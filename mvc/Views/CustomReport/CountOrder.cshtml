@@ -1,0 +1,77 @@
+﻿@model Dictionary<DateTime, int>
+@{
+    ViewBag.Title = "Отчет по дням";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+}
+
+<script src="~/Scripts/FrontEnd/report.js"></script>
+
+<div class="calendar-container">
+    @Html.Partial(ViewData["TypeCalendar"].ToString(), Model)
+</div>
+
+<style>
+    thead {
+        width: 100%;
+        height: 50px;
+    }
+
+    .title-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    tbody td {
+        border-left: 1px solid gainsboro;
+        border-top: 1px solid gainsboro;
+    }
+
+    td {
+        padding: 10px;
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        min-width: 45px;
+        user-select: none;
+    }
+
+    table {
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0px 0px 8px 0px #959595;
+        transition: ease .2s;
+    }
+
+        table * {
+            box-sizing: border-box;
+        }
+
+    .calendar-btn {
+        width: 64px;
+        height: 64px;
+        cursor: pointer;
+        transition: ease .2s;
+    }
+
+    .next-calendar-btn {
+        background: url(../../Images/simplified/next.png) center no-repeat;
+    }
+
+    .previous-calendar-btn {
+        background: url(../../Images/simplified/previous.png) center no-repeat;
+    }
+
+        .previous-calendar-btn:hover,
+        .next-calendar-btn:hover {
+            transform: scale(1.15);
+        }
+
+    .calendar-container {
+        display: flex;
+        height: 100vh;
+        padding: 0 30px;
+        align-items: center;
+        justify-content: space-between;
+    }
+</style>

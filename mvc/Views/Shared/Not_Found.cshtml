@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Master/_AdminSimplified.cshtml";
+}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a style="display:block;margin: 0px auto;" href="@LIB.Tools.Utils.URLHelper.GetUrl(" ")">
+                <img src="@LIB.Tools.Utils.URLHelper.GetUrl(@" Images\logo_btn.svg")" />
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <section class="content">
+                <div class="error-page">
+                    <h2 class="headline text-yellow"> 404</h2>
+                    <div class="error-content">
+                        <h3><i class="fa fa-warning text-yellow"></i> Pagina nu a fost găsită.</h3>
+                        <p>
+                            Ne cerem scuze! Pagina pe care o căutați nu a fost găsită.
+                            Vă rugăm să verificați URL-ul sau <a href="@LIB.Tools.Utils.URLHelper.GetUrl(" ")">reveniți la pagina principală</a>.
+                        </p>
+                    </div>
+                    <!-- /.error-content -->
+                </div>
+                <!-- /.error-page -->
+            </section>
+        </div>
+        <!-- /.login-box-body -->
+    </div>

@@ -1,0 +1,231 @@
+﻿@model Transaction
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using LIB.BusinessObjects
+@using Weblib.Models.Common.Enums
+@{
+
+    ViewBag.Title = Model.Id > 0 ? "Транзакция: " + Model.Client.GetName() : "Добавить транзакцию";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    <script src="~/Scripts/FrontEnd/Object/client.js"></script>
+    <script src="~/Scripts/FrontEnd/popup.js"></script>
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool AddOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.AddOrder),
+    EditOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.EditOrder);
+
+    var CanEdit = EditOrderPass || (AddOrderPass && Model.Id == 0);
+
+    var Currency = Model.Id > 0 && Model.Client.Id > 0 ? Model.Client.GetCurrency() : null;
+}
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "Transaction",
+            Save = true,
+            Namespace = typeof(Transaction).FullName
+        })
+
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header">
+                    Данные транзакции
+                </div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-trio edit-section-row-fisrt">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "TransactionNumber",
+                                Type = TextboxType.Text,
+                                Value = Model.Id > 0 ? Model.TransactionNumber : "",
+                                Caption = "Номер транзакции",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-second">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Sum",
+                                Type = TextboxType.Number,
+                                Value = Model.Id > 0 ? Model.Sum.ToString() : "",
+                                Caption = "Сумма",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-third" style="width: 100px">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Id = "TransactionCurrency",
+                                Type = TextboxType.Text,
+                                Value = Currency != null ? Currency.GetName() : "",
+                                Disabled = true,
+                                Caption = "Валюта"
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "TransactionTime",
+                                Class = "input calendar-input",
+                                Type = Weblib.Models.Common.Enums.TextboxType.DateTime,
+                                Value = Model.TransactionTime != DateTime.MinValue ? Model.TransactionTime.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "",
+                                DateValue = Model.TransactionTime != DateTime.MinValue ? Model.TransactionTime : DateTime.MinValue,
+                                ValidationType = ValidationTypes.Required,
+                                Caption = "Дата транзакции"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "PayMethod",
+                                AllowDefault = true,
+                                Value = Model.PayMethod != null ? Model.PayMethod.Id.ToString() : "0",
+                                Options = new PayMethod().Populate(),
+                                Caption = "Способ оплаты",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="full-size">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Description",
+                                Type = Weblib.Models.Common.Enums.TextboxType.MultiLine,
+                                Value = Model.Note,
+                                Caption = "Описание"
+                            })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @{
+            var client = Model.Id > 0 ? Client.PopulateById(Model.Client.Id) : null;
+        }
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">
+                    <div>
+                        Заказчик@(client != null ? ": " : "")
+                        <label id="client_name_ajax" class="text-client">@(client != null ? client.Id > 0 ? client.GetName() : "Заказчик удален!" : "")</label>
+                    </div>
+                </div>
+                <div class="edit-section-body">
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            AutocompleteName = "Client",
+                            Type = Weblib.Models.Common.Enums.TextboxType.AutoComplete,
+                            AutocompleteServer = true,
+                            AutocompleteMinLen = 2,
+                            AutocompleteType = typeof(Client),
+                            AutocompleteClearFunction = "clear_client_autocomplete(this)",
+                            AutocompleteFilter = ((long)Currency.Enum.USD) + "," + ((long)Currency.Enum.EUR),
+                            Value = client != null && client.Id > 0 ? client.Name : "",
+                            HtmlValue = client != null && client.Id > 0 ? client.Id.ToString() : "",
+                            OnChange = "client_data_output()",
+                            Caption = "Имя"
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                       {
+                           AutocompleteName = "Countries",
+                           Type = Weblib.Models.Common.Enums.TextboxType.AutoComplete,
+                           AutocompleteServer = true,
+                           AutocompleteMinLen = 0,
+                           AutocompleteType = typeof(Countries),
+                           Value = client != null && client.Id > 0 ? client.Countries.GetName() : "",
+                           HtmlValue = client != null && client.Id > 0 ? client.Countries.Id.ToString() : "",
+                           Caption = "Страна"
+                       })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                       {
+                           AutocompleteName = "City",
+                           Type = Weblib.Models.Common.Enums.TextboxType.AutoComplete,
+                           AutocompleteServer = true,
+                           AutocompleteMinLen = 0,
+                           AutocompleteType = typeof(City),
+                           Value = client != null && client.Id > 0 ? client.City.GetName() : "",
+                           HtmlValue = client != null && client.Id > 0 ? client.City.Id.ToString() : "",
+                           Caption = "Город"
+                       })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-trio edit-section-row-fisrt">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                       {
+                           Name = "Phone",
+                           Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                           OnKeyUp = "check_number_input(this)",
+                           Value = client != null ? client.Phone : "",
+                           Caption = "Телефон"
+                       })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-second">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                       {
+                           Name = "Birthday",
+                           Class = "input calendar-input",
+                           Type = Weblib.Models.Common.Enums.TextboxType.Date,
+                           Value = client != null && client.Birthday != DateTime.MinValue ? client.Birthday.ToString("dd/MM/yyyy") : "",
+                           DateValue = client != null ? client.Birthday : DateTime.MinValue,
+                           Caption = "Дата рождения"
+                       })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-third">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Email",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Email,
+                                Value = client != null ? client.Email : "",
+                                Caption = "Email"
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row not-vivible" style="padding: 11px;">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Name = "Comment",
+                            Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                            Value = client != null ? client.Comment : "",
+                            PlaceHolder = "Место для коментария..."
+                        })
+                        <a class="description-control" onclick="show_description(this)"></a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

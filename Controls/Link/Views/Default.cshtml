@@ -1,0 +1,22 @@
+﻿@model Controls.Link.Models.LinkModel
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/Link/css/Link.css");
+    Html.AddScriptParts("~/plugins/Link/js/link.js");  
+}
+@if(Model.Link!=null){
+    if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search)
+    {
+        <div class="control-link control-view">
+            @Html.Partial("../Controls/_link", Model.Link)
+        </div>  
+    }
+    if (!Model.ReadOnly && !string.IsNullOrEmpty(Model.Id))
+    {
+        <div data-control="link" class="control-link control-edit">
+            @Html.Partial("../Controls/_link", Model.Link)
+            <input type="hidden" name="@(Model.Name)" value="@(Model.Id)" />
+        </div>
+    }
+}

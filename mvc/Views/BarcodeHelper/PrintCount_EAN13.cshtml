@@ -1,0 +1,26 @@
+﻿@using Weblib.Models.Common
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    var maxCount = Request.Form["MaxCount"];
+}
+
+<div class="edit-section-header-popup center-header popup-header">Печать</div>
+
+<div class="popup-container">
+    <div class="edit-section-row">
+        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+        {
+            Name = "Count",
+            Value = maxCount,
+            Type = TextboxType.Number,
+            Class = "input decimal-input small-input-table",
+            Caption = "Количество"
+        })
+    </div>
+</div>
+
+<div class="popup-btn">
+    <a class="button" onclick="preview_barcode_EAN13('@Request.Form["BarcodeStr"]', '@Request.Form["MovingProduct"]', $('.popup-container [name=Count]').val())">Печать</a>
+</div>

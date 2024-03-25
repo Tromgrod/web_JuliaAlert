@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/LIB.BusinessObjects" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/LIB.BusinessObjects" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://eh.galex.md:82/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://eh.galex.md:82/Service.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q1:ItemBase">
+        <xs:sequence>
+          <xs:element name="_Image" nillable="true" type="tns:Graphic" />
+          <xs:element name="_x003C_DisplayError_x003E_k__BackingField" type="xs:boolean" />
+          <xs:element name="_x003C_Enabled_x003E_k__BackingField" type="xs:boolean" />
+          <xs:element name="_x003C_LastLogin_x003E_k__BackingField" type="xs:dateTime" />
+          <xs:element name="_x003C_Login_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Password_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Permission_x003E_k__BackingField" type="xs:long" />
+          <xs:element name="_x003C_Person_x003E_k__BackingField" nillable="true" type="tns:Person" />
+          <xs:element name="_x003C_Role_x003E_k__BackingField" nillable="true" type="tns:Role" />
+          <xs:element name="_x003C_Timeout_x003E_k__BackingField" type="xs:int" />
+          <xs:element name="_x003C_UniqueId_x003E_k__BackingField" type="ser:guid" />
+          <xs:element name="_x003C_UpdatedBy_x003E_k__BackingField" nillable="true" type="tns:User" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="Graphic">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q2:ItemBase">
+        <xs:sequence>
+          <xs:element name="_x003C_BOName_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Ext_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C__RelativePath_x003E_k__BackingField" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Graphic" nillable="true" type="tns:Graphic" />
+  <xs:complexType name="Person">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q3:ItemBase">
+        <xs:sequence>
+          <xs:element name="_x003C_Email_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_FirstName_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_LastName_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Sex_x003E_k__BackingField" nillable="true" type="tns:Sex" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Person" nillable="true" type="tns:Person" />
+  <xs:complexType name="Sex">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q4:ItemBase">
+        <xs:sequence>
+          <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Sex" nillable="true" type="tns:Sex" />
+  <xs:complexType name="Role">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q5:AggregateBase">
+        <xs:sequence>
+          <xs:element name="_x003C_Avatar_x003E_k__BackingField" nillable="true" type="tns:Graphic" />
+          <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Permission_x003E_k__BackingField" type="xs:long" />
+          <xs:element name="_x003C_RoleAccessPermission_x003E_k__BackingField" type="xs:long" />
+          <xs:element name="_x003C_UserCount_x003E_k__BackingField" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Role" nillable="true" type="tns:Role" />
+  <xs:complexType name="PredefinedColor">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/LIB.Tools.BO" base="q6:ItemBase">
+        <xs:sequence>
+          <xs:element name="_x003C_Code_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Color_x003E_k__BackingField" nillable="true" type="xs:string" />
+          <xs:element name="_x003C_Name_x003E_k__BackingField" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PredefinedColor" nillable="true" type="tns:PredefinedColor" />
+</xs:schema>

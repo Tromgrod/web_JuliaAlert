@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Master/_AdminSimplified.cshtml";
+}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a style="display:block;margin: 0px auto;" href="@LIB.Tools.Utils.URLHelper.GetUrl("")">
+                <img src="@LIB.Tools.Utils.URLHelper.GetUrl("Images/logo_btn.svg")" style="background-color: white; padding: 10px; border-radius: 10px;" />
+            </a>
+        </div>
+        <div class="login-box-body" style="border-radius: 100%;">
+            <section class="content">
+                <div class="error-page">
+                    <h2 class="headline text-red">500</h2>
+                    <div class="error-content">
+                        <h3><i class="fa fa-warning text-red"></i> Что-то пошло не так.</h3>
+                        <p>Извините, мы не можем обработать информацию прямо сейчас. Попробуйте позже или <a href="@LIB.Tools.Utils.URLHelper.GetUrl("")">вернуться на главную стр</a>.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>

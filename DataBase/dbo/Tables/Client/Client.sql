@@ -1,0 +1,19 @@
+﻿CREATE TABLE [dbo].[Client]
+(
+	[ClientId] BIGINT PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(100) NOT NULL,
+	[CountriesId] BIGINT NULL,
+	[StateId] BIGINT NULL,
+	[CityId] BIGINT NULL,
+	[Index] NVARCHAR(100) NULL,
+	[Address] NVARCHAR(200) NULL,
+	[Phone] NVARCHAR(100) NULL,
+	[Comment] NVARCHAR(MAX) NULL,
+	[Discount] INT NOT NULL,
+	[Birthday] DATETIME NULL,
+	[Email] NVARCHAR(100) NULL,
+	[DeletedBy] BIGINT NULL,
+	[CreatedBy] BIGINT NOT NULL,
+	[DateCreated] DATETIME NOT NULL,
+	[DateUpdated] DATETIME NULL
+)

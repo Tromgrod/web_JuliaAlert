@@ -1,0 +1,16 @@
+﻿<form class="search-data-grid-container data-grid-container">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="search-data-grid data-grid" data-type="@(ViewData["Grid_Type"])">
+        <div class="data-grid-row">    
+            @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Search_Properties"])
+            {
+                <div class="data-grid-data data-grid-search"><div class="data-grid-data-title">@(property.Common.DisplayName):</div>@{Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(ViewData["Search_Item"]), property, (LIB.Tools.BO.ItemBase)ViewData["Search_Item"], false, LIB.AdvancedProperties.DisplayMode.Search) });}</div>
+            }
+        </div>
+    </div>
+    <div class="search-controls">
+        <a class="search-controls-subbmit" onclick="SearchReport()"></a>
+        <a class="search-controls-clear" onclick="ResetReport()"></a>
+    </div>
+</form>

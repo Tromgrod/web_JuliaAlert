@@ -1,0 +1,40 @@
+﻿@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    long uniqueProductId;
+    long.TryParse(HttpContext.Current.Request.Form["UniqueProductId"], out uniqueProductId);
+
+    var factoryPrice = new UniqueProduct(uniqueProductId).PopulateById().GetLastFactoryPrice();
+
+    var salesChannels = SalesChannel.PopulateSalesChannelsFormula();
+}
+<div class="edit-section-header-popup center-header popup-header">Актуальные цены по каналам продаж</div>
+<div class="popup-container" style="flex-direction: column;">
+    @foreach (SalesChannel salesChannel in salesChannels)
+    {
+        var lastSalesChannelCoefficient = SalesChannelCoefficient.GetLastBySalesChannel(salesChannel);
+        <div class="edit-section-row">
+            <div class="edit-section-row-left">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Type = TextboxType.Text,
+                    Value = salesChannel.GetName(),
+                    Disabled = true,
+                    Caption = "Канал продаж"
+                })
+            </div>
+            <div class="edit-section-row-right">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Type = TextboxType.Number,
+                    Value = salesChannel.GetEstimatedPrice(factoryPrice, lastSalesChannelCoefficient).ToString("F"),
+                    Disabled = true,
+                    Caption = "Цена " + salesChannel.Currency.GetName()
+                })
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,103 @@
+﻿@model Barcode_EAN13[]
+@using LIB.BusinessObjects.Barcode
+@using LIB.BusinessObjects
+@using JuliaAlert.Models.Objects
+
+@{
+    Layout = null;
+
+    var dateMoving = ViewData["DateMoving"];
+    int count = Convert.ToInt32(ViewData["Count"]);
+}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Печать штрих-код</title>
+
+<style type="text/css">
+    body {
+        margin: 0;
+    }
+
+    .print-text {
+        font-family: Arial, sans-serif;
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        padding: 0 3mm;
+    }
+
+        .print-text.micro-text {
+            font-size: 16pt;
+        }
+
+        .print-text.small-text {
+            font-size: 22pt;
+        }
+
+        .print-text.medium-text {
+            font-size: 34pt;
+            font-weight: bold;
+        }
+
+        .print-text.big-text {
+            font-size: 44pt;
+            font-weight: bold;
+        }
+
+    .logo-img {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .printItem {
+        width: 20%;
+        height: 50%;
+        float: left;
+    }
+
+        .printItem:last-child {
+            page-break-after: avoid;
+        }
+</style>
+
+@for (var index = 0; index < Model.Length; index++)
+{
+    var barcode = Model[index];
+
+    var specificProduct = barcode.GetObject<SpecificProduct>();
+    var productPrice = ProductPrice.PopulateByProduct(specificProduct.UniqueProduct.Product).FirstOrDefault(pp => pp.SalesChannel.Id == (long)SalesChannel.Enum.JuliaAllert);
+
+    for (var counter = 0; counter < count; counter++)
+    {
+        <div class="printItem">
+            @if (barcode == null || barcode.Error)
+            {
+                <div class="print-text big-text">Error</div>
+            }
+            else
+            {
+                <img src="@Graphic.LogoInvoiceBarcode.AdminThumbnail" class="logo-img" />
+                <br>
+                <br>
+                <span class="print-text medium-text">@specificProduct.UniqueProduct.GetCode()</span>
+                <span class="print-text medium-text">@specificProduct.UniqueProduct.Product.TypeProduct.GetName()</span>
+                <br>
+                <br>
+                <span class="print-text small-text">@specificProduct.UniqueProduct.ColorProduct.Name.ToLower() @specificProduct.ProductSize.Name</span>
+                <br>
+                <br>
+                <span class="print-text big-text">@(productPrice != null ? "Цена " + productPrice.Price.ToString("### ### ###") + " Lei" : "Нет цены") </span>
+                <br>
+                <br>
+                <img src="data:image/png;base64, @barcode.GenerateBarcode(580, 140)" />
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                    <span class="print-text micro-text" style="float: left">@dateMoving</span>
+                    <span class="print-text micro-text" style="float: right">Производитель Allert & Co SRL</span>
+                </div>
+            }
+        </div>
+    }
+}

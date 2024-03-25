@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[Decor]
+(
+	[DecorId] BIGINT PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(100) NOT NULL,
+	[Code] NVARCHAR(10) UNIQUE NOT NULL,
+	[DeletedBy] BIGINT NULL,
+	[CreatedBy] BIGINT NOT NULL,
+	[DateCreated] DATETIME NOT NULL,
+	[DateUpdated] DATETIME NULL
+)

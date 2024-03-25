@@ -1,0 +1,17 @@
+﻿@model List<ItemBase>
+@using LIB.Tools.BO
+@{
+    Layout = null;
+
+    var ModelId = ViewData["ModelId"] != null ? ViewData["ModelId"].ToString() : string.Empty;
+
+    bool AllowDefault = ViewData["AllowDefault"] != null ? (bool)ViewData["AllowDefault"] : false;
+
+    if (AllowDefault)
+    {<option value=""></option>
+    }
+
+    foreach (var item in Model)
+    {<option value="@item.Id"@(item.Id.ToString() == ModelId ? " selected" : "")>@Html.Raw(item.GetAutocompleteName())</option>
+    }
+}

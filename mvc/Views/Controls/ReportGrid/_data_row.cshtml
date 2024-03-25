@@ -1,0 +1,34 @@
+﻿@model ReportBase
+@using LIB.Tools.Utils
+@using JuliaAlertLib.BusinessObjects
+@{
+    var bNewTab = (bool)ViewData["NewTab"];
+    string action = string.Empty;
+
+    if (!string.IsNullOrEmpty(Model.GetLink()))
+    {
+        action = bNewTab ? "window.open('" + URLHelper.GetUrl(Model.GetLink()) + "')" : "window.location='" + URLHelper.GetUrl(Model.GetLink()) + "'";
+    }
+    else if (!string.IsNullOrEmpty(Model.GetAction()))
+    {
+        action = Model.GetAction();
+    }
+}
+<div onclick="@action" style="@Model.GetConditionalStyle()" class="data-grid-data-row data-grid-data-row-@(Model.Id.ToString() + Model.GetConditionalClass())">
+    @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+    {
+        if (property.Common.Visible == true && property.Common.EditTemplate != LIB.AdvancedProperties.EditTemplates.ImageUpload)
+        {
+            if (property.Common.EditTemplate == LIB.AdvancedProperties.EditTemplates.Label || string.IsNullOrEmpty(property.Common.ReportModifyFunc))
+            {
+                <div class="data-grid-data"><div class="control-view @property.Common.ViewCssClass">@Html.Raw(property.PropertyDescriptor.GetValue(Model))</div></div>
+            }
+            else
+            {
+                <div class="data-grid-data"><input type="text" class="control-view @property.Common.ViewCssClass" value="@Html.Raw(property.PropertyDescriptor.GetValue(Model))" onchange="@property.Common.ReportModifyFunc"></div>
+            }
+        }
+    }
+
+    @Html.Raw(Model.GetHiddenInputs())
+</div>

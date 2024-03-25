@@ -1,0 +1,57 @@
+﻿@model Return
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using System.Globalization
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    bool ProductIsReturn = Model.Id > 0;
+}
+<style>
+    .popup-container * {
+        border-top: none;
+    }
+</style>
+<div class="edit-section-header-popup center-header popup-header">Оформление возврата</div>
+<div class="popup-container" style="flex-direction: column;">
+    <div class="edit-section-row">
+        <div class="edit-section-row-left">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "ReturnDate",
+                Class = "input calendar-input normal-calendar",
+                Type = TextboxType.Date,
+                ValidationType = ValidationTypes.Required,
+                Value = Model.ReturnDate != DateTime.MinValue ? Model.ReturnDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "",
+                DateValue = Model.ReturnDate != DateTime.MinValue ? Model.ReturnDate : DateTime.MinValue,
+                ReadOnly = ProductIsReturn,
+                Caption = "Дата заявки"
+            })
+        </div>
+        <div class="edit-section-row-right">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "ReturnCount",
+                Type = TextboxType.Number,
+                Value = Model.ReturnCount.ToString(),
+                ValidationType = ValidationTypes.Required,
+                Caption = "Количество"
+            })
+        </div>
+    </div>
+    <input type="hidden" name="Namespace" value="@Model.GetType().FullName">
+    <input type="hidden" name="Id" value="@Model.Id">
+    <input type="hidden" name="ProductForOrder" value="@Request.Form["ModelId"]">
+</div>
+<div class="popup-btn">
+    @if (Model.Id > 0)
+    {
+        <a class="button button-red" onclick="delete_return()">Удалить</a>
+    }
+    <a class="button" onclick="save_local_return()">Сохранить</a>
+</div>
+<script>
+    set_calendar($('.popup-container'));
+</script>

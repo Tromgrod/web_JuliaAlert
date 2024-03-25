@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{6380b0dc-3728-4bac-a94b-171bdb48153b}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Database</RootNamespace>
+    <AssemblyName>Database</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Functions" />
+    <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Functions\Table-valued funсtions" />
+    <Folder Include="dbo\Stored Procedures\Base" />
+    <Folder Include="dbo\Tables\Base" />
+    <Folder Include="Scripts" />
+    <Folder Include="dbo\Tables\BO" />
+    <Folder Include="dbo\Tables\Service" />
+    <Folder Include="dbo\Stored Procedures\Common" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Tables\Reports" />
+    <Folder Include="dbo\Stored Procedures\System" />
+    <Folder Include="dbo\Tables\FrontEndBase" />
+    <Folder Include="dbo\Tables\Product" />
+    <Folder Include="dbo\Tables\Order" />
+    <Folder Include="dbo\Stored Procedures\Product" />
+    <Folder Include="dbo\Tables\Geography" />
+    <Folder Include="dbo\Stored Procedures\Client" />
+    <Folder Include="dbo\Tables\Client" />
+    <Folder Include="dbo\Stored Procedures\Order" />
+    <Folder Include="dbo\Tables\Stock" />
+    <Folder Include="dbo\Views\Sales" />
+    <Folder Include="dbo\Stored Procedures\Location" />
+    <Folder Include="dbo\Tables\Money" />
+    <Folder Include="dbo\Stored Procedures\Money" />
+    <Folder Include="dbo\Views\PopUp Report" />
+    <Folder Include="dbo\Tables\Production" />
+    <Folder Include="dbo\Stored Procedures\Production" />
+    <Folder Include="dbo\Trigger" />
+    <Folder Include="dbo\Views\Production" />
+    <Folder Include="dbo\Stored Procedures\Report" />
+    <Folder Include="dbo\Stored Procedures\Stock" />
+    <Folder Include="dbo\Stored Procedures\Report\PopUp Report" />
+    <Folder Include="dbo\Stored Procedures\Statistic" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData\TypeProduct" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData\SalesChannel" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData\Product" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData\Sales" />
+    <Folder Include="dbo\Stored Procedures\Statistic\FrameData\Country" />
+    <Folder Include="dbo\Stored Procedures\Statistic\BarChart" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Functions\Table-valued funсtions\Split.sql" />
+    <Build Include="dbo\Tables\Base\Document.sql" />
+    <Build Include="dbo\Tables\Base\Graphic.sql" />
+    <Build Include="dbo\Tables\Base\Language.sql" />
+    <Build Include="dbo\Tables\Base\Person.sql" />
+    <Build Include="dbo\Tables\Base\Role.sql" />
+    <Build Include="dbo\Tables\Base\Sex.sql" />
+    <Build Include="dbo\Tables\Base\Translation.sql" />
+    <Build Include="dbo\Tables\Base\User.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_Cancel.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_PopulateTools.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Translation_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Translation_Populate.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Translation_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Base\User_CheckLoginForUniqueness.sql" />
+    <Build Include="dbo\Stored Procedures\Base\User_DoLogin.sql" />
+    <Build Include="dbo\Stored Procedures\Base\User_Updatelast_login.sql" />
+    <Build Include="dbo\Tables\BO\News.sql" />
+    <Build Include="dbo\Tables\BO\Page.sql" />
+    <Build Include="dbo\Tables\BO\MenuType.sql" />
+    <Build Include="dbo\Tables\BO\MenuItem.sql" />
+    <Build Include="dbo\Tables\BO\MenuGroup.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Generic_PopulateReport.sql" />
+    <Build Include="dbo\Tables\Service\KeyValueSetting.sql" />
+    <Build Include="dbo\Tables\Base\Permission.sql" />
+    <Build Include="dbo\Stored Procedures\Common\MenueGroup_Populate.sql" />
+    <Build Include="dbo\Stored Procedures\Common\Person_Populate.sql" />
+    <Build Include="dbo\Stored Procedures\Common\User_Populate.sql" />
+    <Build Include="dbo\Stored Procedures\Common\User_UpdatePassword.sql" />
+    <Build Include="dbo\Stored Procedures\Common\Person_LoadInfo.sql" />
+    <Build Include="dbo\Stored Procedures\Common\Person_UpdateEmail.sql" />
+    <Build Include="dbo\Tables\Base\BORevision.sql" />
+    <Build Include="dbo\Stored Procedures\Base\BORevisions_Populate.sql" />
+    <Build Include="dbo\Stored Procedures\Base\BORevisions_Populate_By_User.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Person_CanDelete.sql" />
+    <Build Include="dbo\Stored Procedures\Base\Revision_Insert.sql" />
+    <Build Include="dbo\Tables\Reports\PrintableReportType.sql" />
+    <Build Include="dbo\Tables\Reports\PrintableReport.sql" />
+    <Build Include="dbo\Stored Procedures\Common\Role_Populate_Users.sql" />
+    <Build Include="dbo\Stored Procedures\Common\User_Populate_Latests.sql" />
+    <Build Include="dbo\Stored Procedures\System\Field_Populate_Page.sql" />
+    <Build Include="dbo\Tables\FrontEndBase\Field.sql" />
+    <Build Include="dbo\Tables\FrontEndBase\DisplayMode.sql" />
+    <Build Include="dbo\Tables\Base\PredefinedColor.sql" />
+    <Build Include="dbo\Stored Procedures\Common\Person_Populate_ByPermission.sql" />
+    <Build Include="dbo\Stored Procedures\System\PrintableReport_LoadTemplate.sql" />
+    <Build Include="dbo\Tables\Product\Product.sql" />
+    <Build Include="dbo\Tables\Product\ColorProduct.sql" />
+    <Build Include="dbo\Tables\Product\Compound.sql" />
+    <Build Include="dbo\Tables\Product\TypeProduct.sql" />
+    <Build Include="dbo\Tables\Order\Order.sql" />
+    <Build Include="dbo\Tables\Product\ProductSize.sql" />
+    <Build Include="dbo\Tables\Order\OrderState.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Populate_Product.sql" />
+    <Build Include="dbo\Tables\Product\UniqueProduct.sql" />
+    <Build Include="dbo\Tables\Geography\Countries.sql" />
+    <Build Include="dbo\Tables\Geography\State.sql" />
+    <Build Include="dbo\Tables\Geography\City.sql" />
+    <Build Include="dbo\Tables\Order\ProductForOrder.sql" />
+    <Build Include="dbo\Stored Procedures\Client\Client_Populate_One.sql" />
+    <Build Include="dbo\Tables\Client\Client.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Populate_UniqueProduct_ByProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Order_Populate_Latests.sql" />
+    <Build Include="dbo\Stored Procedures\Order\ProductForOrder_Populate_ByOrder.sql" />
+    <Build Include="dbo\Stored Procedures\Order\OrderState_Populate_ByAllOrder.sql" />
+    <Build Include="dbo\Tables\Order\DeliveryMethod.sql" />
+    <Build Include="dbo\Tables\Order\Return.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Populate_UniqueProduct_ById.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Populate_ProductForOrder_CountByYear.sql" />
+    <Build Include="dbo\Tables\Stock\Stock.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Gift_Populate_ByOrder.sql" />
+    <Build Include="dbo\Tables\Order\Gift.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Order_Populate_One.sql" />
+    <Build Include="dbo\Stored Procedures\Order\ProductForOrder_PopulateById.sql" />
+    <Build Include="dbo\Tables\Product\GroupProduct.sql" />
+    <Build Include="dbo\Tables\Stock\SalesChannel.sql" />
+    <Build Include="dbo\Tables\Stock\TypeSalesChannel.sql" />
+    <Build Include="dbo\Views\Sales\CityStatisticList.sql" />
+    <Build Include="dbo\Views\Sales\CountryStatisticList.sql" />
+    <Build Include="dbo\Tables\Product\Decor.sql" />
+    <Build Include="dbo\Stored Procedures\Product\InsertDecor.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Populate_UniqueProduct.sql" />
+    <Build Include="dbo\Tables\Product\SpecificProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Product\InsertColor.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Delete_SpecificProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Location\Populate_Countries.sql" />
+    <Build Include="dbo\Stored Procedures\Location\Populate_State.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Order_Populate_ByClient.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Product_Populate_Autocomplete.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Insert-Update_ProductPrice.sql" />
+    <Build Include="dbo\Tables\Money\Transaction.sql" />
+    <Build Include="dbo\Tables\Money\PayMethod.sql" />
+    <Build Include="dbo\Stored Procedures\Money\Currency_Populate_ByClient.sql" />
+    <Build Include="dbo\Stored Procedures\Order\ProductForOrder_PopulateReturnProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Client\Client_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Populate_Return_CountByYear.sql" />
+    <Build Include="dbo\Stored Procedures\Product\GetByUniqueProductAndSize.sql" />
+    <Build Include="dbo\Tables\Money\Currency.sql" />
+    <Build Include="dbo\Views\PopUp Report\SpecificProduct_ModelList.sql" />
+    <Build Include="dbo\Views\PopUp Report\TransactionUnitList.sql" />
+    <Build Include="dbo\Views\Sales\TransactionList.sql" />
+    <Build Include="dbo\Tables\Money\ProductPrice.sql" />
+    <Build Include="dbo\Stored Procedures\Money\ProductPrice_PopulateByProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Product\UniqueProduct_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Product\SpecificProduct_Insert.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Order_PopulateByClient.sql" />
+    <Build Include="dbo\Tables\Production\Collection.sql" />
+    <Build Include="dbo\Tables\Stock\LocationStorage.sql" />
+    <Build Include="dbo\Tables\Production\Pattern.sql" />
+    <Build Include="dbo\Tables\Production\Constructor.sql" />
+    <Build Include="dbo\Stored Procedures\Production\Populate_Pattern.sql" />
+    <Build Include="dbo\Tables\Production\Finding.sql" />
+    <Build Include="dbo\Tables\Production\FindingSpecie.sql" />
+    <Build Include="dbo\Tables\Production\FindingSubspecie.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingSpecie_GetSubspecieList.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingColor_DeleteByFinding.sql" />
+    <Build Include="dbo\Tables\Production\FindingColor.sql" />
+    <Build Include="dbo\Stored Procedures\Production\Populate_Finding.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingColor_PopulateByParent.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingColor_PopulateById.sql" />
+    <Build Include="dbo\Views\PopUp Report\FindingColorList.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingColor_GetByFullCode.sql" />
+    <Build Include="dbo\Tables\Production\Textile.sql" />
+    <Build Include="dbo\Tables\Production\TextileColor.sql" />
+    <Build Include="dbo\Stored Procedures\Production\Populate_Textile.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TextileColor_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TextileColor_PopulateByParent.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TextileColor_GetByFullCode.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TextileColor_DeleteByTextile.sql" />
+    <Build Include="dbo\Views\PopUp Report\TextileColorList.sql" />
+    <Build Include="dbo\Tables\Production\Provider.sql" />
+    <Build Include="dbo\Tables\Production\СonsumptionFinding.sql" />
+    <Build Include="dbo\Tables\Production\СonsumptionTextile.sql" />
+    <Build Include="dbo\Stored Procedures\Production\СonsumptionFinding_PopulateByParentId.sql" />
+    <Build Include="dbo\Stored Procedures\Production\СonsumptionTextile_PopulateByParentId.sql" />
+    <Build Include="dbo\Stored Procedures\Production\Finding_PopulateAutocomplete.sql" />
+    <Build Include="dbo\Tables\Production\SupplyTextile.sql" />
+    <Build Include="dbo\Tables\Production\SupplyTextileUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyTextileUnit_PopulateByParentId.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TextileColor_GetByTextileAndColor.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyFindingUnit_PopulateByParentId.sql" />
+    <Build Include="dbo\Tables\Production\SupplyFinding.sql" />
+    <Build Include="dbo\Tables\Production\SupplyFindingUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingColor_GetByFindingAndColor.sql" />
+    <Build Include="dbo\Tables\Production\ReturnSupplyTextileUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\ReturnSupplyTextileUnit_PopulateByParent.sql" />
+    <Build Include="dbo\Stored Procedures\Production\ReturnSupplyFindingUnit_PopulateByParent.sql" />
+    <Build Include="dbo\Tables\Production\ReturnSupplyFindingUnit.sql" />
+    <Build Include="dbo\Views\Production\PatternList.sql" />
+    <Build Include="dbo\Views\Production\ProviderList.sql" />
+    <Build Include="dbo\Views\Production\SupplyFindingList.sql" />
+    <Build Include="dbo\Views\Production\SupplyConsumableList.sql" />
+    <Build Include="dbo\Views\Production\SupplyTextileList.sql" />
+    <Build Include="dbo\Stored Procedures\Order\SalesChannel_PopulateByCurrencies.sql" />
+    <Build Include="dbo\Stored Procedures\Client\Client_PopulateAutocomplete.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyTextile_LoadList.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyFinding_LoadList.sql" />
+    <Build Include="dbo\Tables\Production\ProductionExpense.sql" />
+    <Build Include="dbo\Tables\Production\SalesChannelCoefficient.sql" />
+    <Build Include="dbo\Stored Procedures\Product\SpecificProduct_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Product\SpecificProduct_SetByFullCode.sql" />
+    <Build Include="dbo\Tables\Production\SupplySpecificProduct.sql" />
+    <Build Include="dbo\Tables\Production\SupplySpecificProductUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_PopulateByParentId.sql" />
+    <Build Include="dbo\Stored Procedures\Product\UniqueProduct_GetSizes.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Finding_GetColors.sql" />
+    <Build Include="dbo\Stored Procedures\Product\Textile_GetColors.sql" />
+    <Build Include="dbo\Stored Procedures\Product\UniqueProduct_Update.sql" />
+    <Build Include="dbo\Stored Procedures\Production\UniqueProduct_GetLastPriceConsumables.sql" />
+    <Build Include="dbo\Stored Procedures\Product\TypeProduct_PopulateByGroupProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Product\SpecificProduct_GenerateProductCode.sql" />
+    <Build Include="dbo\Tables\Stock\FindingLocationStorage.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProduct_LoadList.sql" />
+    <Build Include="dbo\Stored Procedures\Report\ModelList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\OrderList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Money\SalesChannel_PopulateSalesChannelsFormula.sql" />
+    <Build Include="dbo\Stored Procedures\Report\FindingList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SpecificProductStock_LoadList.sql" />
+    <Build Include="dbo\Tables\Stock\MovingProductUnit.sql" />
+    <Build Include="dbo\Tables\Stock\MovingProduct.sql" />
+    <Build Include="dbo\Stored Procedures\Stock\MovingProductUnit_PopulateByParentId.sql" />
+    <Build Include="dbo\Tables\Stock\SpecificProductStock.sql" />
+    <Build Include="dbo\Stored Procedures\Stock\MovingProductUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Report\MovingProductList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_GetLastByParrent.sql" />
+    <Build Include="dbo\Tables\Production\Factory.sql" />
+    <Build Include="dbo\Tables\Production\ImplementSupplySpecificProductUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_PopulateImplementSupplySpecificProductUnits.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_GetTotalImplementCount.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\ImplementSupplySpecificProductUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Report\SupplySpecificProductList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\PopUp Report\SupplySpecificProductUnitList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\PopUp Report\MovingProductUnitList_Report.sql" />
+    <Build Include="dbo\Trigger\UniqueProduct_INSERT_TRG.sql" />
+    <Build Include="dbo\Stored Procedures\Stock\UserStock_GetStocksByUser.sql" />
+    <Build Include="dbo\Stored Procedures\Stock\Stock_PopulateByCurrencies.sql" />
+    <Build Include="dbo\Tables\Stock\UserStock.sql" />
+    <Build Include="dbo\Stored Procedures\Report\UniqueProductList_Report.sql" />
+    <Build Include="dbo\Tables\Production\TailoringSupplySpecificProductUnit.sql" />
+    <Build Include="dbo\Tables\Production\FindingLocationStorageTailoringSupplySpecificProductUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_GetTotalTailoringtCount.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplySpecificProductUnit_PopulateTailoringSupplySpecificProductUnits.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TailoringSupplySpecificProductUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingLocationStorageTailoringSupplySpecificProductUnit_PopulateByParentId.sql" />
+    <Build Include="dbo\Stored Procedures\Production\TailoringSupplySpecificProductUnit_GetLastByParrent.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingLocationStorageTailoringSupplySpecificProductUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\FindingLocationStorage_PopulateByFindingColorAndLocationStorage.sql" />
+    <Build Include="dbo\Stored Procedures\Report\PopUp Report\SpecificProductList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\ClientList_Report.sql" />
+    <Build Include="dbo\Tables\Stock\SpecificProductStockHistory.sql" />
+    <Build Include="dbo\Tables\Stock\Inventory.sql" />
+    <Build Include="dbo\Tables\Stock\InventoryUnit.sql" />
+    <Build Include="dbo\Stored Procedures\Report\InventoryList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Production\InventoryUnit_PopulateBySpecificProductStockIdAndInventoryId.sql" />
+    <Build Include="dbo\Stored Procedures\Production\Inventory_PopulateAutocomplete.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SpecificProductStockHistory_PopulateBySpecificProductStockIdAndDate.sql" />
+    <Build Include="dbo\Stored Procedures\Stock\MovingProduct_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Order\Return_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\ReturnSupplyTextileUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyTextileUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\ReturnSupplyFindingUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyFindingUnit_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Production\SupplyFinding_PopulateById.sql" />
+    <Build Include="dbo\Stored Procedures\Report\GiftList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\CustomerList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Report\TextileList_Report.sql" />
+    <Build Include="dbo\Stored Procedures\Product\UniqueProduct_PopulateAll.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\TypeProduct\StatisticHelpers_FrameData_TypeProduct_Days.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\TypeProduct\StatisticHelpers_FrameData_TypeProduct_Months.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\TypeProduct\StatisticHelpers_FrameData_TypeProduct_Years.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\SalesChannel\StatisticHelpers_FrameData_SalesChannel_Days.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\SalesChannel\StatisticHelpers_FrameData_SalesChannel_Months.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\SalesChannel\StatisticHelpers_FrameData_SalesChannel_Years.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Product\StatisticHelpers_FrameData_Product_Days.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Product\StatisticHelpers_FrameData_Product_Months.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Product\StatisticHelpers_FrameData_Product_Years.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Sales\StatisticHelpers_FrameData_Sales_Days.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Sales\StatisticHelpers_FrameData_Sales_Months.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Sales\StatisticHelpers_FrameData_Sales_Years.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Country\StatisticHelpers_FrameData_Country_Days.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Country\StatisticHelpers_FrameData_Country_Months.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\FrameData\Country\StatisticHelpers_FrameData_Country_Years.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\StatisticHelpers_SalesTypeChartData.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\BarChart\StatisticHelpers_BarData_Client.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\BarChart\StatisticHelpers_BarData_Product.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\BarChart\StatisticHelpers_BarData_SalesChannel.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\BarChart\StatisticHelpers_BarData_Country.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\StatisticHelpers_MapData.sql" />
+    <Build Include="dbo\Stored Procedures\Statistic\BarChart\StatisticHelpers_BarData_TypeProduct.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+</Project>

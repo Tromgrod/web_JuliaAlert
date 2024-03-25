@@ -1,0 +1,37 @@
+﻿@using System.Web.Optimization
+@using WebLib.UI
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-config" content="none"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>@(string.IsNullOrEmpty(ViewBag.Title) ? "Julia Allert" : ViewBag.Title)</title>
+        <link href="~/images/favicon.png" rel="shortcut icon" type="image/png" />
+        <script type="text/javascript">var gRootUrl = '@LIB.Tools.Utils.URLHelper.GetUrl("")'</script>
+        @Styles.Render("~/styles/common")
+        @Styles.Render("~/styles/full")
+        @Styles.Render("~/styles/front_common")
+        @Styles.Render("~/styles/front_full")
+        @Scripts.Render("~/scripts/jquerylib")
+        @Scripts.Render("~/scripts/jquery-ui")
+        @Scripts.Render("~/scripts/jquery-upload")
+        @Scripts.Render("~/scripts/jquery-download")
+        @Scripts.Render("~/scripts/d3")
+        @Scripts.Render("~/scripts/front_common")
+        @Scripts.Render("~/scripts/front_advanced")
+        @Scripts.Render("~/scripts/commonlib")
+        @Scripts.Render("~/scripts/dynamics")
+        @Html.BuilderCssFiles(this.Url, ResourceLocation.Head)
+        @Html.BuilderScripts(this.Url, ResourceLocation.Head)
+    </head>
+    <body>
+        <div class="ajax-loading-overlay"></div>
+        @Html.Partial("../Controls/_message")
+        @Html.Partial("../Layout/Standard/_Header")
+        <div class="content">
+            @RenderBody()
+        </div>
+        @Html.Partial("../Layout/Standard/_Footer")
+    </body>
+</html>

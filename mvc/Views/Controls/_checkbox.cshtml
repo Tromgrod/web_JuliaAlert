@@ -1,0 +1,13 @@
+﻿@using Weblib.Models.Common
+<input type="checkbox" name="@(((CheckboxModel)Model).Name)" id="@(!string.IsNullOrEmpty(((CheckboxModel)Model).Id)?((CheckboxModel)Model).Id:((CheckboxModel)Model).LabelName)" class="@(!string.IsNullOrEmpty(((CheckboxModel)Model).Class)?((CheckboxModel)Model).Class:"checkbox") large"
+    @if (((CheckboxModel)Model).Checked){@:checked
+    }
+    @if (((CheckboxModel)Model).Disabled){@:disabled
+    }
+    @if (!string.IsNullOrEmpty(((CheckboxModel)Model).Value)){@:value="@(((CheckboxModel)Model).Value)"
+    }   
+    else{@:value="1"
+    } 
+    @if (!string.IsNullOrEmpty(((CheckboxModel)Model).OnClick)){@:onclick="@(((CheckboxModel)Model).OnClick)"
+    }/> 
+    <label for="@(!string.IsNullOrEmpty(((CheckboxModel)Model).Id)?((CheckboxModel)Model).Id:((CheckboxModel)Model).LabelName)" class="checkbox-caption checkbox-replacement"></label>

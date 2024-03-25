@@ -1,0 +1,11 @@
+﻿@using Weblib.Models.Common
+@{
+    var model = (ButtonModel)Model;
+
+    var modelClass = !string.IsNullOrEmpty(model.Class) ? model.Class : "button";
+    var modelPredefinedIcon = model.PredefinedIcon != null ? " " + model.PredefinedIcon.Class : "";
+    modelClass += modelPredefinedIcon;
+
+    var modelVisible = !model.Visible ? " style=\"display:none\"" : "";
+}
+<a id="@(model.Name)" class="@modelClass" href="@(model.Href)" @modelVisible onclick="@(model.Action)">@if (!string.IsNullOrEmpty(model.Icon)){<i class="fa fa-@(model.Icon)"></i>}@(model.Text)</a>

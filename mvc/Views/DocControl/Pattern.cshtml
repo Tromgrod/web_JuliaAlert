@@ -1,0 +1,125 @@
+﻿@model Pattern
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+
+@{
+    ViewBag.Title = "Добавить лекало";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    <script src="~/Scripts/FrontEnd/Object/product.js"></script>
+}
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "Pattern",
+            Delete = true,
+            Save = true,
+            Namespace = typeof(Pattern).FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header">
+                    Изображение лекало
+                </div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-row" style="justify-content: center;">
+                        @Html.Partial("../Controls/RowControl/_photorow", new PhotoModel()
+                        {
+                            Name = "Image",
+                            Value = Model.Image,
+                            Width = 450,
+                            Height = 450
+                        })
+                        <script type="text/javascript">
+                            initUploadImageFileAutoSave('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadImage/")', 'Image', 450, 450, 900, 900, '@Model.GetType().Name', '@Model.GetType().FullName', @Model.Id);
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">
+                    Данные лекало
+                </div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Name",
+                                Type = TextboxType.Text,
+                                Value = Model.GetName(),
+                                Caption = "Название",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Code",
+                                Type = TextboxType.Text,
+                                Value = Model.Code,
+                                Caption = "Код лекало",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "Constructor",
+                            AllowDefault = true,
+                            Value = Model.Constructor != null ? Model.Constructor.Id.ToString() : "0",
+                            Options = new Constructor().Populate(),
+                            Caption = "Конструктор",
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "LocationStorage",
+                                AllowDefault = true,
+                                Value = Model.Id > 0 && Model.LocationStorage.Id > 0 ? Model.LocationStorage.Id.ToString() : "0",
+                                Options = new LocationStorage().Populate(),
+                                Caption = "Место хранения",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "Collection",
+                                AllowDefault = true,
+                                Value = Model.Id > 0 && Model.Collection.Id > 0 ? Model.Collection.Id.ToString() : "0",
+                                Options = new Collection().Populate(),
+                                Caption = "Коллекция",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

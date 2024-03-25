@@ -1,0 +1,203 @@
+﻿@using JuliaAlert.Controllers
+@using JuliaAlert.Models.Objects
+@using LIB.Extensions
+@{
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var statisticGroups = Enum.GetValues(typeof(StatisticController.StatisticGroup));
+
+    var currentStatisticGroup = (StatisticController.StatisticGroup)Enum.Parse(typeof(StatisticController.StatisticGroup), Session["StatisticDiagram_StatisticGroup"].ToString());
+
+    var uniqueProducts = UniqueProduct.PopulateAll();
+    var salesChannels = new SalesChannel().Populate();
+    var typeProducts = new TypeProduct().Populate();
+    var countries = new Countries().Populate();
+
+    var years = Session["StatisticDiagram_Years"].ToString().Split(',');
+    int monthFrom = (int)Session["StatisticDiagram_MonthFrom"];
+    int monthTo = (int)Session["StatisticDiagram_MonthTo"];
+    int countingType = (int)Session["StatisticDiagram_CountingType"];
+
+    var uniqueProductIdSelected = Session["StatisticDiagram_UniqueProducts"] != null ? Session["StatisticDiagram_UniqueProducts"].ToString().Split(',') : null;
+    var salesChannelIdSelected = Session["StatisticDiagram_SalesChannels"] != null ? Session["StatisticDiagram_SalesChannels"].ToString().Split(',') : null;
+    var typeProductIdSelected = Session["StatisticDiagram_TypeProducts"] != null ? Session["StatisticDiagram_TypeProducts"].ToString().Split(',') : null;
+    var countryIdSelected = Session["StatisticDiagram_Countries"] != null ? Session["StatisticDiagram_Countries"].ToString().Split(',') : null;
+    var dynamicFilterValues = Session["StatisticDiagram_DynamicFilterValues"] != null ? Session["StatisticDiagram_DynamicFilterValues"].ToString() : "";
+}
+
+<script src="~/Scripts/Bootstrap_Plugins/chartjs/chart.min.js"></script>
+<script src="~/Scripts/FrontEnd/Statistic/statistic_frame.js"></script>
+
+<div class="statistic-container">
+    <div class="statistic-frame-block">
+        <div style="max-width: 54%; width: 100%;">
+            <label id="frame-header">
+                <label>Статистика за</label>
+                <label id="dinamic-text"></label>
+                <label>групировака по</label>
+                <select id="statisticGroup" class="select" onchange="statisticGroups_event(this.value)">
+                    @foreach (StatisticController.StatisticGroup statisticGroup in statisticGroups)
+                    {
+                        <option @(currentStatisticGroup == statisticGroup ? "selected" : "") value="@((int)statisticGroup)">@statisticGroup.GetDisplayName()</option>
+                    }
+                </select>
+            </label>
+
+            <div style="position: relative">
+                <div id="loader-statisticFrame" style="display: none"></div>
+                <canvas id="statisticFrame"></canvas>
+            </div>
+        </div>
+        <div class="filter-container">
+            <div class="search-data-grid filter-column">
+                <label id="filter-header">Основные фильтра</label>
+
+                <div class="years-filter">
+                    <div class="data-grid-data-title">Года:</div>
+                    <select id="years" class="select select-multyselect select2-hidden-accessible" onchange="years_event(this)" multiple>
+                        @for (var year = DateTime.Now.Year; year >= 2015; year--)
+                        {
+                            <option @(years.Any(y => y == year.ToString()) ? "selected" : "") value="@year">@year</option>
+                        }
+                    </select>
+                </div>
+
+                <div id="months" style="@(years.Count() != 1 ? "display: none; " : "")">
+                    <div class="data-grid-data-title">Месяца:</div>
+                    <div class="months-block">
+                        <select id="monthFrom" class="select" onchange="months_event()">
+                            <option @(monthFrom == 1 ? "selected" : "") value="1">Январь</option>
+                            <option @(monthFrom == 2 ? "selected" : "") value="2">Февраль</option>
+                            <option @(monthFrom == 3 ? "selected" : "") value="3">Март</option>
+                            <option @(monthFrom == 4 ? "selected" : "") value="4">Апрель</option>
+                            <option @(monthFrom == 5 ? "selected" : "") value="5">Май</option>
+                            <option @(monthFrom == 6 ? "selected" : "") value="6">Июнь</option>
+                            <option @(monthFrom == 7 ? "selected" : "") value="7">Июль</option>
+                            <option @(monthFrom == 8 ? "selected" : "") value="8">Август</option>
+                            <option @(monthFrom == 9 ? "selected" : "") value="9">Сентябрь</option>
+                            <option @(monthFrom == 10 ? "selected" : "") value="10">Октябрь</option>
+                            <option @(monthFrom == 11 ? "selected" : "") value="11">Ноябрь</option>
+                            <option @(monthFrom == 12 ? "selected" : "") value="12">Декабрь</option>
+                        </select>
+                        <div class="control-defis"> - </div>
+                        <select id="monthTo" class="select" onchange="months_event()">
+                            <option @(monthTo == 1 ? "selected" : "") value="1">Январь</option>
+                            <option @(monthTo == 2 ? "selected" : "") value="2">Февраль</option>
+                            <option @(monthTo == 3 ? "selected" : "") value="3">Март</option>
+                            <option @(monthTo == 4 ? "selected" : "") value="4">Апрель</option>
+                            <option @(monthTo == 5 ? "selected" : "") value="5">Май</option>
+                            <option @(monthTo == 6 ? "selected" : "") value="6">Июнь</option>
+                            <option @(monthTo == 7 ? "selected" : "") value="7">Июль</option>
+                            <option @(monthTo == 8 ? "selected" : "") value="8">Август</option>
+                            <option @(monthTo == 9 ? "selected" : "") value="9">Сентябрь</option>
+                            <option @(monthTo == 10 ? "selected" : "") value="10">Октябрь</option>
+                            <option @(monthTo == 11 ? "selected" : "") value="11">Ноябрь</option>
+                            <option @(monthTo == 12 ? "selected" : "") value="12">Декабрь</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="dynamic-filter" style="display: none; overflow-x: auto;">
+                    <label class="data-grid-data-title"></label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple></select>
+                </div>
+            </div>
+            <div class="search-data-grid filter-column">
+                <label id="filter-header">Дополниельные фильтра</label>
+
+                <div>
+                    <div class="data-grid-data-title">Тип подсчета продаж:</div>
+                    <select id="countingType" class="select" onchange="search_statistic_frame()">
+                        <option @(countingType == 1 ? "selected" : "") value="1">Чистые продажи</option>
+                        <option @(countingType == 2 ? "selected" : "") value="2">Только возврат</option>
+                        <option @(countingType == 3 ? "selected" : "") value="3">Все продажи</option>
+                    </select>
+                </div>
+
+                <div id="uniqueProducts" style="@(currentStatisticGroup == StatisticController.StatisticGroup.Product ? "display: none; " : "")overflow-x: auto;">
+                    <label class="data-grid-data-title">Модели:</label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple>
+                        @foreach (var uniqueProduct in uniqueProducts)
+                        {
+                            <option @(uniqueProductIdSelected != null && uniqueProductIdSelected.Any(id => id == uniqueProduct.Id.ToString()) ? "selected" : "") value="@uniqueProduct.Id">@uniqueProduct.GetAutocompleteName()</option>
+                        }
+                    </select>
+                </div>
+
+                <div id="salesChannels" style="@(currentStatisticGroup == StatisticController.StatisticGroup.SalesChannel ? "display: none; " : "")overflow-x: auto;">
+                    <label class="data-grid-data-title">Каналы продаж:</label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple>
+                        @foreach (var salesChannel in salesChannels.Values)
+                        {
+                            <option @(salesChannelIdSelected != null && salesChannelIdSelected.Any(id => id == salesChannel.Id.ToString()) ? "selected" : "") value="@salesChannel.Id">@salesChannel.GetName()</option>
+                        }
+                    </select>
+                </div>
+
+                <div id="typeProducts" style="@(currentStatisticGroup == StatisticController.StatisticGroup.TypeProduct ? "display: none; " : "")overflow-x: auto;">
+                    <label class="data-grid-data-title">Типы моделей:</label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple>
+                        @foreach (var typeProduct in typeProducts.Values)
+                        {
+                            <option @(typeProductIdSelected != null && typeProductIdSelected.Any(id => id == typeProduct.Id.ToString()) ? "selected" : "") value="@typeProduct.Id">@typeProduct.GetName()</option>
+                        }
+                    </select>
+                </div>
+
+                <div id="countries" style="@(currentStatisticGroup == StatisticController.StatisticGroup.Country ? "display: none; " : "")overflow-x: auto;">
+                    <label class="data-grid-data-title">Страны:</label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple>
+                        @foreach (var country in countries.Values)
+                        {
+                            <option @(countryIdSelected != null && countryIdSelected.Any(id => id == country.Id.ToString()) ? "selected" : "") value="@country.Id">@country.GetName()</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="statistic-child-container">
+        <div class="statistic-child-block">
+            <div id="top-client">
+                <label class="titel-statistic">Топ клиентов</label>
+                <canvas id="bar-chart-top-client"></canvas>
+            </div>
+            <div id="top-country">
+                <label class="titel-statistic">Топ стран</label>
+                <canvas id="bar-chart-top-country"></canvas>
+            </div>
+        </div>
+
+        <div class="statistic-child-block">
+            <div id="top-product">
+                <label class="titel-statistic">Топ моделей</label>
+                <canvas id="bar-chart-top-product"></canvas>
+            </div>
+            <div id="top-type-product">
+                <label class="titel-statistic">Топ типов моделей</label>
+                <canvas id="bar-chart-top-type-product"></canvas>
+            </div>
+        </div>
+
+        <div class="statistic-child-block">
+            <div style="width: 50%; margin: 0 auto;">
+                <label id="totalCount" class="titel-statistic">Типы продаж</label>
+                <canvas id="pie-chart-type-sales"></canvas>
+            </div>
+            <div id="top-sales-channel">
+                <label class="titel-statistic">Топ каналов продаж</label>
+                <canvas id="bar-chart-top-sales-channel"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    @if (currentStatisticGroup != StatisticController.StatisticGroup.Sales)
+    {
+        @: statisticGroups_event(@((int)currentStatisticGroup), '@(dynamicFilterValues != null ? dynamicFilterValues : "")', true);
+    }
+
+    search_statistic_frame();
+</script>

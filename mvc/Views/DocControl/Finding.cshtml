@@ -1,0 +1,156 @@
+﻿@model Finding
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using LIB.Tools.BO
+@using LIB.BusinessObjects.Barcode
+
+@{
+    ViewBag.Title = Model.Id > 0 ? "Основа фактуры: " + Model.Name : "Добавить основу фактуры";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    <script src="~/Scripts/FrontEnd/Object/production.js"></script>
+    <script src="~/Scripts/FrontEnd/print.js"></script>
+    <script src="~/Scripts/FrontEnd/popup.js"></script>
+}
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "Finding",
+            Delete = true,
+            Save = true,
+            Namespace = typeof(Finding).FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header">Изображение фурнитуры</div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-img">
+                        @Html.Partial("../Controls/RowControl/_photorow", new PhotoModel()
+                        {
+                            Name = "Image",
+                            Value = Model.Image,
+                            Width = 450,
+                            Height = 450
+                        })
+                        <script type="text/javascript">
+                            initUploadImageFileAutoSave('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadImage/")', 'Image', 450, 450, 900, 900, "Finding", '@Model.GetType().FullName', @Model.Id);
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">Данные основы фурнитуры</div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-row" style="@(Model.Id > 0 ? "" : "opacity: .5")">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Disabled = true,
+                            Type = TextboxType.Text,
+                            Value = Model.GetName(),
+                            Caption = "Название"
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                AllowDefault = true,
+                                Value = Model.Id > 0 ? Model.FindingSubspecie.FindingSpecie.Id.ToString() : "0",
+                                Options = new FindingSpecie().Populate(),
+                                Caption = "Вид",
+                                OnChange = "set_finding_specie(this.value)",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "FindingSubspecie",
+                                Value = Model.Id > 0 ? Model.FindingSubspecie.Id.ToString() : "0",
+                                Options = Model.Id > 0 ? FindingSpecie.GetSubspecieList(Model.FindingSubspecie.FindingSpecie.Id) : null,
+                                Caption = "Подвид",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "ColorProduct",
+                            Caption = "Цвета",
+                            Class = "select select-multyselect",
+                            Multiple = true,
+                            Values = Model.Id > 0 ? Model.Colors.Select(c => (ItemBase)c).ToDictionary(c => c.Id) : new Dictionary<long, ItemBase>(),
+                            Options = new ColorProduct().Populate(),
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+
+                    <div class="edit-section-row" style="@(Model.Id > 0 ? "" : "opacity: .5")">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Number,
+                                Value = Model.TotalCount.ToString("F"),
+                                Caption = "Общее остатки"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Number,
+                                Value = Model.LastPrice.ToString("F"),
+                                Caption = "Цена"
+                            })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="clear separator"></div>
+
+            @if (Model.Id > 0)
+            {
+                var findingColors = new FindingColor().PopulateByParent(Model);
+
+                <div class="edit-section">
+                    <div class="edit-section-header-flex">
+                        <span>Цвета фурнитур</span>
+                        <a onclick="preview_barcode_CODE128('@string.Join("|", findingColors.Select(tc => tc.GetCode()))', @((int)Barcode_CODE128.Type.Finding))" class="edit-section-icon edit-section-print" title="Печать штрихкода"></a>
+                    </div>
+                    <div id="unique-model-container" class="edit-section-body" style="display: flex; flex-wrap: wrap; padding: 10px; gap: 10px; box-sizing: border-box">
+                        @foreach (var findingColor in findingColors)
+                        {
+                            <a class="product-select product-select-flex-2" href="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/FindingColor/" + findingColor.Id)">
+                                <span>Цвет: @findingColor.ColorProduct.GetName()</span>
+                                <span>Код: @findingColor.GetCode()</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</form>

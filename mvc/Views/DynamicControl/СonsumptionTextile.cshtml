@@ -1,0 +1,128 @@
+﻿@model Dictionary<long, LIB.Tools.BO.ItemBase>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+    <script src="~/Scripts/FrontEnd/popup.js"></script>
+
+    long UniqueProductId = Convert.ToInt64(Request.Form["ParentId"]);
+}
+<div class="edit-section-table">
+    <div class="edit-section-table-header">
+
+        <div class="edit-section-table-title">
+            Ткань
+        </div>
+
+        <div class="edit-section-table-title">
+            Цвет
+        </div>
+
+        <div class="edit-section-table-title">
+            Расход
+        </div>
+
+        <div class="edit-section-table-title"></div>
+
+    </div>
+
+    <div class="edit-section-table-row edit-section-table-add">
+
+        <div class="edit-section-table-content">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                AutocompleteName = "Textile",
+                Type = TextboxType.AutoComplete,
+                AutocompleteServer = true,
+                AutocompleteMinLen = 0,
+                AutocompleteType = typeof(Textile),
+                OnChange = "set_Textile_data_dynamic(this)",
+                AutocompleteClearFunction = "clear_autocomplete_dynamic(this)"
+            })
+        </div>
+
+        <div class="edit-section-table-content">
+            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+            {
+                Name = "ColorProduct",
+                Class = "select dynamic-select",
+                ValidationType = ValidationTypes.Required
+            })
+        </div>
+
+        <div class="edit-section-table-content">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Consumption",
+                Type = TextboxType.Number,
+                ValidationType = ValidationTypes.Required
+            })
+        </div>
+
+        <div class="edit-section-table-content edit-section-table-content-controls">
+            <input type="hidden" dontAutoClear name="UniqueProduct" value="@UniqueProductId">
+            <div class="dynamic-btn-conainer">
+                <a title="Сохраить" class="control-save" onclick="save_Dynamic(this, @UniqueProductId, '@typeof(СonsumptionTextile).FullName')"></a>
+            </div>
+        </div>
+
+    </div>
+
+    @foreach (СonsumptionTextile consumptionTextile in Model.Values)
+    {
+        <div class="edit-section-table-row">
+            <input type="hidden" dontAutoClear name="Id" value="@consumptionTextile.Id">
+            <input type="hidden" dontAutoClear name="UniqueProduct" value="@UniqueProductId">
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    AutocompleteName = "Textile",
+                    Type = TextboxType.AutoComplete,
+                    AutocompleteServer = true,
+                    AutocompleteMinLen = 0,
+                    HtmlValue = consumptionTextile.TextileColor.Textile.Id.ToString(),
+                    Value = consumptionTextile.TextileColor.Textile.GetName(),
+                    AutocompleteType = typeof(Textile),
+                    OnChange = "set_Textile_data_dynamic(this)",
+                    AutocompleteClearFunction = "clear_autocomplete_dynamic(this)"
+                })
+            </div>
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                {
+                    Name = "ColorProduct",
+                    Value = consumptionTextile.TextileColor.ColorProduct.Id.ToString(),
+                    Options = consumptionTextile.TextileColor.Textile.GetColors(),
+                    Class = "select dynamic-select",
+                    AllowDefault = true,
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Consumption",
+                    Type = TextboxType.Number,
+                    Value = consumptionTextile.Consumption.ToString(),
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+
+            <div class="edit-section-table-content edit-section-table-content-controls">
+                <div class="dynamic-btn-conainer">
+                    <a title="Сохраить" class="control-save" onclick="save_Dynamic(this, @UniqueProductId, '@typeof(СonsumptionTextile).FullName')"></a>
+                    <a title="Удалить" class="control-delete" onclick="delete_Dynamic(this, @consumptionTextile.Id, '@typeof(СonsumptionTextile).FullName')"></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(".edit-section-table .autocomplete-input").each((i, item) => load_autocomplete(item));
+</script>

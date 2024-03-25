@@ -1,0 +1,1547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\SLN\packages\Antlr3.3.5.1\build\Antlr3.props" Condition="Exists('..\SLN\packages\Antlr3.3.5.1\build\Antlr3.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07E36806-3BE5-4559-BC02-0F9641A35B2E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JuliaAlert</RootNamespace>
+    <AssemblyName>JuliaAlert</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="BarcodeStandard, Version=2.2.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\BarcodeLib.2.2.10\lib\netstandard2.0\BarcodeStandard.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\DocumentFormat.OpenXml.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elasticsearch.Net, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Elasticsearch.Net.7.3.0\lib\net461\Elasticsearch.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlToOpenXml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6ad79d83e2b60e63, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\HtmlToOpenXml.dll.2.0.3\lib\net46\HtmlToOpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\NEST.7.3.0\lib\net461\Nest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenHtmlToPdf, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\OpenHtmlToPdf.1.12.0.0\lib\net45\OpenHtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Oracle.ManagedDataAccess.19.3.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Parse, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Parse.1.7.0\lib\net45\Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="Parse.NetFx45, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Parse.1.7.0\lib\net45\Parse.NetFx45.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Activities" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Console, Version=4.0.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Console.4.3.1\lib\net46\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Diagnostics.TraceSource.4.3.0\lib\net46\System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Drawing.Common.6.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Xml.ReaderWriter.4.3.1\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\DynamicJsGenerator.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BarcodeHelperController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\CustomReportController.cs" />
+    <Compile Include="Controllers\DataProcessorController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\MultySelectController.cs" />
+    <Compile Include="Controllers\ControlPanelController.cs" />
+    <Compile Include="Controllers\AutoCompleteController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HtmlPopUpController.cs" />
+    <Compile Include="Controllers\DynamicControlController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductionController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\DocControlController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\SystemManagementController.cs" />
+    <Compile Include="Controllers\Tools\UploadController.cs" />
+    <Compile Include="Controllers\Tools\ValidationHelperController.cs" />
+    <Compile Include="Dashboards\BaseDashboard.cs" />
+    <Compile Include="Dashboards\DashboardUnit\AdminDashboard.cs" />
+    <Compile Include="Dashboards\DashboardUnit\ProductionDashboard.cs" />
+    <Compile Include="Dashboards\DashboardUnit\WorkDashboard.cs" />
+    <Compile Include="Dashboards\DashboardUnit\SalesDashboard.cs" />
+    <Compile Include="Dashboards\UtilityModel\ChartDashboard.cs" />
+    <Compile Include="Dashboards\UtilityModel\DashboardItem.cs" />
+    <Compile Include="Dashboards\UtilityModel\ListDashboard.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\BasicAuthHttpModule.cs" />
+    <Compile Include="Helpers\ExtendedRazorViewEngine .cs" />
+    <Compile Include="Helpers\StatisticHelpers.cs" />
+    <Compile Include="Helpers\T.cs" />
+    <Compile Include="Models\Objects\Client - Location\City.cs" />
+    <Compile Include="Models\Objects\Client - Location\Client.cs" />
+    <Compile Include="Models\Objects\Client - Location\Countries.cs" />
+    <Compile Include="Models\Objects\Money\ExchangeRate.cs" />
+    <Compile Include="Models\Objects\Money\PayMethod.cs" />
+    <Compile Include="Models\Objects\Money\Transaction.cs" />
+    <Compile Include="Models\Objects\Money\ProductPrice.cs" />
+    <Compile Include="Models\Objects\Production\Factory.cs" />
+    <Compile Include="Models\Objects\Production\FindingLocationStorageTailoringSupplySpecificProductUnit.cs" />
+    <Compile Include="Models\Objects\Production\TailoringSupplySpecificProductUnit.cs" />
+    <Compile Include="Models\Objects\Production\SalesChannelCoefficient.cs" />
+    <Compile Include="Models\Objects\Production\ProductionExpense.cs" />
+    <Compile Include="Models\Objects\Production\Collection.cs" />
+    <Compile Include="Models\Objects\Production\Constructor.cs" />
+    <Compile Include="Models\Objects\Production\Finding.cs" />
+    <Compile Include="Models\Objects\Production\FindingSubspecie.cs" />
+    <Compile Include="Models\Objects\Production\Pattern.cs" />
+    <Compile Include="Models\Objects\Production\FindingColor.cs" />
+    <Compile Include="Models\Objects\Production\FindingSpecie.cs" />
+    <Compile Include="Models\Objects\Production\Provider.cs" />
+    <Compile Include="Models\Objects\Production\ReturnSupplyFindingUnit.cs" />
+    <Compile Include="Models\Objects\Production\ReturnSupplyTextileUnit.cs" />
+    <Compile Include="Models\Objects\Production\ImplementSupplySpecificProductUnit.cs" />
+    <Compile Include="Models\Objects\Production\SupplySpecificProduct.cs" />
+    <Compile Include="Models\Objects\Production\SupplyFinding.cs" />
+    <Compile Include="Models\Objects\Production\SupplySpecificProductUnit.cs" />
+    <Compile Include="Models\Objects\Production\SupplyTextile.cs" />
+    <Compile Include="Models\Objects\Production\SupplyFindingUnit.cs" />
+    <Compile Include="Models\Objects\Production\SupplyTextileUnit.cs" />
+    <Compile Include="Models\Objects\Production\TextileColor.cs" />
+    <Compile Include="Models\Objects\Production\Textile.cs" />
+    <Compile Include="Models\Objects\Production\СonsumptionFinding.cs" />
+    <Compile Include="Models\Objects\Production\СonsumptionTextile.cs" />
+    <Compile Include="Models\Objects\Product\ColorProduct.cs" />
+    <Compile Include="Models\Objects\Product\Compound.cs" />
+    <Compile Include="Models\Objects\Product\Decor.cs" />
+    <Compile Include="Models\Objects\Product\SpecificProduct.cs" />
+    <Compile Include="Models\Objects\Money\Currency.cs" />
+    <Compile Include="Models\Objects\Order\Gift.cs" />
+    <Compile Include="Models\Objects\Stock\InventoryUnit.cs" />
+    <Compile Include="Models\Objects\Stock\Inventory.cs" />
+    <Compile Include="Models\Objects\Stock\MovingProductUnit.cs" />
+    <Compile Include="Models\Objects\Stock\MovingProduct.cs" />
+    <Compile Include="Models\Objects\Stock\SpecificProductStock.cs" />
+    <Compile Include="Models\Objects\Stock\FindingLocationStorage.cs" />
+    <Compile Include="Models\Objects\Stock\LocationStorage.cs" />
+    <Compile Include="Models\Objects\Stock\SpecificProductStockHistory.cs" />
+    <Compile Include="Models\Objects\Stock\Stock.cs" />
+    <Compile Include="Models\Objects\Product\GroupProduct.cs" />
+    <Compile Include="Models\Objects\Order\TypeSalesChannel.cs" />
+    <Compile Include="Models\Objects\Product\UniqueProduct.cs" />
+    <Compile Include="Models\Objects\Stock\DeliveryMethod.cs" />
+    <Compile Include="Models\Objects\Product\Product.cs" />
+    <Compile Include="Models\Objects\Order\ProductForOrder.cs" />
+    <Compile Include="Models\Objects\Product\ProductSize.cs" />
+    <Compile Include="Models\Objects\Order\Order.cs" />
+    <Compile Include="Models\Objects\Order\OrderState.cs" />
+    <Compile Include="Models\Objects\Order\Return.cs" />
+    <Compile Include="Models\Objects\Order\SalesChannel.cs" />
+    <Compile Include="Models\Objects\Client - Location\State.cs" />
+    <Compile Include="Models\Objects\Product\TypeProduct.cs" />
+    <Compile Include="Models\Objects\Stock\UserStock.cs" />
+    <Compile Include="Models\Reports\InventoryList.cs" />
+    <Compile Include="Models\Reports\Export Sales\CityStatisticList.cs" />
+    <Compile Include="Models\Reports\ClientList_Global.cs" />
+    <Compile Include="Models\Reports\Export Sales\ClientList.cs" />
+    <Compile Include="Models\Reports\Export Sales\CountryStatisticList.cs" />
+    <Compile Include="Models\Reports\Export Sales\ModelList.cs" />
+    <Compile Include="Models\Reports\Export Sales\CustomerList.cs" />
+    <Compile Include="Models\Reports\Export Sales\OrderList.cs" />
+    <Compile Include="Models\Reports\FindingList.cs" />
+    <Compile Include="Models\Reports\GiftList.cs" />
+    <Compile Include="Models\Reports\Local Sales\ClientList_LocalSales.cs" />
+    <Compile Include="Models\Reports\Local Sales\CustomerList_LocalSales.cs" />
+    <Compile Include="Models\Reports\Local Sales\ModelList_LocalSales.cs" />
+    <Compile Include="Models\Reports\Local Sales\OrderList_LocalSales.cs" />
+    <Compile Include="Models\Reports\PatternList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\FindingColorList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\MovingProductUnitList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\SpecificProductList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\SpecificProduct_ModelList_LocalSales.cs" />
+    <Compile Include="Models\Reports\PopUp Report\SpecificProduct_ModelList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\SupplySpecificProductUnitList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\TextileColorList.cs" />
+    <Compile Include="Models\Reports\PopUp Report\TransactionUnitList.cs" />
+    <Compile Include="Models\Reports\Export Sales\TransactionList.cs" />
+    <Compile Include="Models\Reports\ProviderList.cs" />
+    <Compile Include="Models\Reports\SupplySpecificProductList.cs" />
+    <Compile Include="Models\Reports\SupplyConsumableList.cs" />
+    <Compile Include="Models\Reports\SupplyFindingList.cs" />
+    <Compile Include="Models\Reports\MovingProductList.cs" />
+    <Compile Include="Models\Reports\SupplyTextileList.cs" />
+    <Compile Include="Models\Reports\TextileList.cs" />
+    <Compile Include="Models\Reports\UniqueProductList.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExceptionHandler\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\BackEnd\back_common.css" />
+    <Content Include="Content\BackEnd\back_full.css" />
+    <Content Include="Content\BackEnd\back_simplified.css" />
+    <Content Include="Content\BackEnd\bootstrap-checkbox.css" />
+    <Content Include="Content\BackEnd\bootstrap-theme.css" />
+    <Content Include="Content\BackEnd\bootstrap-theme.min.css" />
+    <Content Include="Content\BackEnd\bootstrap.css" />
+    <Content Include="Content\BackEnd\bootstrap.min.css" />
+    <Content Include="Content\Common\common.css" />
+    <Content Include="Content\Common\full.css" />
+    <Content Include="Content\Common\simplified.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\ieold.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\win_chrome.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\android.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\android_firefox.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\ie10.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\ie11.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\ie9.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\ipad.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\mac_chrome.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\mac_firefox.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\mac_safari.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\win_firefox.css" />
+    <Content Include="Content\FrontEnd\BrowserSpecific\win_safari.css" />
+    <Content Include="Content\FrontEnd\Mobile.css" />
+    <Content Include="Content\FrontEnd\Controls.css" />
+    <Content Include="Content\FrontEnd\Report.css" />
+    <Content Include="Content\FrontEnd\front_common.css" />
+    <Content Include="Content\FrontEnd\dashboard.css" />
+    <Content Include="Content\FrontEnd\front_full.css" />
+    <Content Include="Content\FrontEnd\front_simplified.css" />
+    <Content Include="Content\jquery\tooltipster-light.css" />
+    <Content Include="Content\jquery\tooltipster.css" />
+    <Content Include="Content\Print\report.css" />
+    <Content Include="Content\Print\protocol.css" />
+    <Content Include="Content\Print\samplesreport.css" />
+    <Content Include="Content\Print\resultsreport.css" />
+    <Content Include="Content\Print\common.css" />
+    <Content Include="Content\SuperBackEnd\back_common.css" />
+    <Content Include="Content\SuperBackEnd\back_full.css" />
+    <Content Include="Content\SuperBackEnd\back_simplified.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="appSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="browserCaps.config" />
+    <Content Include="Content\BackEnd\bootstrap-theme.css.map" />
+    <Content Include="Content\BackEnd\bootstrap.css.map" />
+    <Content Include="robots.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\chartjs\chart.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\CHANGES.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\LICENSE.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\README.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\Readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\Readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\Readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\css\dataTables.responsive.scss" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\Readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\psd\collection.psd" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\psd\copy document.psd" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\psd\file_types.psd" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\psd\printer.psd" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\Readme.md" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\phone-codes\phone-be.json" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Scripts\BackEnd\app.js" />
+    <Content Include="Scripts\BackEnd\back_common.js" />
+    <Content Include="Scripts\BackEnd\back_utils.js" />
+    <Content Include="Scripts\BackEnd\bootstrap-checkbox.js" />
+    <Content Include="Scripts\BackEnd\bootstrap.js" />
+    <Content Include="Scripts\BackEnd\bootstrap.min.js" />
+    <Content Include="Scripts\BackEnd\config.js" />
+    <Content Include="Scripts\BackEnd\pages\dashboard.js" />
+    <Content Include="Scripts\BackEnd\pages\dashboard2.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-slider\bootstrap-slider.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-slider\slider.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\adapters\jquery.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\build-config.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\ckeditor.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\config.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\contents.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\af.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ar.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\bg.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\bn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\bs.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\cs.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\cy.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\da.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\de.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\el.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\en-au.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\en-ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\en-gb.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\en.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\eo.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\es.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\et.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\eu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\fa.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\fi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\fo.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\fr-ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\fr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\gl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\gu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\he.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\hi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\hr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\hu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\id.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\is.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\it.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ja.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ka.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\km.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ko.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ku.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\lt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\lv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\mk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\mn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ms.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\nb.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\nl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\no.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\pl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\pt-br.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\pt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ro.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ru.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\si.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sq.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sr-latn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\sv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\th.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\tr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\ug.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\uk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\vi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\zh-cn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\lang\zh.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\fakeobjects\images\spacer.gif" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\icons.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\tmp.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\dialog_opera.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\icons.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ckeditor\styles.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\dataTables.bootstrap.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\css\dataTables.autoFill.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\css\dataTables.autoFill.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\columns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\complete-callback.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\fill-both.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\fill-horizontal.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\scrolling.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\examples\step-callback.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\images\filler.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\js\dataTables.autoFill.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\js\dataTables.autoFill.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\AutoFill\Readme.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\css\dataTables.colReorder.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\css\dataTables.colReorder.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\alt_insert.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\colvis.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\col_filter.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\fixedcolumns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\fixedheader.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\jqueryui.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\new_init.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\predefined.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\realtime.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\reset.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\scrolling.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\server_side.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\examples\state_save.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\images\insert.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\js\dataTables.colReorder.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\js\dataTables.colReorder.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColReorder\License.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\css\dataTables.colVis.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\css\dataTables.colvis.jqueryui.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\css\dataTables.colVis.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\button_order.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\exclude_columns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\group_columns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\jqueryui.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\mouseover.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\new_init.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\restore.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\text.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\title_callback.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\two_tables.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\examples\two_tables_identical.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\js\dataTables.colVis.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\js\dataTables.colVis.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\ColVis\License.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\css\dataTables.fixedColumns.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\css\dataTables.fixedColumns.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\bootstrap.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\colvis.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\col_filter.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\css_size.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\index_column.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\left_right_columns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\right_column.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\rowspan.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\server-side-processing.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\size_fixed.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\size_fluid.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\examples\two_columns.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\js\dataTables.fixedColumns.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\js\dataTables.fixedColumns.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedColumns\License.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\css\dataTables.fixedHeader.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\css\dataTables.fixedHeader.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\header_footer.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\top_left_right.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\two_tables.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\examples\zIndexes.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\js\dataTables.fixedHeader.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\js\dataTables.fixedHeader.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\FixedHeader\Readme.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\css\dataTables.keyTable.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\css\dataTables.keyTable.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\examples\events.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\examples\html.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\examples\scrolling.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\js\dataTables.keyTable.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\js\dataTables.keyTable.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\KeyTable\Readme.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\css\dataTables.responsive.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\column-control.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\custom-renderer.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\disable-child-rows.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\right-column.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\child-rows\whole-row-control.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\auto.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\classes.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\complexHeader.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\fixedHeader.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\display-control\init-classes.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\ajax.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\className.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\default.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\new.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\initialisation\option.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\styling\bootstrap.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\styling\compact.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\styling\foundation.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\styling\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\examples\styling\scrolling.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\js\dataTables.responsive.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\js\dataTables.responsive.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Responsive\License.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\css\dataTables.scroller.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\css\dataTables.scroller.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\api_scrolling.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\data\2500.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\data\ssp.php" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\large_js_source.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\server-side_processing.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\examples\state_saving.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\images\loading-background.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\js\dataTables.scroller.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\js\dataTables.scroller.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\Scroller\Readme.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\css\dataTables.tableTools.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\css\dataTables.tableTools.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\ajax.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\alter_buttons.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\bootstrap.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\button_text.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\collection.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\defaults.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\index.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\jqueryui.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\multiple_tables.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\multi_instance.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\new_init.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\pdf_message.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\plug-in.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\select_column.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\select_multi.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\select_os.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\select_single.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\simple.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\examples\swf_path.html" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\collection.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\collection_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\copy.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\copy_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\csv.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\csv_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\pdf.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\pdf_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\print.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\print_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\xls.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\images\xls_hover.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\js\dataTables.tableTools.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\js\dataTables.tableTools.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\swf\copy_csv_xls.swf" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\extensions\TableTools\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\images\sort_asc.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\images\sort_both.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\images\sort_desc.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\jquery.dataTables.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\jquery.dataTables.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datatables\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\datepicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\datepicker\datepicker3.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\daterangepicker\daterangepicker-bs3.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\daterangepicker\moment.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\daterangepicker\moment.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\fastclick\fastclick.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\fastclick\fastclick.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\excanvas.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\excanvas.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.colorhelpers.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.colorhelpers.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.canvas.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.canvas.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.categories.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.categories.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.crosshair.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.crosshair.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.errorbars.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.errorbars.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.fillbetween.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.image.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.image.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.navigate.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.navigate.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.pie.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.resize.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.selection.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.selection.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.stack.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.stack.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.symbol.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.threshold.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.threshold.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.time.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\flot\jquery.flot.time.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\fullcalendar\fullcalendar.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\fullcalendar\fullcalendar.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\fullcalendar\fullcalendar.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\all.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\aero%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\aero.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\aero.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\blue%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\blue.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\blue.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\flat%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\flat.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\flat.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\green%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\green.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\green.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\grey%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\grey.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\grey.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\orange%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\orange.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\orange.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\pink%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\pink.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\pink.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\purple%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\purple.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\purple.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\red%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\red.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\red.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\yellow%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\yellow.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\yellow.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\flat\_all.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\futurico\futurico%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\futurico\futurico.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\futurico\futurico.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\icheck.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\icheck.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\aero.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\blue.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\green.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\grey.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\line%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\line.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\line.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\orange.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\pink.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\purple.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\red.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\yellow.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\line\_all.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\aero%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\aero.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\aero.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\blue%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\blue.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\blue.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\green%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\green.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\green.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\grey%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\grey.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\grey.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\minimal%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\minimal.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\minimal.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\orange%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\orange.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\orange.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\pink%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\pink.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\pink.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\purple%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\purple.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\purple.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\red%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\red.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\red.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\yellow%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\yellow.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\yellow.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\minimal\_all.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\polaris\polaris%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\polaris\polaris.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\polaris\polaris.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\aero%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\aero.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\aero.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\blue%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\blue.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\blue.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\green%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\green.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\green.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\grey%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\grey.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\grey.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\orange%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\orange.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\orange.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\pink%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\pink.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\pink.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\purple%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\purple.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\purple.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\red%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\red.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\red.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\square%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\square.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\square.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\yellow%402x.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\yellow.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\yellow.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\iCheck\square\_all.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.extensions.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\jquery.inputmask.regex.extensions.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\input-mask\phone-codes\readme.txt" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\img\sprite-skin-flat.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\img\sprite-skin-nice.png" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\ion.rangeSlider.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\ion.rangeSlider.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\ionslider\ion.rangeSlider.skinNice.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\jQueryUI\jquery-ui.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\jQueryUI\jquery-ui.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\jQuery\jQuery-2.1.4.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\jvectormap\jquery-jvectormap-1.2.2.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\jvectormap\jquery-jvectormap-1.2.2.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\jvectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\knob\jquery.knob.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\morris\morris.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\morris\morris.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\morris\morris.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\pace\pace.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\az.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\bg.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\ca.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\cs.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\da.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\de.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\en.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\es.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\et.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\eu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\fa.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\fi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\fr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\gl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\he.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\hi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\hr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\hu.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\id.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\is.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\it.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\ko.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\lt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\lv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\mk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\nb.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\nl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\pl.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\pt-BR.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\pt.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\ro.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\ru.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\sk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\sr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\sv.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\th.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\tr.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\uk.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\vi.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\zh-CN.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\i18n\zh-TW.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\select2.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\select2.full.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\select2.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\select2.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\select2\select2.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\slimScroll\jquery.slimscroll.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\slimScroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\sparkline\jquery.sparkline.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\timepicker\bootstrap-timepicker.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\timepicker\bootstrap-timepicker.js" />
+    <Content Include="Scripts\Bootstrap_Plugins\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Scripts\Bootstrap_Plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\Common\common.js" />
+    <Content Include="Scripts\Common\messages.js" />
+    <Content Include="Scripts\Common\globals.js" />
+    <Content Include="Scripts\Common\utils.js" />
+    <Content Include="Scripts\Common\login.js" />
+    <Content Include="Scripts\FrontEnd\barcode.js" />
+    <Content Include="Scripts\FrontEnd\Statistic\statistic_select.js" />
+    <Content Include="Scripts\FrontEnd\Statistic\statistic_map.js" />
+    <Content Include="Scripts\FrontEnd\Statistic\statistic_frame.js" />
+    <Content Include="Scripts\FrontEnd\Object\client.js" />
+    <Content Include="Scripts\FrontEnd\Object\product.js" />
+    <Content Include="Scripts\FrontEnd\Object\production.js" />
+    <Content Include="Scripts\FrontEnd\front_advanced.js" />
+    <Content Include="Scripts\FrontEnd\front_utils.js" />
+    <Content Include="Scripts\FrontEnd\Object\order.js" />
+    <Content Include="Scripts\FrontEnd\import_excel.js" />
+    <Content Include="Scripts\FrontEnd\popup.js" />
+    <Content Include="Scripts\FrontEnd\print.js" />
+    <Content Include="Scripts\FrontEnd\report.js" />
+    <Content Include="Scripts\FrontEnd\document.js" />
+    <Content Include="Scripts\FrontEnd\dashboard.js" />
+    <Content Include="Scripts\FrontEnd\front_common.js" />
+    <Content Include="Scripts\FrontEnd\Object\stock.js" />
+    <Content Include="Scripts\JQuery\ajaxupload-v1.2.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.4.js" />
+    <Content Include="Scripts\JQuery\jquery.ckeditor.js" />
+    <Content Include="Scripts\JQuery\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\JQuery\jquery.fancybox-media.js" />
+    <Content Include="Scripts\JQuery\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\JQuery\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\JQuery\jquery.fileDownload.js" />
+    <Content Include="Scripts\JQuery\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\JQuery\jquery.printArea.js" />
+    <Content Include="Scripts\JQuery\jquery.tooltipster.js" />
+    <Content Include="Scripts\JQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\JQuery\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="behaviors.config" />
+    <Content Include="bindings.config" />
+    <Content Include="client.config" />
+    <Content Include="compilation.config" />
+    <Content Include="email.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\JQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Other_Plugins\modernizr-2.6.2.js" />
+    <Content Include="Scripts\_references.js" />
+    <None Include="Service References\ExceptionHandler\ExceptionHandlerService.wsdl" />
+    <None Include="Service References\ExceptionHandler\Service.disco" />
+    <None Include="Service References\ExceptionHandler\configuration91.svcinfo" />
+    <None Include="Service References\ExceptionHandler\configuration.svcinfo" />
+    <None Include="Service References\ExceptionHandler\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Layout\Standard\_Footer.cshtml" />
+    <Content Include="Views\Layout\Standard\_Header.cshtml" />
+    <Content Include="Views\Controls\_textbox.cshtml" />
+    <Content Include="Views\Controls\_button.cshtml" />
+    <Content Include="Views\Controls\DataGrid\_data_grid.cshtml" />
+    <Content Include="Views\Controls\DataGrid\_data_row.cshtml" />
+    <Content Include="Views\Controls\DataGrid\_title_row.cshtml" />
+    <Content Include="Views\Controls\_dropdown.cshtml" />
+    <Content Include="Views\SystemManagement\DashBoard.cshtml" />
+    <Content Include="Views\ControlPanel\DashBoard.cshtml" />
+    <Content Include="Views\Layout\Admin\_Footer.cshtml" />
+    <Content Include="Views\Layout\Admin\_Header.cshtml" />
+    <Content Include="Views\Layout\Admin\_Sidebar.cshtml" />
+    <Content Include="Views\Layout\SuperAdmin\_Footer.cshtml" />
+    <Content Include="Views\Layout\SuperAdmin\_Header.cshtml" />
+    <Content Include="Views\Layout\SuperAdmin\_Sidebar.cshtml" />
+    <Content Include="Views\ControlPanel\Edit.cshtml" />
+    <Content Include="Views\SystemManagement\Edit.cshtml" />
+    <Content Include="Views\Controls\_textarea.cshtml" />
+    <Content Include="Views\Controls\_checkbox.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Controls\_link.cshtml" />
+    <Content Include="Views\Controls\RowControl\_inputrow.cshtml" />
+    <Content Include="Views\Controls\RowControl\_selectrow.cshtml" />
+    <Content Include="Views\Controls\RowControl\_pagecontrols.cshtml" />
+    <Content Include="Views\Controls\RowControl\_checkboxrow.cshtml" />
+    <Content Include="Views\Master\_Print.cshtml" />
+    <Content Include="Views\Master\_Ajax.cshtml" />
+    <Content Include="Views\Report\View.cshtml" />
+    <Content Include="Views\Controls\ReportGrid\_data_grid.cshtml" />
+    <Content Include="Views\Controls\ReportGrid\_data_row.cshtml" />
+    <Content Include="Views\Controls\ReportGrid\_title_row.cshtml" />
+    <Content Include="Views\Controls\SearchGrid\_data_grid.cshtml" />
+    <Content Include="Views\Controls\SearchGrid\_data_row.cshtml" />
+    <Content Include="Views\Controls\SearchGrid\_title_row.cshtml" />
+    <Content Include="Views\Report\Search.cshtml" />
+    <Content Include="Views\Controls\_multycheck.cshtml" />
+    <Content Include="Views\AutoComplete\List.cshtml" />
+    <Content Include="Views\Master\_Js.cshtml" />
+    <Content Include="Views\Report\Print.cshtml" />
+    <Content Include="Views\Controls\_message.cshtml" />
+    <Content Include="Views\Controls\_label.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Not_Found.cshtml" />
+    <Content Include="Views\Account\CPLogin.cshtml" />
+    <Content Include="Views\Account\SMILogin.cshtml" />
+    <Content Include="Views\ControlPanel\CreateItem.cshtml" />
+    <Content Include="Views\ControlPanel\EditItem.cshtml" />
+    <Content Include="Views\ControlPanel\NoAccess.cshtml" />
+    <Content Include="Views\ControlPanel\NoItem.cshtml" />
+    <Content Include="Views\ControlPanel\Print.cshtml" />
+    <Content Include="Views\ControlPanel\PrintItem.cshtml" />
+    <Content Include="Views\ControlPanel\Profile.cshtml" />
+    <Content Include="Views\Controls\ControlPanel\_alertdialog.cshtml" />
+    <Content Include="Views\Controls\ControlPanel\_clonedialog.cshtml" />
+    <Content Include="Views\Controls\ControlPanel\_deletedialog.cshtml" />
+    <Content Include="Views\Master\_AdminSimplified.cshtml" />
+    <Content Include="Views\SystemManagement\CreateItem.cshtml" />
+    <Content Include="Views\SystemManagement\EditItem.cshtml" />
+    <Content Include="Views\SystemManagement\NoAccess.cshtml" />
+    <Content Include="Views\SystemManagement\NoItem.cshtml" />
+    <Content Include="Views\SystemManagement\Print.cshtml" />
+    <Content Include="Views\SystemManagement\PrintItem.cshtml" />
+    <Content Include="Views\SystemManagement\Profile.cshtml" />
+    <Content Include="Views\Print\Generic.cshtml" />
+    <Content Include="Views\Controls\RowControl\_filerow.cshtml" />
+    <Content Include="Views\Controls\_file.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\AdminIcons.cshtml" />
+    <Content Include="Views\AutoComplete\InvestigationMethods.cshtml" />
+    <Content Include="Views\DashBoard\Chart\Chart.cshtml" />
+    <Content Include="Views\Master\_ExportWord.cshtml" />
+    <Content Include="Views\AutoComplete\Search.cshtml" />
+    <Content Include="Views\MultySelect\Options.cshtml" />
+    <Content Include="Views\Account\Redirect.cshtml" />
+    <Content Include="Views\DashBoard\Lists\User\UserList.cshtml" />
+    <Content Include="Views\Controls\ControlPanel\_deletealldialog.cshtml" />
+    <Content Include="Views\Report\Options.cshtml" />
+    <Content Include="Views\Controls\_photo.cshtml" />
+    <Content Include="Views\Controls\RowControl\_photorow.cshtml" />
+    <Content Include="Views\Controls\RowControl\_multiselectrow.cshtml" />
+    <Content Include="services.config" />
+    <Content Include="trace.config" />
+    <None Include="Service References\ExceptionHandler\Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExceptionHandler\Service6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Shared\AccessDenied.cshtml" />
+    <Content Include="Views\Shared\Unavailable.cshtml" />
+    <Content Include="Views\DocControl\Product.cshtml" />
+    <Content Include="Views\DocControl\Order.cshtml" />
+    <Content Include="Views\DynamicControl\ProductForOrder.cshtml" />
+    <Content Include="Views\DashBoard\Lists\ListGeneric.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Order\OrderList.cshtml" />
+    <Content Include="Views\CustomReport\CountOrder.cshtml" />
+    <Content Include="Views\DynamicControl\Gift.cshtml" />
+    <Content Include="Views\HtmlPopUp\ReturnProduct.cshtml" />
+    <Content Include="Views\HtmlPopUp\InvoiceOrder.cshtml" />
+    <Content Include="Views\Master\_Standard_NoFooter.cshtml" />
+    <Content Include="Views\DocControl\UniqueProduct.cshtml" />
+    <Content Include="Views\Master\_Standard_Report.cshtml" />
+    <Content Include="Views\CustomReport\Сalendar_Order.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Order\OrderList_Local.cshtml" />
+    <Content Include="Views\Client\ClientInfo.cshtml" />
+    <Content Include="Views\Report\View_Min.cshtml" />
+    <Content Include="Views\Controls\ReportGrid\_data_grid_min.cshtml" />
+    <Content Include="Views\Client\ClientInfo_Local.cshtml" />
+    <Content Include="Views\DocControl\Transaction.cshtml" />
+    <Content Include="Views\CustomReport\Сalendar_Return.cshtml" />
+    <Content Include="Views\Import\LocalOrder.cshtml" />
+    <Content Include="Views\Import\Model.cshtml" />
+    <Content Include="Views\Import\Order.cshtml" />
+    <Content Include="Views\DocControl\Pattern.cshtml" />
+    <Content Include="Views\DocControl\Finding.cshtml" />
+    <Content Include="Views\DocControl\FindingColor.cshtml" />
+    <Content Include="Views\BarcodeHelper\Barcode_CODE128.cshtml" />
+    <Content Include="Views\BarcodeHelper\PreviewBarcode_CODE128.cshtml" />
+    <Content Include="Views\DocControl\Textile.cshtml" />
+    <Content Include="Views\DocControl\TextileColor.cshtml" />
+    <Content Include="Views\DynamicControl\СonsumptionFinding.cshtml" />
+    <Content Include="Views\DynamicControl\СonsumptionTextile.cshtml" />
+    <Content Include="Views\DocControl\SupplyTextile.cshtml" />
+    <Content Include="Views\DynamicControl\SupplyTextileUnit.cshtml" />
+    <Content Include="Views\DocControl\SupplyFinding.cshtml" />
+    <Content Include="Views\DynamicControl\SupplyFindingUnit.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\PopUp Icons\Supply_Icon.cshtml" />
+    <Content Include="Views\DashBoard\Dashboard.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\ProductionIcons.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\SalesIcons.cshtml" />
+    <Content Include="Views\Client\ClientOrders.cshtml" />
+    <Content Include="Views\Production\ReturnSupplyTextileUnit.cshtml" />
+    <Content Include="Views\Print\Templates\InvoiceOrder.cshtml" />
+    <Content Include="Views\Print\Templates\ProformaOrder.cshtml" />
+    <Content Include="Views\Production\ReturnSupplyFindingUnit.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\PopUp Icons\MD_Icon.cshtml" />
+    <Content Include="Views\Production\AddNewFinding.cshtml" />
+    <Content Include="Views\Production\AddNewTextile.cshtml" />
+    <Content Include="Views\DocControl\Local_Order.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Supply\SupplyTextileList.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Supply\SupplyFindingList.cshtml" />
+    <Content Include="Views\DocControl\SupplySpecificProduct.cshtml" />
+    <Content Include="Views\Controls\_dropdown_options.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Supply\SupplyModelList.cshtml" />
+    <Content Include="Views\Production\ProviderInfo.cshtml" />
+    <Content Include="Views\HtmlPopUp\EstimatedPrice.cshtml" />
+    <Content Include="Views\DashBoard\IconsGroup\WorkIcons.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Stock\SpecificProductSubsidiaryStockList.cshtml" />
+    <Content Include="Views\DocControl\MovingProduct.cshtml" />
+    <Content Include="Views\DynamicControl\MovingProductUnit.cshtml" />
+    <Content Include="Views\DashBoard\Lists\Stock\SpecificProductMainStockList.cshtml" />
+    <Content Include="Views\Production\ImplementSupplySpecificProductUnit.cshtml" />
+    <Content Include="Views\Production\TailoringSupplySpecificProductUnit.cshtml" />
+    <Content Include="Views\DynamicControl\SupplySpecificProductUnit.cshtml" />
+    <Content Include="Views\DynamicControl\FindingLocationStorageTailoringSupplySpecificProductUnit.cshtml" />
+    <Content Include="Views\BarcodeHelper\Barcode_EAN13.cshtml" />
+    <Content Include="Views\BarcodeHelper\PreviewBarcode_EAN13.cshtml" />
+    <Content Include="Views\BarcodeHelper\PrintCount_EAN13.cshtml" />
+    <Content Include="Views\BarcodeHelper\PrintCount_CODE128.cshtml" />
+    <Content Include="Views\Print\Templates\FindingColorConsumptionList.cshtml" />
+    <Content Include="Views\HtmlPopUp\ReturnLocalProduct.cshtml" />
+    <Content Include="Views\Product\ProductPrices.cshtml" />
+    <Content Include="Views\HtmlPopUp\ReturnProduct_LocalSales.cshtml" />
+    <Content Include="Views\Controls\ReportGrid\_data_square_item.cshtml" />
+    <Content Include="Views\Statistic\Diagram.cshtml" />
+    <Content Include="Views\Statistic\Map.cshtml" />
+    <Content Include="Views\Statistic\SelectStatistic.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Manage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layout\Simplified\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layout\Simplified\_Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\_Admin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\_PopUp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\_Simplified.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\_Standard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Master\_SuperAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JuliaAlertLib\JuliaAlertLib.csproj">
+      <Project>{5844f794-6d18-41b4-8d06-6985620a4ab4}</Project>
+      <Name>JuliaAlertLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JuliaAlertweblib\JuliaAlertweblib.csproj">
+      <Project>{934b3dd1-8f25-4d36-a5c1-88130b1c7a00}</Project>
+      <Name>JuliaAlertweblib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\lib.csproj">
+      <Project>{bd11ebb4-b949-481c-bdd8-d9d79c866770}</Project>
+      <Name>lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Translations\Translations.csproj">
+      <Project>{64f4e1b8-50f6-429a-81c1-dd47d8c4fb65}</Project>
+      <Name>Translations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\weblib\weblib.csproj">
+      <Project>{7a934baa-493b-4cb3-aaa6-748693df9542}</Project>
+      <Name>weblib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ExceptionHandler\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55726</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50341/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\SLN\packages\Antlr3.3.5.1\build\Antlr3.props')" Text="$([System.String]::Format('$(ErrorText)', '..\SLN\packages\Antlr3.3.5.1\build\Antlr3.props'))" />
+    <Error Condition="!Exists('..\SLN\packages\Antlr3.3.5.1\build\Antlr3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\SLN\packages\Antlr3.3.5.1\build\Antlr3.targets'))" />
+    <Error Condition="!Exists('..\SLN\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\SLN\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\SLN\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\SLN\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+  <Import Project="..\SLN\packages\Antlr3.3.5.1\build\Antlr3.targets" Condition="Exists('..\SLN\packages\Antlr3.3.5.1\build\Antlr3.targets')" />
+  <Import Project="..\SLN\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\SLN\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\SLN\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\SLN\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

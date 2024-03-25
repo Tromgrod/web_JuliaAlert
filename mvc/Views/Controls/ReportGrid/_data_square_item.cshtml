@@ -1,0 +1,53 @@
+﻿@model ReportBase
+@using LIB.Tools.Utils
+@using JuliaAlertLib.BusinessObjects
+@using LIB.BusinessObjects
+@{
+    var bNewTab = (bool)ViewData["NewTab"];
+    string action = string.Empty;
+
+    if (!string.IsNullOrEmpty(Model.GetLink()))
+    {
+        action = bNewTab ? "window.open('" + URLHelper.GetUrl(Model.GetLink()) + "')" : "window.location='" + URLHelper.GetUrl(Model.GetLink()) + "'";
+    }
+    else if (!string.IsNullOrEmpty(Model.GetAction()))
+    {
+        action = Model.GetAction();
+    }
+}
+<div onclick="@action" class="data-square-block">
+    @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+    {
+        if (property.Common.Visible == true)
+        {
+            if (property.Common.EditTemplate == LIB.AdvancedProperties.EditTemplates.ImageUpload)
+            {
+                var image = ((Graphic)property.PropertyDescriptor.GetValue(Model));
+
+                if (!string.IsNullOrEmpty(image.BOName) &&
+                    !string.IsNullOrEmpty(image.Name) &&
+                    !string.IsNullOrEmpty(image.Ext))
+                {
+                    <div class="image-square-block">
+                        <img src="@image.FullThumbnail" height="250" class="image-square-data">
+                    </div>
+                }
+                else
+                {
+                    <div class="image-square-block">
+                        <img src="@Graphic.ToolsPlaceHolder.FullThumbnail" height="250" class="image-square-data">
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="data-square-data">
+                    <span class="title-square-data">@property.Common.DisplayName:</span>
+                    <span>@Html.Raw(property.PropertyDescriptor.GetValue(Model).ToString())</span>
+                </div>
+            }
+        }
+    }
+
+    @Html.Raw(Model.GetHiddenInputs())
+</div>

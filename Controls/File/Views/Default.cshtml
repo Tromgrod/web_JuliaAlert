@@ -1,0 +1,39 @@
+﻿@model Controls.File.Models.FileModel
+@using Weblib.Models.Common
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/File/css/File.css");
+    Html.AddScriptParts("~/plugins/File/js/File.js");
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search && Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+{
+    <div class="control-File control-view @(Model.CssView)">
+        <A href="@Model.Value.File">@Model.Value.Name</A>
+    </div>
+}
+@if (!Model.ReadOnly)
+{
+    if (Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+    {
+        <div data-control="File" data-name="@(Model.PropertyName)" data-id="@(Model.Value.Id)"
+             class="control-File control-edit@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">
+            <div id="upload_File_container_@(Model.UniqueId)" class="upload-File-container">
+                <div class="upload-File-File-loading"></div>
+                <a class="upload-File-File" id="filePreview_@Model.UniqueId" href="@Model.Value.File">@Model.Value.Name</a>
+                <a title="Upload" class="btn btn-xs btn-warning btn-tools upload-File-btn" href="#">Upload</a>
+            </div>
+        </div>
+        <script type="text/javascript">
+        initUploadFile('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadFile")','@Model.UniqueId');
+        </script>
+    }
+    else
+    {
+        @Html.Partial("../Controls/RowControl/_filerow", new DocumentModel()
+        {
+            Name = Model.PropertyName,
+            Value = Model.Value
+        })
+    }
+}

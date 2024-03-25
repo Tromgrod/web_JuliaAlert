@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d99ae711-f44a-4960-9ef7-8a78a6f2f98a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://eh.galex.md:82/Service.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Service.xsd" MetadataType="Schema" ID="f81cf383-4738-4e3f-8409-06fb4225af66" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd6" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="6ccd10fe-eec1-45a7-b321-f1307a2dca47" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd5" />
+    <MetadataFile FileName="Service2.xsd" MetadataType="Schema" ID="265db6f9-d410-4b46-acb6-d9d18bbac9c7" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd4" />
+    <MetadataFile FileName="Service3.xsd" MetadataType="Schema" ID="4c9f196b-a791-43f4-adf3-32e4c4eb8f99" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd3" />
+    <MetadataFile FileName="Service4.xsd" MetadataType="Schema" ID="af84253d-ace5-4be9-abf7-c84b679eabb2" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd2" />
+    <MetadataFile FileName="Service.disco" MetadataType="Disco" ID="63372a8c-a6eb-4e73-b75e-00bb2611ec42" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?disco" />
+    <MetadataFile FileName="Service5.xsd" MetadataType="Schema" ID="005cc685-dd6a-486a-8bd4-c76f89819f1a" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd0" />
+    <MetadataFile FileName="Service6.xsd" MetadataType="Schema" ID="c2a94376-d1e5-4fcb-86f9-f7c04106ebef" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?xsd=xsd1" />
+    <MetadataFile FileName="ExceptionHandlerService.wsdl" MetadataType="Wsdl" ID="75a847eb-af5b-4160-a779-3c109748ffce" SourceId="1" SourceUrl="http://eh.galex.md:82/Service.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

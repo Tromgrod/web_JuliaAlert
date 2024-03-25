@@ -1,0 +1,219 @@
+﻿@model JuliaAlert.Models.Objects.UniqueProduct
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.BusinessObjects
+
+@{
+    ViewBag.Title = Model.Id > 0 ? "Модель: " + Model.GetCode() : "Добавить товар";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool FactoryPriceVisible = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.FactoryPrice);
+    bool ProductionAccess = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.Production);
+
+    var compoundId = Model.Id > 0 ? Model.Compound.Id : 0;
+}
+
+<script src="~/Scripts/FrontEnd/Object/product.js"></script>
+<script src="~/Scripts/FrontEnd/Object/production.js"></script>
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+<script src="~/Scripts/FrontEnd/print.js"></script>
+
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+
+        if (ProductionAccess)
+        {
+            ControlButtons.Add(new ButtonModel { Text = "Актуальные цены по каналам продаж", Action = "open_simple_popup_customData({ UniqueProductId: " + Model.Id + "}, 'EstimatedPrice')" });
+        }
+
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "UniqueProduct",
+            Delete = false,
+            Save = false,
+            Update = ProductionAccess,
+            Namespace = typeof(UniqueProduct).FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header">Изображение товара</div>
+                <div class="edit-section-body">
+                    <div class="edit-section-img">
+                        @Html.Partial("../Controls/RowControl/_photorow", new PhotoModel()
+                        {
+                            Name = "Image",
+                            Value = Model.Image,
+                            Width = 450,
+                            Height = 540
+                        })
+                        <script type="text/javascript">
+                            initUploadImageFileAutoSave('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadImage/")', 'Image', 450, 540, 1200, 1200, "Product", '@Model.GetType().FullName', @Model.Id);
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">Данные модели</div>
+                <div class="edit-section-body">
+                    <div class="edit-section-row">
+                        <div class="input-row">
+                            <div class="caption input-caption">Название</div>
+                            <input type="text" class="input" value="@Model.GetName()" disabled>
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-trio edit-section-row-fisrt">
+                            <div class="input-row">
+                                <div class="caption input-caption">Код</div>
+                                <input type="text" class="input" value="@Model.GetCode()" disabled>
+                            </div>
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-second">
+                            <div class="input-row">
+                                <div class="caption input-caption">Группа</div>
+                                <input type="text" class="input" value="@Model.Product.TypeProduct.GroupProduct.Name" disabled>
+                            </div>
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-third">
+                            <div class="input-row">
+                                <div class="caption input-caption">Тип</div>
+                                <input type="text" class="input" value="@Model.Product.TypeProduct.Name" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            <div class="input-row">
+                                <div class="caption input-caption">Цвет</div>
+                                <input type="text" class="input" value="@Model.ColorProduct.GetName()" disabled>
+                            </div>
+                        </div>
+                        <div class="edit-section-row-right">
+                            <div class="input-row">
+                                <div class="caption input-caption">Декор</div>
+                                <input type="text" class="input" value="@Model.Decor.GetName()" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            <div class="input-row">
+                                <div class="caption input-caption">Стоимость последнего пошива</div>
+                                <input type="number" name="" class="input decimal-input" step="any" value="@Model.LastTailoringCost.ToString("F")" disabled>
+                            </div>
+                        </div>
+                        <div class="edit-section-row-right">
+                            <div class="input-row">
+                                <div class="caption input-caption">Стоимость последнего кроя</div>
+                                <input type="number" name="" class="input decimal-input" step="any" value="@Model.LastCutCost.ToString("F")" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    @if (FactoryPriceVisible)
+                    {
+                        <div class="edit-section-row">
+                            <div class="edit-section-row-left">
+                                <div class="input-row">
+                                    <div class="caption input-caption">Текущая цена производства</div>
+                                    <input type="number" name="" class="input decimal-input" step="any" value="@Model.GetProductionPrice().ToString("F")" disabled>
+                                </div>
+                            </div>
+                            <div class="edit-section-row-right">
+                                <div class="input-row">
+                                    <div class="caption input-caption">Текущая цена фабрики</div>
+                                    <input type="number" name="" class="input decimal-input" step="any" value="@Model.LastFactoryPrice.ToString("F")" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            <div class="input-row">
+                                <div class="caption input-caption">Изгатовлено из</div>
+                                <select name="Compound" class="select" data-req="1" data-req-mess="Заполните поле" @(!ProductionAccess ? "disabled" : "")>
+                                    <option value=""></option>
+                                    @foreach (var item in new Compound().Populate().Values)
+                                    {
+                                        <option @(item.Id == compoundId ? "selected" : "") value="@item.Id">@item.GetName()</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear separator"></div>
+                @{
+                    var codeBarcodes = string.Join("|", Model.SpecificProducts.Select(sp => sp.ProductCode.ToString("00000")));
+                }
+                <div class="edit-section">
+                    <div class="edit-section-header flex-caption" style="align-items: center">
+                        <div>Размеры</div>
+                        <a onclick="preview_barcode_EAN13('@codeBarcodes')" class="edit-section-icon edit-section-print" title="Печать штрихкода"></a>
+                    </div>
+                    <div class="edit-section-body" style="display: flex; flex-wrap: wrap; padding: 10px; gap: 10px; box-sizing: border-box">
+                        @foreach (SpecificProduct SpecificProduct in Model.SpecificProducts)
+                        {
+                            <div onclick="preview_barcode_EAN13('@SpecificProduct.ProductCode.ToString("00000")')" class="product-select" style="flex: 20%">Размер: @SpecificProduct.ProductSize.GetName()</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (ProductionAccess)
+    {
+        <div class="clear separator"></div>
+
+        <div class="content-two-columns-form">
+            <div class="inner-content-left">
+                <div id="product_for_order_dynamic" class="edit-section dynamic-section dynamic-section-sample">
+                    <div class="edit-section-header">
+                        <div style="display: flex;">
+                            <div id="dynamic_section_samples" onclick="toggle_dynamic_section(this,'@typeof(СonsumptionFinding).FullName')" title="Добавить фурнитуру" class="edit-section-state-indicator">
+                                <div class="close-block right-line"></div>
+                                <div class="close-block left-line"></div>
+                            </div>
+                            <div id="header-caption-price" class="edit-section-header-caption">Расход фурнитуры</div>
+                        </div>
+                        <div class="edit-section-icons-group">
+                            <a onclick="add_new_dynamic_section(this,'@typeof(СonsumptionFinding).FullName')" title="Добавить фурнитуру к расходу" class="edit-section-icon edit-section-new"></a>
+                        </div>
+                    </div>
+                    <div class="edit-section-body edit-section-body-samples"></div>
+                </div>
+            </div>
+
+            <div class="inner-content-right">
+                <div id="product_for_order_dynamic" class="edit-section dynamic-section dynamic-section-sample">
+                    <div class="edit-section-header">
+                        <div style="display: flex;">
+                            <div id="dynamic_section_samples" onclick="toggle_dynamic_section(this,'@typeof(СonsumptionTextile).FullName')" title="Добавить ткань" class="edit-section-state-indicator">
+                                <div class="close-block right-line"></div>
+                                <div class="close-block left-line"></div>
+                            </div>
+                            <div id="header-caption-price" class="edit-section-header-caption">Расход ткани</div>
+                        </div>
+                        <div class="edit-section-icons-group">
+                            <a onclick="add_new_dynamic_section(this,'@typeof(СonsumptionTextile).FullName')" title="Добавить ткань к расходу" class="edit-section-icon edit-section-new"></a>
+                        </div>
+                    </div>
+                    <div class="edit-section-body edit-section-body-samples"></div>
+                </div>
+            </div>
+        </div>
+    }
+
+</form>

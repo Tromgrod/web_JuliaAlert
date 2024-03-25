@@ -1,0 +1,73 @@
+﻿@model Controls.DateRange.Models.DateRangeModel
+@using System.Globalization
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/DateRange/css/DateRange.css");  
+    Html.AddScriptParts("~/plugins/DateRange/js/DateRange.js");  
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search && Model.Mode != LIB.AdvancedProperties.DisplayMode.PrintSearch)
+{ 
+    <div class="control-DateRange control-view">
+        @(Model.Value.From!=DateTime.MinValue? (Model.ShowTime ? Model.Value.From.ToString("dd/MM/yyyy HH:mm") : Model.Value.From.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)): "")
+    </div>
+}
+    @if (Model.Mode == LIB.AdvancedProperties.DisplayMode.PrintSearch)
+{
+    @(Model.Value.From != DateTime.MinValue ? (Model.Value.To == DateTime.MinValue?"începînd cu ":"")+(Model.ShowTime?Model.Value.From.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture) : Model.Value.From.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)) : "")@(Model.Value.From != DateTime.MinValue && Model.Value.To != DateTime.MinValue ? " - " : "")@(Model.Value.To != DateTime.MinValue ? (Model.Value.From == DateTime.MinValue ? "Pîna la " : "") + (Model.ShowTime ? Model.Value.To.ToString("dd/MM/yyyy HH:mm") : Model.Value.To.ToString("dd/MM/yyyy")) : "")
+}
+    @if (!Model.ReadOnly)
+{
+    <div data-control="DateRange" class="control-DateRange control-edit@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">
+        @Html.Partial("../Controls/_textbox", Model.TextBoxFrom)
+    @if (Model.ShowTime) {
+@: <div class="hour-input-caption">Время:</div>
+        @: @Html.Partial("../Controls/_textbox", new Weblib.Models.Common.TextboxModel()
+      {
+          Class = "input input-small",
+          MaxLength = 2,
+          OnKeyUp = "isHourKey(this)",
+          OnKeyPress = "return isNumberKey(event)",
+          EditCssClass = Model.CssEdit,
+          Value = Model.Value.From != DateTime.MinValue ? Model.Value.From.ToString("HH") : "",
+          Name = Model.TextBoxFrom.Name + "_Hours"
+      })
+        @: @Html.Partial("../Controls/_textbox", new Weblib.Models.Common.TextboxModel()
+      {
+          Class = "input input-small",
+          MaxLength = 2,
+          OnKeyUp = "isMinuteKey(this)",
+          OnKeyPress = "return isNumberKey(event)",
+          EditCssClass = Model.CssEdit,
+          Value = Model.Value.From != DateTime.MinValue ? Model.Value.From.ToString("mm") : "",
+
+          Name = Model.TextBoxFrom.Name + "_Minutes"
+      })
+    }
+        <div class="control-defis"> - </div>
+        @Html.Partial("../Controls/_textbox", Model.TextBoxTo)
+    @if (Model.ShowTime)
+    {
+        @: <div class="hour-input-caption">Время:</div>
+        @: @Html.Partial("../Controls/_textbox", new Weblib.Models.Common.TextboxModel()
+      {
+          Class = "input input-small",
+          MaxLength = 2,
+          OnKeyUp = "isHourKey(this)",
+          OnKeyPress = "return isNumberKey(event)",
+          Value = Model.Value.To != DateTime.MinValue ? Model.Value.To.ToString("HH") : "",
+          Name = Model.TextBoxTo.Name + "_Hours"
+      })
+        @: @Html.Partial("../Controls/_textbox", new Weblib.Models.Common.TextboxModel()
+      {
+          Class = "input input-small",
+          MaxLength = 2,
+          OnKeyUp = "isMinuteKey(this)",
+          OnKeyPress = "return isNumberKey(event)",
+          EditCssClass = Model.CssEdit,
+          Value = Model.Value.To != DateTime.MinValue ? Model.Value.To.ToString("mm") : "",
+          Name = Model.TextBoxTo.Name + "_Minutes"
+      })
+    }
+    </div>
+}

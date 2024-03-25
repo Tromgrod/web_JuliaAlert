@@ -1,0 +1,104 @@
+﻿@model List<ImplementSupplySpecificProductUnit>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    var supplySpecificProductUnit = SupplySpecificProductUnit.PopulateById(Convert.ToInt64(Request.Form["ModelId"]));
+
+    var selectedIndex = Request.Form["SelectedIndex"] != null ? Convert.ToInt32(Request.Form["SelectedIndex"]) : 0;
+
+    if (selectedIndex == -1)
+    {
+        selectedIndex = Model.Count - 1;
+    }
+
+    var selectedImplementSupplySpecificProductUnit = new ImplementSupplySpecificProductUnit();
+
+    if (Model.Count > 0)
+    {
+        if (Model.Count <= selectedIndex)
+        {
+            selectedIndex = 0;
+        }
+
+        selectedImplementSupplySpecificProductUnit = Model[selectedIndex];
+    }
+    var parentId = supplySpecificProductUnit.Id;
+    var parentNamespace = supplySpecificProductUnit.GetType().FullName;
+}
+
+<div class="edit-section-header-popup center-header popup-header">Реализация прихода модели</div>
+
+<div>
+    @if (Model.Count > 0)
+    {
+        <div class="selected-block">
+            @for (var index = 0; index < Model.Count; index++)
+            {
+                var implementSupplySpecificProductUnit = Model[index];
+
+                <div index="@index" class="select-item mini-button@(index == selectedIndex ? " hover-button" : "")" onclick="set_ImplementSupplySpecificProductUnit_data(this, @implementSupplySpecificProductUnit.Id)">Приход: @implementSupplySpecificProductUnit.Count шт</div>
+            }
+
+            <div index="-1" class="select-item mini-button" onclick="set_ImplementSupplySpecificProductUnit_data(this, 0)">Новый приход</div>
+        </div>
+    }
+
+    <div class="popup-container" style="flex-direction: column;">
+
+        <div class="edit-section-row">
+            <div class="edit-section-row-right">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Count",
+                    Type = TextboxType.Number,
+                    Value = selectedImplementSupplySpecificProductUnit.Id > 0 ? selectedImplementSupplySpecificProductUnit.Count.ToString() : "",
+                    ValidationType = ValidationTypes.Required,
+                    Caption = "Количество"
+                })
+            </div>
+
+            <div class="edit-section-row-left">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Date",
+                    Class = "input calendar-input normal-calendar",
+                    Type = TextboxType.Date,
+                    ValidationType = ValidationTypes.Required,
+                    Value = selectedImplementSupplySpecificProductUnit.DateString,
+                    DateValue = selectedImplementSupplySpecificProductUnit.Date,
+                    Caption = "Дата прихода"
+                })
+            </div>
+        </div>
+
+        <input type="hidden" dontAutoClear name="Namespace" value="@selectedImplementSupplySpecificProductUnit.GetType().FullName">
+        <input type="hidden" name="Id" value="@selectedImplementSupplySpecificProductUnit.Id">
+
+        <input type="hidden" dontAutoClear name="SupplySpecificProductUnit" value="@supplySpecificProductUnit.Id">
+        <input type="hidden" dontAutoClear name="SupplySpecificProductUnitCount" value="@supplySpecificProductUnit.Count">
+        <input type="hidden" dontAutoClear name="TotalImplementCount" value="@supplySpecificProductUnit.TotalImplementCount">
+
+        <input type="hidden" name="ImplementSupplySpecificProductUnitCount" value="@selectedImplementSupplySpecificProductUnit.Count">
+
+    </div>
+</div>
+
+<div class="popup-btn">
+    @if (Model.Count > 0)
+    {
+        <a class="button button-red" onclick="delete_ImplementSupplySpecificProductUnit('@typeof(ImplementSupplySpecificProductUnit).FullName', @parentId, '~/Views/Production/ImplementSupplySpecificProductUnit.cshtml', { SelectedIndex: $('.select-item.hover-button').attr('index') })">Удалить</a>
+    }
+    <a class="button" onclick="save_ImplementSupplySpecificProductUnit('@typeof(ImplementSupplySpecificProductUnit).FullName', @parentId, '~/Views/Production/ImplementSupplySpecificProductUnit.cshtml', { SelectedIndex: $('.select-item.hover-button').attr('index') })">Сохранить</a>
+</div>
+
+<script>
+    let calendarOptions = {
+        startDate: '@(supplySpecificProductUnit.SupplySpecificProduct.Date.ToString("dd/MM/yyyy"))',
+    };
+
+    set_calendar($('.popup-container'), calendarOptions);
+</script>

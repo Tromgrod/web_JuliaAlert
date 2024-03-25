@@ -1,0 +1,218 @@
+﻿@model Dictionary<long, LIB.Tools.BO.ItemBase>
+@using JuliaAlert.Models.Objects
+@using LIB.BusinessObjects
+@using LIB.Tools.Utils
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    long OrderId = Convert.ToInt64(Request.Form["ParentId"]);
+
+    var order = Order.PopulateById(OrderId);
+
+    var ProductsForOrder = Model.Values.Select(itembase => (ProductForOrder)itembase);
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool AddOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.AddOrder),
+    EditOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.EditOrder),
+    FactoryPriceVisible = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.FactoryPrice);
+}
+<div class="edit-section-table">
+    <div class="edit-section-table-header">
+        <div class="edit-section-table-title">Название</div>
+        <div class="edit-section-table-title">Код</div>
+        <div class="edit-section-table-title">Цвет</div>
+        <div class="edit-section-table-title">Размер</div>
+        <div class="edit-section-table-title">Кол-во</div>
+        @if (FactoryPriceVisible)
+        {
+            <div class="edit-section-table-title">Цена фабрики</div>
+        }
+        <div class="edit-section-table-title">Цена</div>
+        <div class="edit-section-table-title">Конечная цена</div>
+        <div class="edit-section-table-title">Финалная цена</div>
+        <div class="edit-section-table-title">Скидка</div>
+        <div class="edit-section-table-title">Возврат</div>
+        <div class="edit-section-table-title"></div>
+    </div>
+
+    @if (EditOrderPass || AddOrderPass)
+    {
+        <div class="edit-section-table-row edit-section-table-add">
+            <div class="edit-section-table-content">
+                <div class="input-row" style="position: relative;">
+                    <input type="text" name="UniqueProduct_autocomplete" class="input autocomplete-input ui-autocomplete-input" onchange="set_UniqueProduct_data_dynamic(this)" data-namespace="JuliaAlert.Models.Objects.UniqueProduct" data-classname="UniqueProduct" data-autocompleteminlen="0" data-autocompletename="UniqueProduct" data-autocomplete-server="1" autocomplete="off">
+                    <input type="hidden" class="hidden-autocomplete-input" name="UniqueProduct">
+                    <a onclick="clear_autocomplete_dynamic(this)" class="clear-link"></a>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="Code" class="input midle-input-table" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ColorProduct_Name" class="input midle-input-table" disabled>
+                </div>
+                <input type="hidden" name="ColorProduct">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <select name="ProductSize" class="select dynamic-select" data-req="1" data-req-mess="Заполните поле"></select>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Count" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)">
+                </div>
+            </div>
+
+            @if (FactoryPriceVisible)
+            {
+                <div class="edit-section-table-content">
+                    <div class="input-row">
+                        <input type="number" name="FactoryPrice" class="input decimal-input" step="any" disabled>
+                    </div>
+                </div>
+            }
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Price" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onchange="get_price(this)" onkeyup="get_discount(this)">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="FinalPrice" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onchange="get_price(this)" onkeyup="get_discount(this)">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="FinalPriceCount" class="input decimal-input" step="any" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Discount" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_price(this)" value="@(order.Id > 0 ? order.Client.Discount.ToString() : "")">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content"></div>
+
+            <div class="edit-section-table-content edit-section-table-content-controls">
+                <input type="hidden" dontAutoClear name="Id" value="0">
+                <input type="hidden" dontAutoClear name="Order" value="@OrderId">
+                <div class="dynamic-btn-conainer">
+                    <a title="Сохранить" class="control-save" onclick="save_Dynamic(this, @OrderId, '@typeof(ProductForOrder).FullName')"></a>
+                </div>
+            </div>
+        </div>
+    }
+
+    @foreach (var productForOrder in ProductsForOrder)
+    {
+        <div class="edit-section-table-row">
+            <input type="hidden" dontAutoClear name="Order" value="@OrderId">
+            <input type="hidden" dontAutoClear name="Id" value="@productForOrder.Id">
+
+            @{
+                var productPrice = ProductPrice.PopulateByProduct(productForOrder.SpecificProduct.UniqueProduct.Product).FirstOrDefault(pp => pp.SalesChannel.Id == order.SalesChannel.Id);
+
+                decimal price = productPrice == null ? 0 : productPrice.Price;
+            }
+            <input type="hidden" name="ProductPrice" value="@price">
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="UniqueProduct_Name" class="input" value="@productForOrder.SpecificProduct.UniqueProduct.GetName()" disabled>
+                </div>
+                <input type="hidden" name="UniqueProduct" value="@productForOrder.SpecificProduct.UniqueProduct.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="Code" class="input midle-input-table" value="@productForOrder.SpecificProduct.UniqueProduct.GetCode()" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ColorProduct_Name" class="input midle-input-table" value="@productForOrder.SpecificProduct.UniqueProduct.ColorProduct.GetName()" disabled>
+                </div>
+                <input type="hidden" name="ColorProduct" value="@productForOrder.SpecificProduct.UniqueProduct.ColorProduct.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ProductSize_Name" class="input small-input-table" value="@productForOrder.SpecificProduct.ProductSize.GetName()" disabled>
+                </div>
+                <input type="hidden" name="ProductSize" value="@productForOrder.SpecificProduct.ProductSize.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Count" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)" value="@productForOrder.Count">
+                </div>
+            </div>
+
+            @if (FactoryPriceVisible)
+            {
+                <div class="edit-section-table-content">
+                    <div class="input-row">
+                        <input type="number" name="FactoryPrice" class="input decimal-input" step="any" value="@(productForOrder.FactoryPrice > 0 ? productForOrder.FactoryPrice.ToString("F") : productForOrder.SpecificProduct.UniqueProduct.LastFactoryPrice.ToString("F"))" disabled>
+                    </div>
+                </div>
+            }
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Price" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_discount(this)" value="@(productForOrder.Price > 0 ? productForOrder.Price.ToString("F") : price.ToString("F"))">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="FinalPrice" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_discount(this)" value="@productForOrder.FinalPrice.ToString("F")">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="FinalPriceCount" class="input decimal-input" step="any" value="@((productForOrder.FinalPrice * productForOrder.Count).ToString("F"))" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Discount" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_price(this)" value="@productForOrder.Discount.ToString()">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <a class="button return-btn@(productForOrder.IsReturn() ? " button-red" : "")" onclick="open_return_popup('@typeof(ProductForOrder).FullName', @productForOrder.Id)">Возврат</a>
+            </div>
+
+            <div class="edit-section-table-content edit-section-table-content-controls">
+                <div class="dynamic-btn-conainer">
+                    @if (EditOrderPass || currentUser.Id == order.CreatedBy.Id)
+                    {
+                        <a title="Клонировать" class="control_clone" onclick="clone_ProductForOrder_Dynamic(this)"></a>
+                        <a title="Удалить" class="control-delete" onclick="delete_Dynamic(this, @productForOrder.Id, '@typeof(ProductForOrder).FullName', () => get_price())"></a>
+                    }
+                    <a title="Перейти к модели" class="control-link" href="@URLHelper.GetUrl("DocControl/UniqueProduct/" + productForOrder.SpecificProduct.UniqueProduct.Id)" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(".edit-section-table .autocomplete-input").each((i, item) => load_autocomplete(item));
+</script>

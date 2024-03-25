@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Master/_SuperAdmin.cshtml";
+    var BOType = (Type)ViewData["BOType"];
+    var BOProperties = (LIB.AdvancedProperties.BoAttribute)ViewData["BOProperties"];
+}
+<section class="content-header">
+    <h1>
+        Access Denied
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/DashBoard/")"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/Edit/" + BOType.Name + "/" + HttpUtility.UrlEncode(BOType.Namespace))"><i class="fa fa-@(BOProperties.Icon)"></i> @(BOProperties.DisplayName)</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="alert alert-danger alert-dismissable">
+        <h4><i class="icon fa fa-ban"></i> No Access!</h4>
+        No Access to this data item, possible it was deleted <br />
+        <a href="@ViewData["Back_Link"]"> Back to @BOProperties.DisplayName</a>
+    </div>
+</section>

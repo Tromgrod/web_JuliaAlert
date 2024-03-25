@@ -1,0 +1,44 @@
+﻿@using LIB.Tools.Utils
+
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+
+<div class="edit-section-header-popup center-header popup-header">Приходы</div>
+
+<div class="popup-container">
+    <div class="icon-item">
+        <a class="dashboard-icon-supply dashboard-icon" href="@URLHelper.GetUrl("DocControl/SupplySpecificProduct")" target="_blank"></a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/SupplySpecificProduct")" target="_blank">
+            <span class="dashboard-icon-title button">Приход<br>моделей</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/SupplySpecificProductList")" target="_blank"></a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/SupplySpecificProductList")" target="_blank">
+            <span id="add_participation_category_btn" class="dashboard-icon-title button">Список приходов<br>моделей</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-supply dashboard-icon" href="@URLHelper.GetUrl("DocControl/SupplyFinding")" target="_blank"></a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/SupplyFinding")" target="_blank">
+            <span class="dashboard-icon-title button">Приход<br>фурнитуры</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-supply dashboard-icon" href="@URLHelper.GetUrl("DocControl/SupplyTextile")" target="_blank"></a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/SupplyTextile")" target="_blank">
+            <span class="dashboard-icon-title button">Приход<br>тканей</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/SupplyConsumableList")" target="_blank"></a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/SupplyConsumableList")" target="_blank">
+            <span id="add_participation_category_btn" class="dashboard-icon-title button">Список приходов<br>фурнитуры / ткани</span>
+        </a>
+    </div>
+</div>

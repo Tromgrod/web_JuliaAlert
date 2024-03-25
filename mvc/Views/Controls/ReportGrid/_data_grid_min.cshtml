@@ -1,0 +1,13 @@
+﻿@model Dictionary<long, ItemBase>
+@using LIB.Tools.BO
+<div class="data-grid-container">
+    <div class="data-grid" data-type="@(ViewData["Grid_Type"])">
+        <div class="data-grid-title-row">
+            @Html.Partial("../Controls/ReportGrid/_title_row", Model)
+        </div>
+        @foreach (var item in Model.Values)
+        {
+            @Html.Partial("../Controls/ReportGrid/_data_row", item);
+        }
+    </div>
+</div>

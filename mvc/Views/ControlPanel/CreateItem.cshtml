@@ -1,0 +1,59 @@
+﻿@using Weblib.Models
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+    var BOProperties = (LIB.AdvancedProperties.BoAttribute)ViewData["BOProperties"];
+    var BOType = (Type)ViewData["BOType"];
+}
+<div class="box data-item-container" data-id="0" data-type="@(ViewData["Grid_Type"])">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-@(BOProperties.Icon)"></i> Добавить @(BOProperties.SingleName.ToLower())</h3>
+        <div class="class-legend"><i class="fa fa-fw fa-asterisk req-field-indicator"></i> - Обязательные поля</div>
+    </div>
+    <div class="box-body no-padding">
+        <table class="table table-striped">
+            <tbody>
+                @foreach (string key in ((Dictionary<string, List<LIB.AdvancedProperties.AdvancedProperty>>)ViewData["Properties"]).Keys)
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        @:<tr>
+                            @:<td colspan="2" class="property-group">
+                                @(key)
+                            @:</td>
+                        @:</tr>
+                        }
+                    foreach (LIB.AdvancedProperties.AdvancedProperty property in ((Dictionary<string, List<LIB.AdvancedProperties.AdvancedProperty>>)ViewData["Properties"])[key])
+                    {
+                        if (property.Common.EditTemplate != LIB.AdvancedProperties.EditTemplates.LinkItems
+                         && property.Common.EditTemplate != LIB.AdvancedProperties.EditTemplates.LinkItem)
+                        {
+                        @:<tr @if(property.Common.EditTemplate == LIB.AdvancedProperties.EditTemplates.Parent){
+                              @:style="display:none"
+                              }
+                            @:>
+                            @:<td style="width:150px">
+                                @(property.Common.DisplayName + ":")                    
+                                if (property.Validation != null && (property.Validation.ValidationType == LIB.AdvancedProperties.ValidationTypes.Required || property.Validation.ValidationType == LIB.AdvancedProperties.ValidationTypes.RegularExpressionRequired))
+                                {
+                                    <i class="fa fa-fw fa-asterisk req-field-indicator"></i>
+                                }
+                                if (!string.IsNullOrEmpty(property.Common.PropertyDescription))
+                                {
+                                    <div class="property-description">@(property.Common.PropertyDescription)</div>
+                                }
+                            @:</td>
+                            @:<td>
+                                Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(Model), property, (LIB.Tools.BO.ItemBase)Model, false, LIB.AdvancedProperties.DisplayMode.AdvancedEdit) });
+                            @:</td>
+                        @:</tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="btn-control-container">
+            <button class="btn btn-success" onclick="save_new_item('@(ViewData["Grid_Type"])')"><i class="fa fa-save"></i> Save</button>
+        </div>
+    </div><!-- /.box-body -->
+</div>
+          

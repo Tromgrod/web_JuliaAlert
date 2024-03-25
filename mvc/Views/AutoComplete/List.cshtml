@@ -1,0 +1,18 @@
+﻿@using Weblib.Models
+@using Weblib.Models.Common
+@using LIB.Tools.BO
+@using JuliaAlertLib.BusinessObjects
+@{
+    Layout = "~/Views/Master/_Js.cshtml";
+}
+@{
+    this.Response.ContentType = "text/javascript";
+}
+var @ViewData["Model"] = [
+@{var ind = 0;}
+@foreach (var item in Model.Values)
+{     
+    @(ind!=0?", ":"") @:{value:@(((ItemBase)item).Id),label:"@(((ItemBase)item).GetAutocompleteName())",category: "@(((ItemBase)item).Category)" }
+    ind++;
+}            
+];

@@ -1,0 +1,125 @@
+﻿@model SupplyTextile
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using LIB.Tools.BO
+
+@{
+    ViewBag.Title = Model.Id > 0 ? "Приход ткани: " + Model.GetName() : "Добавить приход ткани";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var documentNumber = Model.Id > 0 ? Model.DocumentNumber : "";
+
+    if (string.IsNullOrEmpty(documentNumber))
+    {
+        var lastSupplyTextile = ItemBase.GetLast<SupplyTextile>();
+
+        int newDocumentNumber;
+
+        if (int.TryParse(lastSupplyTextile.DocumentNumber, out newDocumentNumber))
+        {
+            documentNumber = (++newDocumentNumber).ToString();
+        }
+    }
+}
+
+<script src="~/Scripts/FrontEnd/Object/production.js"></script>
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "SupplyTextile",
+            Delete = true,
+            Save = true,
+            Namespace = typeof(SupplyTextile).FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-one-column">
+        <div class="edit-section">
+            <div class="edit-section-header">Приход ткани</div>
+
+            <div class="edit-section-body">
+
+                <div class="edit-section-row">
+                    <div class="edit-section-row-quad">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Name = "DocumentNumber",
+                            Type = TextboxType.Text,
+                            Value = documentNumber,
+                            Caption = "№ Документа",
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+                    <div class="edit-section-row-quad">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Name = "Date",
+                            Class = "input calendar-input",
+                            Type = Weblib.Models.Common.Enums.TextboxType.Date,
+                            Value = Model.Date != DateTime.MinValue ? Model.Date.ToString(@"dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "",
+                            DateValue = Model.Date != DateTime.MinValue ? Model.Date : DateTime.MinValue,
+                            ValidationType = ValidationTypes.Required,
+                            Caption = "Дата документа"
+                        })
+                    </div>
+                    <div class="edit-section-row-quad">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "Provider",
+                            AllowDefault = true,
+                            Value = Model.Id > 0 ? Model.Provider.Id.ToString() : "0",
+                            Options = new Provider().Populate(),
+                            Caption = "Поставщик",
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+                </div>
+
+                <div class="edit-section-row">
+                    <div class="full-size">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Name = "Description",
+                            Type = Weblib.Models.Common.Enums.TextboxType.MultiLine,
+                            Value = Model.Description,
+                            Caption = "Комментарий к приходу"
+                        })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Id > 0)
+    {
+        <div class="clear separator"></div>
+
+        <div id="supply_textile_unit_dynamic" class="edit-section dynamic-section dynamic-section-sample">
+            <div class="edit-section-header">
+                <div style="display: flex;">
+                    <div id="dynamic_section_samples" onclick="toggle_dynamic_section(this,'@typeof(SupplyTextileUnit).FullName')" title="Добавить ткань" class="edit-section-state-indicator">
+                        <div class="close-block right-line"></div>
+                        <div class="close-block left-line"></div>
+                    </div>
+                    <div id="header-caption-price" class="edit-section-header-caption">Ткани</div>
+                </div>
+                <div class="edit-section-icons-group">
+                    <a id="btn_open_dynamic" onclick="add_new_dynamic_section(this,'@typeof(SupplyTextileUnit).FullName')" title="Добавить ткань" class="edit-section-icon edit-section-new"></a>
+                    <a id="add_TextileColor" onclick="open_simple_popup_noData('~/Views/Production/AddNewTextile.cshtml')" title="Добавить новую ткань" class="edit-section-icon edit-section-new-textile"></a>
+                </div>
+            </div>
+            <div class="edit-section-body edit-section-body-samples"></div>
+        </div>
+    }
+
+</form>

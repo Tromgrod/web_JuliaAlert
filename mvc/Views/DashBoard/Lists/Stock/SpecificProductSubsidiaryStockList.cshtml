@@ -1,0 +1,23 @@
+﻿@model List<ItemBase>
+@using LIB.Tools.BO
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+<div class="data-grid-title-row">
+    <div class="data-grid-title">Название склада</div>
+    <div class="data-grid-title">Название модели</div>
+    <div class="data-grid-title">Код</div>
+    <div class="data-grid-title">Размер</div>
+    <div class="data-grid-title">Кол-во</div>
+</div>
+@foreach (SpecificProductStock specificProductStock in Model)
+{
+    <a href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/UniqueProductList/UniqueProduct-Stock/JuliaAlert.Models.Objects-JuliaAlert.Models.Objects/" + specificProductStock.SpecificProduct.UniqueProduct.Id + "-" + specificProductStock.Stock.Id)" target="_blank" class="data-grid-data-row data-grid-data-row-list" gradation gradation-min="-2" gradation-max="10">
+        <div class="data-grid-data"><b>@specificProductStock.Stock.GetName()</b></div>
+        <div class="data-grid-data">@specificProductStock.SpecificProduct.GetName()</div>
+        <div class="data-grid-data"><b>@specificProductStock.SpecificProduct.GetCode()</b></div>
+        <div class="data-grid-data">@specificProductStock.SpecificProduct.ProductSize.GetName()</div>
+        <div class="data-grid-data" gradation-val="@specificProductStock.CurrentCount"><b>@specificProductStock.CurrentCount</b></div>
+    </a>
+}

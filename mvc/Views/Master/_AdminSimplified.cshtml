@@ -1,0 +1,31 @@
+﻿@using System.Web.Optimization
+@using WebLib.UI
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script type="text/javascript">
+        var gRootUrl = '@LIB.Tools.Utils.URLHelper.GetUrl("")';
+        </script>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">    
+        @Styles.Render("~/styles/common")
+        @Styles.Render("~/styles/back_common")
+        @Styles.Render("~/styles/back_simplified")
+        @Styles.Render("~/styles/bootstrap")
+        @Scripts.Render("~/scripts/jquerylib")
+        @Scripts.Render("~/scripts/bootstrap")
+        @Scripts.Render("~/scripts/commonlib")
+        @Scripts.Render("~/scripts/back_common")
+        @Html.BuilderCssFiles(this.Url, ResourceLocation.Head)
+        @Html.BuilderScripts(this.Url, ResourceLocation.Head)
+    </head>
+    <body class="hold-transition login-page">
+        @RenderBody()
+    </body>
+</html>

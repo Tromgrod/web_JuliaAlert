@@ -1,0 +1,100 @@
+﻿@model Dictionary<long, ItemBase>
+@using LIB.Tools.BO
+@using LIB.BusinessObjects
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Print.cshtml";
+
+    var supplySpecificProductUnit = ((FindingLocationStorageTailoringSupplySpecificProductUnit)Model.Values.First()).TailoringSupplySpecificProductUnit.SupplySpecificProductUnit;
+
+    supplySpecificProductUnit = SupplySpecificProductUnit.PopulateById(supplySpecificProductUnit.Id);
+
+    var specificProductId = supplySpecificProductUnit.SpecificProduct.Id;
+
+    var specificProduct = SpecificProduct.PopulateById(specificProductId);
+}
+
+<style type="text/css" media="print">
+    body {
+        margin: 0;
+    }
+
+    .container-print {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .container-print * {
+            font-family: Calibri;
+            font-size: 10pt !important;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5%;
+    }
+
+    td {
+        border: 1px solid #000;
+        text-align: center;
+    }
+
+    .logo-invoice {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 140px;
+    }
+
+    .medium-font {
+        font-size: 11pt !important;
+    }
+
+    .big-font {
+        font-size: 12pt !important;
+    }
+
+    .caption-font {
+        font-size: 14pt !important;
+        font-weight: bold;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-print">
+    <img src="@Graphic.LogoInvoice.Thumbnail" class="logo-invoice">
+
+    <span class="caption-font" style="display: block; text-align: center; font-size: 16pt">Расход фурнитуры</span>
+    <br>
+    <span class="caption-font">Номер документа: @supplySpecificProductUnit.SupplySpecificProduct.DocumentNumber</span>
+    <span class="caption-font">Дата документа: @supplySpecificProductUnit.SupplySpecificProduct.Date.ToString("dd/MM/yyyy")</span>
+    <br>
+    <span class="caption-font">Модель: @specificProduct.UniqueProduct.GetName()</span>
+    <span class="caption-font">Код: @specificProduct.UniqueProduct.GetCode()</span>
+    <br>
+    <table>
+        <tbody>
+            <tr>
+                <td class="medium-font bold">Фурнитура</td>
+                <td class="medium-font bold">Цвет</td>
+                <td class="medium-font bold">Код</td>
+                <td class="medium-font bold">Кол-во</td>
+                <td class="medium-font bold">Место хранения</td>
+            </tr>
+            @foreach (FindingLocationStorageTailoringSupplySpecificProductUnit findingLocationStorageTailoringSupplySpecificProductUnit in Model.Values)
+            {
+                <tr>
+                    <td class="medium-font">@findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.GetName()</td>
+                    <td class="medium-font">@findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.ColorProduct.GetName()</td>
+                    <td class="medium-font">@findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.GetCode()</td>
+                    <td class="medium-font">@findingLocationStorageTailoringSupplySpecificProductUnit.Consumption.ToString("F")</td>
+                    <td class="medium-font">@findingLocationStorageTailoringSupplySpecificProductUnit.LocationStorage.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

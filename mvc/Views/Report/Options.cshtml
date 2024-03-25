@@ -1,0 +1,56 @@
+﻿@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+    var Properties = (AdvancedProperties)ViewData["Properties"];
+    var DisplayProperties = (AdvancedProperties)ViewData["DisplayProperties"];
+    var ExcellProperties = (AdvancedProperties)ViewData["ExcellProperties"];
+}
+
+<form id="printOptions" class="edit-section" style="margin: 0 -30px;">
+    <div class="edit-section-header popup-section-header">
+        Настройки репорта
+    </div>
+    <div class="edit-section-body" style="max-height:600px;overflow:auto;">
+        <div class="edit-section-row">
+            <div class="edit-section-row-left">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Type = Weblib.Models.Common.Enums.TextboxType.Label,
+                    Caption = "Отчет"
+                })
+            </div>
+            <div class="edit-section-row-right">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Type = Weblib.Models.Common.Enums.TextboxType.Label,
+                    Caption = "Excell"
+                })
+            </div>
+        </div>
+        @foreach (LIB.AdvancedProperties.AdvancedProperty property in Properties)
+        {
+            <div class="edit-section-row">
+
+                <div class="edit-section-row-left">
+                    @Html.Partial("../Controls/RowControl/_checkboxrow", new CheckboxModel()
+                    {
+                        Name = "Display_" + (property).PropertyName,
+                        Caption = (property).Common.DisplayName,
+                        Checked = DisplayProperties.Exists(property.PropertyName),
+                        Value = "1"
+                    })
+                </div>
+                <div class="edit-section-row-right">
+                    @Html.Partial("../Controls/RowControl/_checkboxrow", new CheckboxModel()
+                    {
+                        Name = "Excell_" + (property).PropertyName,
+                        Caption = (property).Common.PrintName,
+                        Checked = ExcellProperties.Exists(property.PropertyName),
+                        Value = "1"
+                    })
+                </div>
+            </div>
+        }
+    </div>
+</form>

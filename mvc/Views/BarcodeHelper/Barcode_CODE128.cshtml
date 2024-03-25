@@ -1,0 +1,54 @@
+﻿@model Barcode_CODE128[]
+@using LIB.BusinessObjects.Barcode
+
+@{
+    Layout = null;
+
+    int count = Convert.ToInt32(ViewData["Count"]);
+}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Штрих код@(Model.Length > 1 || count > 1 ? "ы" : "")</title>
+
+<style type="text/css">
+    .print-text {
+        line-height: 18px;
+        white-space: nowrap;
+        padding: 0 2px;
+    }
+
+    .printItem {
+        padding-left: .125in;
+        padding-right: .2in;
+        padding-top: .3in;
+        page-break-after: always;
+    }
+
+        .printItem:last-child {
+            page-break-after: avoid;
+        }
+
+    .caption {
+        font-weight: normal;
+        text-align: center;
+        font-size: 20pt;
+    }
+</style>
+
+@for (var index = 0; index < Model.Length; index++)
+{
+    var barcode = Model[index];
+
+    for (var counter = 0; counter < count; counter++)
+    {
+        <div class="printItem">
+            @if (barcode == null || barcode.Error)
+            {
+                <div class="caption print-text">Error</div>
+            }
+            else if (!barcode.Error)
+            {
+                <img src="data:image/png;base64, @barcode.GenerateBarcode(460, 110)" style="display: block; padding: 10px 0" />
+            }
+        </div>
+    }
+}

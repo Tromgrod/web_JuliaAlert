@@ -1,0 +1,37 @@
+﻿<div class="header">
+    <div class="header-left">
+        <div id="start_btn">
+            <a href="@LIB.Tools.Utils.URLHelper.GetUrl("")" id="start_link"></a>
+        </div>
+    </div>
+    @if (ViewData["Breadcrumbs"] != null)
+    {
+        <div style="position: relative; width: 100%; height: 100%;">
+            <div class="header-breadcrumbs">
+                @foreach (var link in (List<LIB.Models.LinkModel>)ViewData["Breadcrumbs"])
+                {
+                    <a href="@link.Href" onclick="@link.Action" value="@link.Value" class="@link.Class">@Html.Raw(link.Caption)</a>
+                }
+            </div>
+        </div>
+    }
+    <div class="header-right">
+        @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission((long)LIB.BusinessObjects.BasePermissionenum.SMIAccess))
+        {
+            <a title="System Management Interface" href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/DashBoard/")" class="icon-container__icon icon-container__icon-smi"></a>
+        }
+        @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission((long)LIB.BusinessObjects.BasePermissionenum.CPAccess))
+        {
+            <a title="Control Panel" href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/DashBoard/")" class="icon-container__icon icon-container__icon-cp"></a>
+        }
+        @{var person = LIB.Tools.Security.Authentication.GetCurrentUser().Person;}
+        <div class="user-info">
+            <a href="@LIB.Tools.Utils.URLHelper.GetUrl("Account/Manage")" class="user-info-username">@(person.FirstName + " " + person.LastName)</a>
+        </div>
+        <div class="header-control">
+            <input type="text" name="global_searh" class="input" onkeydown="search_on_enter(this, event)">
+            <a class="search-control" onclick="doSearch('OrderList')"></a>
+        </div>
+        @Html.Partial("../Controls/_button", new Weblib.Models.Common.ButtonModel() { Name = "logout", Text = "Выход", Href = LIB.Tools.Utils.URLHelper.GetUrl("Account\\LogOff\\"), Class = "mini-button", PredefinedIcon = Weblib.Models.Common.Icon.Logout })
+    </div>
+</div>

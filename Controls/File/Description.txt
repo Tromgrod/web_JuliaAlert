@@ -1,0 +1,8 @@
+﻿Group: Edit Controls
+FriendlyName: Upload and Edit File Control
+SystemName: Controls.File
+Version: 1.00
+SupportedVersions: 1.00
+Author: Alexandr Golubev
+DisplayOrder: 1
+FileName: Controls.File.dll

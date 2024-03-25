@@ -1,0 +1,42 @@
+﻿@using System.Web.Optimization
+@using WebLib.UI
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="~/images/favicon.png" rel="shortcut icon" type="image/png" />
+    <script type="text/javascript">
+        var gRootUrl = '@LIB.Tools.Utils.URLHelper.GetUrl("")';
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    @Styles.Render("~/styles/common")
+    @Styles.Render("~/styles/full")
+    @Styles.Render("~/styles/back_common")
+    @Styles.Render("~/styles/bootstrap")
+    @Styles.Render("~/styles/back_full")
+    @Scripts.Render("~/scripts/jquerylib")
+    @Scripts.Render("~/scripts/jquery-ui")
+    @Scripts.Render("~/scripts/jquery-upload")
+    @Scripts.Render("~/scripts/jquery-download")
+    @Scripts.Render("~/scripts/bootstrap")
+    @Scripts.Render("~/scripts/commonlib")
+    <script type="text/javascript" src="@LIB.Tools.Utils.URLHelper.GetUrl("Scripts/Other_Plugins/ckeditor/ckeditor.js")"></script>
+    <script type="text/javascript" src="@LIB.Tools.Utils.URLHelper.GetUrl("Scripts/JQuery/jquery.ckeditor.js")"></script>
+    @Scripts.Render("~/scripts/back_common")
+    @Html.BuilderCssFiles(this.Url, ResourceLocation.Head)
+    @Html.BuilderScripts(this.Url, ResourceLocation.Head)
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("../Layout/Admin/_Header")
+        @Html.Partial("../Layout/Admin/_Sidebar")
+        <div class="content-wrapper">@RenderBody()</div>
+        @Html.Partial("../Layout/Admin/_Footer")
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+</body>
+</html>

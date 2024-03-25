@@ -1,0 +1,17 @@
+﻿@using LIB.Tools.Utils
+
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    var barcodeStr = Request.Form["BarcodeStr"];
+    var barcodeType = Request.Form["BarcodeType"];
+    var count = Request.Form["Count"];
+}
+
+<div class="popup-container" style="padding: 0">
+    <iframe src="@URLHelper.GetUrl("BarcodeHelper/BarcodePreviewPdf_CODE128/" + barcodeStr + "/" + barcodeType + "/" + count)" width="800" height="420" style="border-radius: 25px 25px 0 0"></iframe>
+</div>
+
+@*<div class="popup-btn">
+    <a onclick="print_barcode()" class="button">Печать</a>
+</div>*@

@@ -1,0 +1,64 @@
+﻿@model DropDownModel
+@using Weblib.Models.Common
+@if (Model.ReadOnly)
+{
+    <div class="select-readonly @(Model.Class)">@(Model.ValueName)</div>
+    <input type="hidden" name="@(Model.Name)" value="@(Model.Value)" />
+}
+else
+{
+    <select name="@Model.Name" class="@(!string.IsNullOrEmpty(Model.Class)?Model.Class:"select")"
+            @if (Model.Disabled) { @: disabled
+            }
+            @if (Model.ValidationType != LIB.AdvancedProperties.ValidationTypes.None) { @: data-req="@((int)Model.ValidationType)"
+            }
+            @if (Model.ValidationType != LIB.AdvancedProperties.ValidationTypes.None && !string.IsNullOrEmpty(Model.RequiredMessage)) { @: data-req-mess="@(Model.RequiredMessage)"
+            }
+            @if (Model.Multiple) { @: multiple="multiple"
+            }
+            @if (Model.ItemType != null) { @: data-namespace="@( HttpUtility.UrlEncode(Model.ItemType.FullName))"
+            }
+            @if (!string.IsNullOrEmpty(Model.StrValues)) { @: data-values="@(Model.StrValues)"
+            }
+            @if (!string.IsNullOrEmpty(Model.OnChange)) { @: onchange="@(Model.OnChange)"
+            }>
+        @if (Model.ShowOptions)
+        {
+            if (Model.AllowDefault)
+            {
+                @:<option value=""></option>
+            }
+            if (Model.Options != null)
+            {
+                foreach (var option in Model.Options.Values)
+                {
+                    if (Model.ExcludeOptions == null || (((List<LIB.Tools.BO.ItemBase>)Model.ExcludeOptions).FirstOrDefault(i => i.Id == option.Id) == null))
+                    {
+                        <option value="@(option.GetId())" @(option.GetId().ToString() == Model.Value ? " selected" : "") @(option.GetAdvancedValue() != "" ? " data-advanced=\"" + option.GetAdvancedValue() + "\"" : "") @(Model.Values != null && Model.Values.Values.Any(i => option.GetId().ToString() == i.Id.ToString()) ? " selected" : "")>@(string.IsNullOrEmpty(Model.NameField) ? option.GetName() : option.GetValue(Model.NameField))</option>
+                    }
+                }
+            }
+            if (Model.Groups != null)
+            {
+                foreach (var group in Model.Groups.Keys)
+                {
+                    @:<optgroup label="@(group)">
+                        foreach (var option in Model.Groups[group].Values)
+                        {
+                            if (Model.ExcludeOptions == null || (((List<LIB.Tools.BO.ItemBase>)Model.ExcludeOptions).FirstOrDefault(i => i.Id == option.Id) == null))
+                            {
+                                @:<option value="@(option.GetId())"
+                                          if (option.GetId().ToString() == Model.Value) { @: selected
+                                          } if (option.GetAdvancedValue() != "") { @: data-advanced="@(option.GetAdvancedValue())"
+                                          } if (Model.Values != null) { foreach (LIB.Tools.BO.ItemBase val in Model.Values.Values) { if (option.GetId().ToString() == val.Id.ToString()) { @: selected
+                                          } } } @:>
+                                    @(string.IsNullOrEmpty(Model.NameField) ? option.GetName() : option.GetValue(Model.NameField))
+                                @:</option>
+                            }
+                        }
+                    @:</optgroup>
+                }
+            }
+        }
+    </select>
+}

@@ -1,0 +1,131 @@
+﻿@model List<TailoringSupplySpecificProductUnit>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    var supplySpecificProductUnit = SupplySpecificProductUnit.PopulateById(Convert.ToInt64(Request.Form["ModelId"]));
+
+    var selectedIndex = Request.Form["SelectedIndex"] != null ? Convert.ToInt32(Request.Form["SelectedIndex"]) : 0;
+
+    if (selectedIndex == -1)
+    {
+        selectedIndex = Model.Count - 1;
+    }
+
+    var selectedTailoringSupplySpecificProductUnit = new TailoringSupplySpecificProductUnit();
+
+    if (Model.Count > 0)
+    {
+        if (Model.Count <= selectedIndex)
+        {
+            selectedIndex = 0;
+        }
+
+        selectedTailoringSupplySpecificProductUnit = Model[selectedIndex];
+    }
+    var parentId = supplySpecificProductUnit.Id;
+    var parentNamespace = supplySpecificProductUnit.GetType().FullName;
+}
+
+<div class="edit-section-header-popup center-header popup-header">Пошив модели</div>
+
+<div>
+    @if (Model.Count > 0)
+    {
+        <div class="selected-block">
+            @for (var index = 0; index < Model.Count; index++)
+            {
+                var tailoringSupplySpecificProductUnit = Model[index];
+
+                <div index="@index" class="select-item mini-button@(index == selectedIndex ? " hover-button" : "")" onclick="set_TailoringSupplySpecificProductUnit_data(this, @tailoringSupplySpecificProductUnit.Id)">Пошив: @tailoringSupplySpecificProductUnit.Count шт</div>
+            }
+
+            <div index="-1" class="select-item mini-button" onclick="set_TailoringSupplySpecificProductUnit_data(this, 0)">Новый пошив</div>
+        </div>
+    }
+
+    <div class="popup-container" style="flex-direction: column;">
+
+        <div class="edit-section-row">
+            <div class="edit-section-row-quad">
+                @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                {
+                    Name = "FactoryTailoring",
+                    Value = selectedTailoringSupplySpecificProductUnit.Id > 0 ? selectedTailoringSupplySpecificProductUnit.FactoryTailoring.Id.ToString() : "0",
+                    Options = new Factory().Populate(),
+                    AllowDefault = true,
+                    ValidationType = ValidationTypes.Required,
+                    Caption = "Место"
+                })
+            </div>
+            <div class="edit-section-row-quad">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "TailoringCost",
+                    Type = TextboxType.Number,
+                    Value = selectedTailoringSupplySpecificProductUnit.Id > 0 ? selectedTailoringSupplySpecificProductUnit.TailoringCost.ToString("F") : "",
+                    ValidationType = ValidationTypes.Required,
+                    Caption = "Стоимость"
+                })
+            </div>
+            <div class="edit-section-row-quad">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Count",
+                    Type = TextboxType.Number,
+                    Value = selectedTailoringSupplySpecificProductUnit.Id > 0 ? selectedTailoringSupplySpecificProductUnit.Count.ToString() : "",
+                    ValidationType = ValidationTypes.Required,
+                    Caption = "Количество"
+                })
+            </div>
+            <div class="edit-section-row-quad">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Date",
+                    Class = "input calendar-input normal-calendar",
+                    Type = TextboxType.Date,
+                    ValidationType = ValidationTypes.Required,
+                    Value = selectedTailoringSupplySpecificProductUnit.DateString,
+                    DateValue = selectedTailoringSupplySpecificProductUnit.Date,
+                    Caption = "Дата"
+                })
+            </div>
+        </div>
+
+        @if (selectedTailoringSupplySpecificProductUnit.Id > 0)
+        {
+            <div class="edit-section dynamic-section dynamic-section-sample">
+                <div class="edit-section-header edit-section-header edit-section-header-expanded">
+                    <div class="edit-section-header-caption">Расход фурнитуры</div>
+                    <a id="print_FindingColorConsumptionList" onclick="print_item_document('FindingColorConsumptionList', { ModelId: @selectedTailoringSupplySpecificProductUnit.Id, Namespace: '@selectedTailoringSupplySpecificProductUnit.GetType().FullName' })" class="edit-section-icon edit-section-print" title="Печать"></a>
+                </div>
+                @Html.Partial("~/Views/DynamicControl/FindingLocationStorageTailoringSupplySpecificProductUnit.cshtml", FindingLocationStorageTailoringSupplySpecificProductUnit.PopulateByParentId(selectedTailoringSupplySpecificProductUnit.Id))
+            </div>
+        }
+
+        <input type="hidden" dontAutoClear name="Namespace" value="@selectedTailoringSupplySpecificProductUnit.GetType().FullName">
+        <input type="hidden" name="Id" value="@selectedTailoringSupplySpecificProductUnit.Id">
+
+        <input type="hidden" dontAutoClear name="SupplySpecificProductUnit" value="@supplySpecificProductUnit.Id">
+        <input type="hidden" dontAutoClear name="SupplySpecificProductUnitCount" value="@supplySpecificProductUnit.Count">
+        <input type="hidden" dontAutoClear name="TotalTailoringCount" value="@supplySpecificProductUnit.TotalTailoringCount">
+
+        <input type="hidden" name="TailoringSupplySpecificProductUnitCount" value="@selectedTailoringSupplySpecificProductUnit.Count">
+
+    </div>
+</div>
+
+<div class="popup-btn">
+    @if (Model.Count > 0)
+    {
+        <a class="button button-red" onclick="delete_TailoringSupplySpecificProductUnit('@typeof(TailoringSupplySpecificProductUnit).FullName', @parentId, '~/Views/Production/TailoringSupplySpecificProductUnit.cshtml', { SelectedIndex: $('.select-item.hover-button').attr('index') })">Удалить</a>
+    }
+    <a class="button" onclick="save_TailoringSupplySpecificProductUnit('@typeof(TailoringSupplySpecificProductUnit).FullName', @parentId, '~/Views/Production/TailoringSupplySpecificProductUnit.cshtml', { SelectedIndex: $('.select-item.hover-button').attr('index') })">Сохранить</a>
+</div>
+
+<script>
+    set_calendar($('.popup-container'));
+</script>

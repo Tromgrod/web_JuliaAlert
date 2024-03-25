@@ -1,0 +1,249 @@
+﻿@using Weblib.Models
+@{
+    Layout = "~/Views/Master/_Admin.cshtml";
+    var BOProperties = (LIB.AdvancedProperties.BoAttribute)ViewData["BOProperties"];
+    var BOType = (Type)ViewData["BOType"];
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @(BOProperties.DisplayName)
+        :
+        @(((LIB.Tools.BO.ItemBase)Model).GetName())
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/DashBoard/")"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        @if (((LIB.Tools.BO.ItemBase)ViewData["LinkItem"]) != null)
+        {
+            var BOPropertiesLinked = (LIB.AdvancedProperties.BoAttribute)ViewData["BOPropertiesLinked"];
+            <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/Edit/" + ViewData["BOLink"].ToString() + "/" + ViewData["NamespaceLink"].ToString())"><i class="fa fa-@(BOPropertiesLinked.Icon)"></i> @(BOPropertiesLinked.DisplayName)</a></li>
+            <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/EditItem/" + ViewData["BOLink"].ToString() + "/" + ViewData["NamespaceLink"].ToString() + "/" + ViewData["Id"].ToString())"><i class="fa fa-@(BOPropertiesLinked.Icon)"></i> @(((LIB.Tools.BO.ItemBase)ViewData["LinkItem"]).GetName())</a></li>
+            <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/Edit/" + BOType.Name + "/" + HttpUtility.UrlEncode(BOType.Namespace) + "/" + ViewData["BOLink"].ToString() + "/" + ViewData["NamespaceLink"].ToString() + "/" + ViewData["Id"])"><i class="fa fa-@(BOProperties.Icon)"></i> @(BOProperties.DisplayName)</a></li>
+        }
+        else { 
+            <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/Edit/" + BOType.Name + "/" + HttpUtility.UrlEncode(BOType.Namespace))"><i class="fa fa-@(BOProperties.Icon)"></i> @(BOProperties.DisplayName)</a></li>
+        }
+        <li class="active">@(((LIB.Tools.BO.ItemBase)Model).GetName())</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box data-item-container" data-id="@(((LIB.Tools.BO.ItemBase)Model).Id)" data-type="@(ViewData["Grid_Type"])">
+        <div class="box-header with-border">
+            <h3 class="box-title class-header"><a href="@(ViewData["Back_Link"])"><i class="fa fa-@(BOProperties.Icon)"></i> @(BOProperties.SingleName)</a></h3>
+
+            <div class="btn-control-container btn-control-container-top">
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.EditAccess))
+                {
+                    <button class="btn btn-info" onclick="edit_item()"><i class="fa fa-edit"></i> Edit</button>
+                    <div class="btn-group btn-save">
+                        <button type="button" onclick="save_item(@(((LIB.Tools.BO.ItemBase)Model).Id))" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" onclick="return save_and_close_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(ViewData["Back_Link"])')">Save and Close</a></li>
+                    </div>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.DeleteAccess))
+                {
+                    <button class="btn btn-danger" onclick="delete_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(((LIB.Tools.BO.ItemBase)Model).GetName())','@(ViewData["Back_Link"])')"><i class="fa fa-trash-o"></i> Delete</button>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && BOProperties.AllowCopy && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.CopyAccess))
+                {
+                    <button class="btn btn-success" onclick="copy_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(((LIB.Tools.BO.ItemBase)Model).GetName())')"><i class="fa fa-clone"></i> Clone</button>
+                }
+                @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.PrintAccess))
+                {
+                    <button class="btn btn-default" onclick="print_item(@(((LIB.Tools.BO.ItemBase)Model).Id))"><i class="fa fa-print"></i> Tipar</button>
+                }
+                @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.ExportAccess))
+                {
+                    <div class="btn-group btn-export">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Export</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="return export_excell_item(@(((LIB.Tools.BO.ItemBase)Model).Id))" href="#"><i class="fa fa-file-excel-o"></i> Excell</a></li>
+                            <li><a onclick="return export_csv_item(@(((LIB.Tools.BO.ItemBase)Model).Id))" href="#"><i class="fa fa-file-text-o"></i> Csv</a></li>
+                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Pdf</a></li>
+                        </ul>
+                    </div>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.ImportAccess))
+                {
+                    <div class="btn-group btn-import">
+                        <button type="button" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-file-excel-o"></i> Excell</a></li>
+                            <li><a href="#"><i class="fa fa-file-text-o"></i> Csv</a></li>
+                        </ul>
+                    </div>
+                }
+                <div class="class-legend"><i class="fa fa-fw fa-asterisk req-field-indicator"></i> - Cămp obligatoriu</div>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tbody>
+                    @foreach (string key in ((Dictionary<string, List<LIB.AdvancedProperties.AdvancedProperty>>)ViewData["Properties"]).Keys)
+                    {
+                        if (!string.IsNullOrEmpty(key))
+                        {
+                            @:<tr>
+                                @:<td colspan="2" class="property-group">
+                                    @(key)
+                                @:</td>
+                            @:</tr>
+                        }
+                        foreach (LIB.AdvancedProperties.AdvancedProperty property in ((Dictionary<string, List<LIB.AdvancedProperties.AdvancedProperty>>)ViewData["Properties"])[key])
+                        {
+                            @:<tr>
+                                @:<td style="width:150px">
+                                    @(property.Common.DisplayName)
+                                    if (property.Validation != null && (property.Validation.ValidationType == LIB.AdvancedProperties.ValidationTypes.Required || property.Validation.ValidationType == LIB.AdvancedProperties.ValidationTypes.RegularExpressionRequired))
+                                    {
+                                    <i class="fa fa-fw fa-asterisk req-field-indicator"></i>
+                                    }
+                                    if (!string.IsNullOrEmpty(property.Common.PropertyDescription))
+                                    {
+                                    <div class="property-description">@(property.Common.PropertyDescription)</div>
+                                    }
+                                @:</td>
+                                @:<td>
+                                    Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(Model), property, (LIB.Tools.BO.ItemBase)Model, false, LIB.AdvancedProperties.DisplayMode.Advanced) });
+                                @:</td>
+                            @:</tr>
+                        }
+                    }
+                    <tr>
+                        <td style="width: 150px; ">
+                            Creat la data:
+                        </td>
+                        <td>
+                            @(((LIB.Tools.BO.ItemBase)Model).DateCreated != DateTime.MinValue ? ((LIB.Tools.BO.ItemBase)Model).DateCreated.ToString("dd/MM/yyyy HH:mm") : DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 150px; ">
+                            Автор:
+                        </td>
+                        <td>
+                            <a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/Profile/"+((LIB.Tools.BO.ItemBase)Model).CreatedBy.Id.ToString())">@(((LIB.Tools.BO.ItemBase)Model).CreatedBy != null ? ((LIB.Tools.BO.ItemBase)Model).CreatedBy.Login : "")</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn-control-container">
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.EditAccess))
+                {
+                    <button class="btn btn-info" onclick="edit_item()"><i class="fa fa-edit"></i> Edit</button>
+                    <div class="btn-group btn-save">
+                        <button type="button" onclick="save_item(@(((LIB.Tools.BO.ItemBase)Model).Id))" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" onclick="return save_and_close_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(ViewData["Back_Link"])')">Save and Close</a></li>
+                    </div>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.DeleteAccess))
+                {
+                    <button class="btn btn-danger" onclick="delete_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(((LIB.Tools.BO.ItemBase)Model).GetName())','@(ViewData["Back_Link"])')"><i class="fa fa-trash-o"></i> Delete</button>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && BOProperties.AllowCopy && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.CopyAccess))
+                {
+                    <button class="btn btn-success" onclick="copy_item(@(((LIB.Tools.BO.ItemBase)Model).Id),'@(((LIB.Tools.BO.ItemBase)Model).GetName())')"><i class="fa fa-clone"></i> Clone</button>
+                }
+                @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.PrintAccess))
+                {
+                    <button class="btn btn-default" onclick="print_item(@(((LIB.Tools.BO.ItemBase)Model).Id))"><i class="fa fa-print"></i> Tipar</button>
+                }
+                @if (LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.ExportAccess))
+                {
+                    <div class="btn-group btn-export">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Export</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-file-excel-o"></i> Excell</a></li>
+                            <li><a href="#"><i class="fa fa-file-text-o"></i> Csv</a></li>
+                            <li><a href="#"><i class="fa fa-file-pdf-o"></i> Pdf</a></li>
+                        </ul>
+                    </div>
+                }
+                @if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.ImportAccess))
+                {
+                    <div class="btn-group btn-import">
+                        <button type="button" class="btn btn-warning"><i class="fa fa-file-excel-o"></i> Import</button>
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-file-excel-o"></i> Excell</a></li>
+                            <li><a href="#"><i class="fa fa-file-text-o"></i> Csv</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div><!-- /.box-body -->
+    </div>
+</section>
+@if ((bool)ViewData["AllowCRUD"] && LIB.Tools.Security.Authentication.GetCurrentUser().HasAtLeastOnePermission(BOProperties.RevisionsAccess) && BOProperties.LogRevisions)
+{
+<section class="content-header" style="margin-top: -30px;">
+    <h1>
+        Versiuni
+        <small>@(BOProperties.DisplayName)
+        :
+        @(((LIB.Tools.BO.ItemBase)Model).GetName())</small>
+    </h1>
+</section>
+
+<section class="content">
+    <!-- row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- The time line -->
+            <ul class="timeline">
+                @{var counter = 0;}
+                @foreach (var revisionDay in ((Dictionary<DateTime, List<LIB.Tools.Revisions.Revision>>)ViewData["Revisions"]).Values)
+                {
+                    counter++;            
+                    <li class="time-label">
+                        <span class="bg-@(counter == ((Dictionary<DateTime, List<LIB.Tools.Revisions.Revision>>)ViewData["Revisions"]).Count ? "red" : "green")">
+                            @(revisionDay.First(d => d.Id > 0).Date.ToString("dd MMM yyyy"))
+                        </span>
+                    </li>
+                    foreach (var revision in revisionDay)
+                    { 
+                    <li>
+                        <i class="fa fa-@(revision.Icon) bg-@(revision.Color)"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fa fa-clock-o"></i> @(revision.Date.ToString("HH:mm:ss"))</span>
+                            <h3 class="timeline-header no-border"><a href="@LIB.Tools.Utils.URLHelper.GetUrl("ControlPanel/Profile/" + revision.User.Id.ToString())">@(revision.User.Login)</a> @(revision.Comment)</h3>
+                        </div>
+                    </li>
+                    }
+                }
+            </ul>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section>
+}
+@Html.Partial("../Controls/ControlPanel/_deletedialog")
+@Html.Partial("../Controls/ControlPanel/_alertdialog")
+@Html.Partial("../Controls/ControlPanel/_clonedialog")

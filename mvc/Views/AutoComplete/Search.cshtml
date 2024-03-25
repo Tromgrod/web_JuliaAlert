@@ -1,0 +1,11 @@
+﻿@using LIB.Tools.BO
+@{
+    Layout = "~/Views/Master/_Js.cshtml";
+}
+@{var ind = 0;}
+@foreach (var item in Model.Values)
+{     
+    @(ind!=0?", ":"[") @:{"value":@(((ItemBase)item).Id),"label":"@(((ItemBase)item).GetAutocompleteName())","category": "@(((ItemBase)item).Category)" }
+    ind++;
+}            
+]

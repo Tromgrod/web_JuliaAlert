@@ -1,0 +1,94 @@
+﻿@model Dictionary<long, ItemBase>
+@using LIB.Tools.BO
+@using JuliaAlert.Controllers
+@{
+    var Count = (long)ViewData["Count"];
+    var CountPerPage = (int)ViewData["CountPerPage"];
+    var PageNum = (int)ViewData["PageNum"];
+    var viewMode = (ReportController.ViewMode)ViewData["ViewMode"];
+}
+<div class="data-grid-container">
+    <input type="hidden" id="page_num" value="@PageNum" />
+    <input type="hidden" id="count_per_page" value="@CountPerPage" />
+    <input type="hidden" id="sort_col" value="@(Request.Form["SortCol"])" />
+    <input type="hidden" id="sort_dir" value="@(Request.Form["SortDir"])" />
+    @if (Count > 0)
+    {
+        <div class="grid-item-page">
+            <div class="grid-item-page-block">
+                <select onchange="count_per_page()" id="dpdwn_count_per_page" class="select grid-item-page-ddown">
+                    @if (Count > 10)
+                    {
+                        <option @(Model.Count == 10 ? "selected" : "")>10</option>
+                    }
+                    @if (Count > 15)
+                    {
+                        <option @(Model.Count == 15 ? "selected" : "")>15</option>
+                    }
+                    @if (Count > 25)
+                    {
+                        <option @(Model.Count == 25 ? "selected" : "")>25</option>
+                    }
+                    @if (Count > 50)
+                    {
+                        <option @(Model.Count == 50 ? "selected" : "")>50</option>
+                    }
+                    @if (Count > 100)
+                    {
+                        <option @(Model.Count == 100 ? "selected" : "")>100</option>
+                    }
+                    @if (Model.Count > 100 && Count > Model.Count)
+                    {
+                        <option selected>@Model.Count</option>
+                    }
+                    <option @(Count <= 10 || Count == Model.Count ? "selected" : "")>@Count</option>
+                </select>
+                <div class="grid-item-page-ddown-text">записей на странице</div>
+            </div>
+            <div class="grid-item-add-page-block">
+                <div class="grid-item-page-counter">Показано @Model.Count из @Count записей</div>
+                <div class="container-view-mode">
+                    <input type="radio" id="line-report" name="view-mode" @(viewMode == ReportController.ViewMode.Line ? "checked" : "") value="@((int)ReportController.ViewMode.Line)" onclick="SearchReport()">
+                    <label for="line-report" class="view-mode-icon three-line_icon"></label>
+                    <input type="radio" id="square-report" name="view-mode" @(viewMode == ReportController.ViewMode.Square ? "checked" : "") value="@((int)ReportController.ViewMode.Square)" onclick="SearchReport()">
+                    <label for="square-report" class="view-mode-icon four-square_icon"></label>
+                </div>
+            </div>
+        </div>
+    }
+    @if (viewMode == ReportController.ViewMode.Line)
+    {
+        <div class="data-grid" data-type="@(ViewData["Grid_Type"])">
+            <div class="data-grid-title-row">@Html.Partial("../Controls/ReportGrid/_title_row", Model)</div>
+            @foreach (var item in Model.Values)
+            {
+                @Html.Partial("../Controls/ReportGrid/_data_row", item);
+            }
+        </div>
+    }
+    else if (viewMode == ReportController.ViewMode.Square)
+    {
+        <div class="data-square-grid">
+            @foreach (var item in Model.Values)
+            {
+                @Html.Partial("../Controls/ReportGrid/_data_square_item", item);
+            }
+        </div>
+    }
+    @if (Count > CountPerPage)
+    {
+        <div class="main-pagination">
+            @if (PageNum > 1)
+            {
+                <a href="#" onclick="show_report_page(@((PageNum - 1).ToString()))" class="pagination-page">@("<")</a>
+            }
+
+            @Html.Raw(ViewData["BuildPaginng"])
+
+            @if ((PageNum) * CountPerPage < Count)
+            {
+                <a href="#" onclick="show_report_page(@((PageNum + 1).ToString()))" class="pagination-page">></a>
+            }
+        </div>
+    }
+</div>

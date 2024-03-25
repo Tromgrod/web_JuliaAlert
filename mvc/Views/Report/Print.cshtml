@@ -1,0 +1,44 @@
+﻿@using LIB.Tools.BO
+@{
+    Layout = "~/Views/Master/_Print.cshtml";
+    var search_item = (ItemBase)ViewData["Search_Item"];
+    var show_header = (bool)ViewData["Show_Header"];
+}
+@if (show_header)
+{
+<h1 class="print-report-caption">@ViewData["Report_Name"]</h1>
+<div class="report-filters">
+@foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Search_Properties"])
+{
+    var lmodel = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(search_item), property, search_item, true, LIB.AdvancedProperties.DisplayMode.PrintSearch);
+    if (((LIB.Tools.Controls.IDataModel)lmodel).hasValue())
+    {
+    @:<div class="prop-name">@(property.Common.PrintName):</div> 
+    @:<div class="prop-val">
+    Html.RenderAction(property.ControlView, property.Control, new { model = lmodel });
+    @:</div>
+    }
+}
+</div>
+}
+<table class="printTable" border="0" cellspacing="0">
+    <tr>
+        @foreach (var property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+        {
+            @:<th>
+                @:@(((LIB.AdvancedProperties.AdvancedProperty)property).Common.PrintName)
+            @:</th>
+        }        
+    </tr>
+    @foreach (var item in ((Dictionary<long, ItemBase>)ViewData["DataItems"]).Values)
+    {
+    @:<tr>
+        foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+        {
+            @:<td @Html.Raw(property.Common.PrintWidth!=0?"style=\"width:"+property.Common.PrintWidth.ToString()+ "\"" : "")>
+                Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(item), property, (LIB.Tools.BO.ItemBase)item, true) });
+            @:</td>
+        }
+    @:</tr>
+    }    
+</table>

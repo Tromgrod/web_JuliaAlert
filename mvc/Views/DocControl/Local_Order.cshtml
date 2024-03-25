@@ -1,0 +1,291 @@
+﻿@model Order
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using LIB.BusinessObjects
+@{
+    ViewBag.Title = Model.Id > 0 ? "Заказ: " + Model.Client.GetName() : "Добавить заказ";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool IsAdmin = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.SuperAdmin),
+    AddOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.AddOrder),
+    EditOrderPass = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.EditOrder);
+
+    var CanEdit = IsAdmin || EditOrderPass || (Model.Id > 0 && Model.CreatedBy.Id == currentUser.Id) || (AddOrderPass && Model.Id == 0);
+    var CanDelete = CanEdit || Model.DateCreated.Date == DateTime.Today;
+
+    ViewData["OrderId"] = Model.Id;
+    ViewData["OrderLink"] = "DocControl/Local_Order";
+}
+<script src="~/Scripts/FrontEnd/Object/order.js"></script>
+<script src="~/Scripts/FrontEnd/Object/product.js"></script>
+<script src="~/Scripts/FrontEnd/Object/client.js"></script>
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "Local_Order",
+            Delete = Model.Id > 0 && CanDelete,
+            Save = CanEdit,
+            Namespace = typeof(Order).FullName
+        })
+
+        var totalSum = Math.Round(Model.GetTotalSum(), 2, MidpointRounding.AwayFromZero);
+        var discountSum = Math.Round(Model.GetDiscountSum(), 2, MidpointRounding.AwayFromZero);
+        var finalTotalSum = Math.Round(Model.GetFinalTotalSum(), 2, MidpointRounding.AwayFromZero);
+        var currencyName = Model.Id > 0 ? Model.SalesChannel.Currency.GetName() : string.Empty;
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header-flex">Добавить новый заказ</div>
+                <div class="edit-section-body">
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "Stock",
+                                AllowDefault = true,
+                                Value = Model.Stock != null ? Model.Stock.Id.ToString() : "0",
+                                Options = Stock.PopulateByMD(),
+                                Caption = "Склад",
+                                Disabled = !CanEdit,
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "SalesChannel",
+                                AllowDefault = true,
+                                Value = Model.SalesChannel != null ? Model.SalesChannel.Id.ToString() : "0",
+                                Options = SalesChannel.PopulateByMD(),
+                                Caption = "Канал продаж",
+                                Disabled = !CanEdit,
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "OrderDate",
+                                Class = "input calendar-input",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Date,
+                                Value = Model.OrderDate != DateTime.MinValue ? Model.OrderDate.ToString(@"dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) : "",
+                                DateValue = Model.OrderDate != DateTime.MinValue ? Model.OrderDate : DateTime.MinValue,
+                                Disabled = !CanEdit,
+                                ValidationType = ValidationTypes.Required,
+                                Caption = "Оформление"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "OrderState",
+                                AllowDefault = true,
+                                Value = (Model.OrderState != null ? Model.OrderState.Id.ToString() : ((long)OrderState.Enum.Paid).ToString()),
+                                Options = new OrderState().Populate(),
+                                Disabled = !CanEdit,
+                                Caption = "Статус",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="full-size">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Description",
+                                Type = Weblib.Models.Common.Enums.TextboxType.MultiLine,
+                                Value = Model.Description,
+                                Disabled = !CanEdit,
+                                Caption = "Описание"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            var client = Model.Id > 0 ? Client.PopulateById(Model.Client.Id) : null;
+            var clientOrders = client != null && client.Id > 0 ? Order.PopulateByClient(client) : new List<Order>();
+        }
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header flex-caption">
+                    <div>
+                        <span>Заказчик@(client != null ? ": " : "")</span>
+                        <label id="client_name_ajax" class="text-client">@(client != null ? client.Id > 0 ? client.GetName() : "Заказчик удален!" : "")</label>
+                    </div>
+                    <div onclick="toggle_client_section(this)" title="Extinde" class="edit-section-state-indicator" style="height: 47px; border-left: 4px solid #666; border-radius: 0 5px 0 0 ">
+                        <div class="close-block right-line"></div>
+                        <div class="close-block left-line"></div>
+                    </div>
+                </div>
+                <div id="client_info" class="edit-section-body edit-section-body-form" style="@(Model.Id > 0 ? "display: none" : "")">
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            AutocompleteName = "Client",
+                            Type = Weblib.Models.Common.Enums.TextboxType.AutoComplete,
+                            AutocompleteServer = true,
+                            AutocompleteMinLen = 2,
+                            AutocompleteType = typeof(Client),
+                            AutocompleteClearFunction = "clear_client_autocomplete(this)",
+                            AutocompleteFilter = ((long)Currency.Enum.MDL).ToString(),
+                            Value = client != null && client.Id > 0 ? client.Name : "",
+                            HtmlValue = client != null && client.Id > 0 ? client.Id.ToString() : "",
+                            Disabled = !CanEdit,
+                            OnChange = "client_data_output()",
+                            Caption = "Имя"
+                        })
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Address",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                                Value = client != null ? client.Address : "",
+                                Disabled = !CanEdit,
+                                Caption = "Адрес"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Phone",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                                OnKeyUp = "check_number_input(this)",
+                                Value = client != null ? client.Phone : "",
+                                Disabled = !CanEdit,
+                                Caption = "Телефон"
+                            })
+                        </div>
+                    </div>
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-trio edit-section-row-fisrt">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Discount",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                                Class = "input funcNumber",
+                                Value = client != null ? client.Discount.ToString() : "",
+                                Disabled = !CanEdit,
+                                Caption = "Скидка"
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-second">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Birthday",
+                                Class = "input calendar-input",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Date,
+                                Value = client != null && client.Birthday != DateTime.MinValue ? client.Birthday.ToString("dd/MM/yyyy") : "",
+                                DateValue = client != null ? client.Birthday : DateTime.MinValue,
+                                Disabled = !CanEdit,
+                                Caption = "Дата рождения"
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-third">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Email",
+                                Type = Weblib.Models.Common.Enums.TextboxType.Email,
+                                Value = client != null ? client.Email : "",
+                                Disabled = !CanEdit,
+                                Caption = "Email"
+                            })
+                        </div>
+                    </div>
+                    <div class="edit-section-row not-vivible" style="padding: 7px">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Name = "Comment",
+                            Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                            Value = client != null ? client.Comment : "",
+                            Disabled = !CanEdit,
+                            PlaceHolder = "Место для коментария..."
+                        })
+                        <a class="description-control" onclick="show_description(this)"></a>
+                    </div>
+                </div>
+                <div id="client_order_info" class="edit-section-body edit-section-body-form" style="max-height: 243px; @(Model.Id > 0 ? "" : "display: none")">
+                    @Html.Partial("~/Views/Client/ClientOrders.cshtml", clientOrders)
+                </div>
+            </div>
+
+            <input type="hidden" name="Countries" value="@((long)Countries.Enum.Moldova)">
+            <input type="hidden" name="State" value="@((long)State.Enum.Chisinau)">
+            <input type="hidden" name="City" value="@((long)City.Enum.Chisinau)">
+        </div>
+    </div>
+
+    @if (Model.Id > 0)
+    {
+        <div class="clear separator"></div>
+
+        string orderHeaderCaption = totalSum != finalTotalSum ? totalSum + currencyName + " - " + discountSum + currencyName + " = " + finalTotalSum + currencyName : totalSum + currencyName;
+
+        <div id="product_for_order_dynamic" class="edit-section dynamic-section dynamic-section-sample">
+            <div class="edit-section-header">
+                <div style="display: flex;">
+                    <div id="dynamic_section_samples" onclick="toggle_dynamic_section(this,'@typeof(ProductForOrder).FullName')" title="Добавить модель" class="edit-section-state-indicator">
+                        <div class="close-block right-line"></div>
+                        <div class="close-block left-line"></div>
+                    </div>
+                    <div id="header-caption-price" class="edit-section-header-caption">Заказы: @orderHeaderCaption</div>
+                </div>
+                <div class="edit-section-icons-group">
+                    @if (CanEdit)
+                    {
+                        <a onclick="add_new_dynamic_section(this,'@typeof(ProductForOrder).FullName')" title="Добавить модель к заказу" class="edit-section-icon edit-section-new"></a>
+                        <a onclick="save_all_dynamic_section(this, @Model.Id, '@typeof(ProductForOrder).FullName')" title="Сохранить" class="edit-section-icon edit-section-add"></a>
+                    }
+                </div>
+            </div>
+            <div class="edit-section-body edit-section-body-samples"></div>
+        </div>
+
+        <div class="clear separator"></div>
+
+        <div class="edit-section dynamic-section dynamic-section-sample">
+            <div class="edit-section-header">
+                <div style="display: flex;">
+                    <div id="dynamic_section_samples" onclick="toggle_dynamic_section(this,'@typeof(Gift).FullName')" title="Добавить подарок" class="edit-section-state-indicator">
+                        <div class="close-block right-line"></div>
+                        <div class="close-block left-line"></div>
+                    </div>
+                    <div class="edit-section-header-caption">Подарки: @Model.Gifts.Values.Sum(g => ((Gift)g).Count) шт</div>
+                </div>
+                <div class="edit-section-icons-group">
+                    @if (CanEdit)
+                    {
+                        <a onclick="add_new_dynamic_section(this,'@typeof(Gift).FullName')" title="Добавить модель к заказу" class="edit-section-icon edit-section-new"></a>
+                    }
+                </div>
+            </div>
+            <div class="edit-section-body edit-section-body-samples"></div>
+        </div>
+    }
+</form>
+<script>
+    var gAcceptedId = @((long)OrderState.Enum.Accepted),
+        gDeliveredId = @((long)OrderState.Enum.Delivered),
+        gSentId = @((long)OrderState.Enum.Sent),
+        gRefundClaimedId = @((long)OrderState.Enum.RefundClaimed),
+        gPartialReturnId = @((long)OrderState.Enum.PartialReturn),
+        gReturnId = @((long)OrderState.Enum.Return),
+        gCurrencyName = '@currencyName',
+        gIsLocalOrder = true;
+</script>

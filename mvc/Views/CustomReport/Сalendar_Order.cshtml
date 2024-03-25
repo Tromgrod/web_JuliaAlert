@@ -1,0 +1,118 @@
+﻿@model Dictionary<DateTime, int>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using System.Globalization
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    var Year = (int)ViewData["YearForm"];
+    var SalesChannelId = ViewData["SalesChannelId"];
+
+    var TmpDate = new DateTime(Year, 1, 1);
+
+    var TypeCalendar = ViewData["TypeCalendar"].ToString();
+}
+<div class="previous-calendar-btn calendar-btn" onclick="update_calendar('@TypeCalendar', @(Year - 1))"></div>
+<div style="position: relative;">
+    <div class="ajax-loading-blur"></div>
+    <table cellspacing="0">
+        <thead>
+            <tr>
+                <td colspan="33">
+                    <div class="title-container">
+                        <div>
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "SalesChannel",
+                                AllowDefault = true,
+                                Value = SalesChannelId != null ? SalesChannelId.ToString() : "0",
+                                Options = new SalesChannel().Populate(),
+                                Caption = "Канал продаж"
+                            })
+                        </div>
+                        <div class="table-title">
+                            <b>Отчет по количеству продаж за @TmpDate.Year год</b>
+                        </div>
+                        <div class="button gray-btn" onclick="update_calendar('@TypeCalendar', @Year, $('[name=SalesChannel]').val())">
+                            Поиск
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var row = 1; row <= 13; row++)
+            {
+                var month = row - 1;
+                var SumOrderMonth = 0;
+                <tr>
+                    @for (var column = 1; column <= 33; column++)
+                    {
+                        <td class="@(row == 1 || column == 1 || column == 33 ? " " : " count_sale")">
+                            @if (row == 1 && (column == 1 || column == 33))
+                            {
+                                continue;
+                            }
+                            else if (row == 1)
+                            {
+                                <b>@(column - 1)</b>
+                            }
+                            else if (column == 1)
+                            {
+                                <b>@TmpDate.ToString("MMM", CultureInfo.CurrentCulture)</b>
+                            }
+                            else if (column == 33)
+                            {
+                                <b>
+                                    @if (TmpDate.AddDays(-1).Month <= DateTime.Today.Month)
+                                    {
+                                        @SumOrderMonth
+                                    }
+                                    else
+                                    {
+                                        @:-
+                                    }
+                                </b>
+                            }
+                            else
+                            {
+                                if (month == TmpDate.Month)
+                                {
+                                    if (TmpDate <= DateTime.Today)
+                                    {
+                                        try
+                                        {
+                                            var CountOrder = Model[TmpDate];
+
+                                            SumOrderMonth += CountOrder;
+                                            @CountOrder
+                                        }
+                                        catch
+                                        {
+                                            @:0
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @:-
+                                    }
+                                    TmpDate = TmpDate.AddDays(1);
+                                }
+                                else
+                                {
+                                    @:-
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="next-calendar-btn calendar-btn" onclick="update_calendar('@TypeCalendar', @(Year + 1))"></div>
+
+<script>
+    coloring_table('100, 255, 0');
+</script>

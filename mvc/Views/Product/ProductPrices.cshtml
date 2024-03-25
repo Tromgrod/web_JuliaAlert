@@ -1,0 +1,55 @@
+﻿@model Product
+@using JuliaAlert.Models.Objects
+@using LIB.BusinessObjects
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool ProductionAccess = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.Production);
+}
+@{
+    var ProductPrices = ProductPrice.PopulateByProduct(Model);
+    var salesChannelsWithFormula = SalesChannel.PopulateSalesChannelsFormula();
+}
+@foreach (SalesChannel salesChannel in new SalesChannel().Populate().Values)
+{
+    decimal price = 0;
+    foreach (ProductPrice productPrice in ProductPrices)
+    {
+        if (productPrice.SalesChannel.Id == salesChannel.Id)
+        {
+            price = productPrice.Price;
+            break;
+        }
+    }
+
+    var isSalesChannelWithFormula = salesChannelsWithFormula.Any(sc => sc.Id == salesChannel.Id);
+
+    <div class="edit-section-row">
+        <div class="edit-section-row-trio edit-section-row-fisrt">
+            <div class="input-row">
+                <div class="caption input-caption">Канал продаж</div>
+                <input type="text" class="input" value="@salesChannel.GetName()" disabled>
+            </div>
+        </div>
+        @if (ProductionAccess)
+        {
+            <div class="edit-section-row-trio edit-section-row-second">
+                @if (isSalesChannelWithFormula)
+                {
+                    <div class="input-row">
+                        <div class="caption input-caption">Цена по формуле</div>
+                        <input type="text" class="input" value="@(Model.GetMaxEstimatedPriceBySalesChannel(salesChannel).ToString("F") + " " + salesChannel.Currency.Name)" disabled>
+                    </div>
+                }
+            </div>
+        }
+        <div class="edit-section-row-trio edit-section-row-third">
+            <div class="input-row">
+                <div class="caption input-caption">Фактическая цена</div>
+                <input type="text" name="Price_@salesChannel.GetName()" class="input" value="@(price > 0 ? price.ToString("F") : "")" @(!ProductionAccess ? "disabled" : "")>
+            </div>
+        </div>
+    </div>
+}

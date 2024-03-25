@@ -1,0 +1,27 @@
+.header-breadcrumbs {
+    width: auto!important;
+}
+
+.header-breadcrumbs a {
+    display: none;
+}
+
+.header-breadcrumbs a:first-child {
+    display: block;
+}
+
+.control-sidebar{
+    display: none;
+}
+
+.content-header .btn-group{
+    display: none;
+}
+
+.btn-export{
+    display: none;
+}
+
+.btn-import{
+    display: none;
+}

@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    var btnHeaderLink = ViewData["BtnHeaderLink"] != null ? ViewData["BtnHeaderLink"].ToString() : string.Empty;
+}
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+
+<div class="edit-section-header-popup center-header popup-header">
+    @Html.Raw(ViewData["Report_Name"])
+    @if (!string.IsNullOrEmpty(btnHeaderLink))
+    {
+        @:<a onclick="window.open('@btnHeaderLink')" class="edit-section-icon edit-section-link" title="Перейти"></a>
+    }
+</div>
+
+<div class="inner-content-area-popup content-report">
+    <div class="search-results-min">
+        @Html.Partial("../Controls/ReportGrid/_data_grid_min", ViewData["DataItems"])
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@using LIB.Tools.Utils
+
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+
+<div class="edit-section-header-popup center-header popup-header">
+    <div>Группа MD</div>
+</div>
+
+<div class="popup-container">
+    <div class="icon-item">
+        <a class="dashboard-icon-order dashboard-icon" href="@URLHelper.GetUrl("DocControl/Local_Order")" target="_blank">
+            <div class="dashboard-icon-mini-moldova"></div>
+        </a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Local_Order")" target="_blank">
+            <span class="dashboard-icon-title button">Добавить<br>заказ</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/OrderList_LocalSales")" target="_blank">
+            <div class="dashboard-icon-mini-moldova"></div>
+        </a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/OrderList_LocalSales")" target="_blank">
+            <span id="add_participation_category_btn" class="dashboard-icon-title button">Список<br>заказов MD</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/CustomerList_LocalSales")" target="_blank">
+            <div class="dashboard-icon-mini-moldova"></div>
+        </a>
+        <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/CustomerList_LocalSales")" target="_blank">
+            <span class="dashboard-icon-title button">Анализ по<br>клиентам MD</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="dashboard-icon-modellist dashboard-icon" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList_LocalSales")" target="_blank">
+            <div class="dashboard-icon-mini-moldova"></div>
+        </a>
+        <a class="dashboard-icon-title-conteiner" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList_LocalSales")" target="_blank">
+            <span class="dashboard-icon-title button">Анализ по<br>моделям MD</span>
+        </a>
+    </div>
+
+    <div class="icon-item">
+        <a class="order-icon dashboard-icon" onclick="open_simple_popup_noData('~/Views/Import/LocalOrder.cshtml')">
+            <label class="dashboard-icon-mini-moldova"></label>
+        </a>
+        <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/Import/LocalOrder.cshtml')">
+            <span id="add_participation_category_btn" class="dashboard-icon-title button">Импорт<br>заказов (MD)</span>
+        </a>
+    </div>
+</div>

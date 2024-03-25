@@ -1,0 +1,9 @@
+﻿<div class="data-grid-data-row data-grid-data-row-@(((LIB.Tools.BO.ItemBase)Model).Id)">    
+    <div class="data-grid-data">@(((LIB.Tools.BO.ItemBase)Model).Id!=0?((LIB.Tools.BO.ItemBase)Model).Id.ToString():"")</div>   
+    @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+    {
+        @:<div class="data-grid-data"> 
+            Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(Model), property, (LIB.Tools.BO.ItemBase)Model, false, LIB.AdvancedProperties.DisplayMode.Search) });
+        @:</div>
+    }     
+</div>

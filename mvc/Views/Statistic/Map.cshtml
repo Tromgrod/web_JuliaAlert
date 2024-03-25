@@ -1,0 +1,99 @@
+﻿@using JuliaAlert.Controllers
+@using JuliaAlert.Models.Objects
+@using LIB.Extensions
+@{
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var uniqueProducts = UniqueProduct.PopulateAll();
+    var salesChannels = new SalesChannel().Populate();
+    var typeProducts = new TypeProduct().Populate();
+    var countries = new Countries().Populate();
+
+    var years = Session["StatisticMap_Years"].ToString().Split(',');
+    int monthFrom = (int)Session["StatisticMap_MonthFrom"];
+    int monthTo = (int)Session["StatisticMap_MonthTo"];
+    int countingType = (int)Session["StatisticMap_CountingType"];
+
+    var uniqueProductIdSelected = Session["StatisticMap_UniqueProducts"] != null ? Session["StatisticMap_UniqueProducts"].ToString().Split(',') : null;
+    var salesChannelIdSelected = Session["StatisticMap_SalesChannels"] != null ? Session["StatisticMap_SalesChannels"].ToString().Split(',') : null;
+    var typeProductIdSelected = Session["StatisticMap_TypeProducts"] != null ? Session["StatisticMap_TypeProducts"].ToString().Split(',') : null;
+    var countryIdSelected = Session["StatisticMap_Countries"] != null ? Session["StatisticMap_Countries"].ToString().Split(',') : null;
+}
+
+<link href="~/Scripts/Bootstrap_Plugins/open-layers/ol.css" rel="stylesheet">
+<script src="~/Scripts/Bootstrap_Plugins/open-layers/ol.js"></script>
+<script src="~/Scripts/FrontEnd/Statistic/statistic_map.js"></script>
+
+<div class="map-container">
+    <div id="map"></div>
+
+    <div id="map-filter">
+
+        <div class="header-map-filter">
+            <label id="filter-header">Основные фильтра</label>
+            <div class="collapse-filter-map"></div>
+        </div>
+
+        <div class="filter-container">
+            <div class="search-data-grid filter-column">
+
+                <div class="years-filter">
+                    <div class="data-grid-data-title">Года:</div>
+                    <select id="years" class="select select-multyselect select2-hidden-accessible" onchange="years_event(this)" multiple>
+                        @for (var year = DateTime.Now.Year; year >= 2015; year--)
+                        {
+                            <option @(years.Any(y => y == year.ToString()) ? "selected" : "") value="@year">@year</option>
+                        }
+                    </select>
+                </div>
+
+                <div id="months" style="@(years.Count() != 1 ? "display: none; " : "")">
+                    <div class="data-grid-data-title">Месяца:</div>
+                    <div class="months-block">
+                        <select id="monthFrom" class="select" onchange="months_event()">
+                            <option @(monthFrom == 1 ? "selected" : "") value="1">Январь</option>
+                            <option @(monthFrom == 2 ? "selected" : "") value="2">Февраль</option>
+                            <option @(monthFrom == 3 ? "selected" : "") value="3">Март</option>
+                            <option @(monthFrom == 4 ? "selected" : "") value="4">Апрель</option>
+                            <option @(monthFrom == 5 ? "selected" : "") value="5">Май</option>
+                            <option @(monthFrom == 6 ? "selected" : "") value="6">Июнь</option>
+                            <option @(monthFrom == 7 ? "selected" : "") value="7">Июль</option>
+                            <option @(monthFrom == 8 ? "selected" : "") value="8">Август</option>
+                            <option @(monthFrom == 9 ? "selected" : "") value="9">Сентябрь</option>
+                            <option @(monthFrom == 10 ? "selected" : "") value="10">Октябрь</option>
+                            <option @(monthFrom == 11 ? "selected" : "") value="11">Ноябрь</option>
+                            <option @(monthFrom == 12 ? "selected" : "") value="12">Декабрь</option>
+                        </select>
+                        <div class="control-defis"> - </div>
+                        <select id="monthTo" class="select" onchange="months_event()">
+                            <option @(monthTo == 1 ? "selected" : "") value="1">Январь</option>
+                            <option @(monthTo == 2 ? "selected" : "") value="2">Февраль</option>
+                            <option @(monthTo == 3 ? "selected" : "") value="3">Март</option>
+                            <option @(monthTo == 4 ? "selected" : "") value="4">Апрель</option>
+                            <option @(monthTo == 5 ? "selected" : "") value="5">Май</option>
+                            <option @(monthTo == 6 ? "selected" : "") value="6">Июнь</option>
+                            <option @(monthTo == 7 ? "selected" : "") value="7">Июль</option>
+                            <option @(monthTo == 8 ? "selected" : "") value="8">Август</option>
+                            <option @(monthTo == 9 ? "selected" : "") value="9">Сентябрь</option>
+                            <option @(monthTo == 10 ? "selected" : "") value="10">Октябрь</option>
+                            <option @(monthTo == 11 ? "selected" : "") value="11">Ноябрь</option>
+                            <option @(monthTo == 12 ? "selected" : "") value="12">Декабрь</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="dynamic-filter" style="display: none; overflow-x: auto;">
+                    <label class="data-grid-data-title"></label>
+                    <select class="select select-multyselect select2-hidden-accessible" onchange="search_statistic_frame()" multiple></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="map-legend-container">
+        <div class="map-legend"></div>
+        <div class="map-legend-text">Загрузка</div>
+    </div>
+</div>
+
+<div class="popup-map"></div>

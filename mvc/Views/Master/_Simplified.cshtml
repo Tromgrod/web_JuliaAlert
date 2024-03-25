@@ -1,0 +1,26 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-config" content="none"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>@ViewBag.Title</title>
+        <link href="~/images/favicon.png" rel="shortcut icon" type="image/png" />
+        @Styles.Render("~/styles/common")
+        @Styles.Render("~/styles/simplified")
+        @Styles.Render("~/styles/front_common")
+        @Styles.Render("~/styles/front_simplified")
+        @Scripts.Render("~/scripts/jquerylib")
+        @Scripts.Render("~/scripts/front_common")
+        @Scripts.Render("~/scripts/commonlib")
+        @Scripts.Render("~/scripts/"+@ViewBag.Script)
+    </head>
+    <body>
+        @Html.Partial("../Layout/Simplified/_Header")
+        <div class="simplified-content">
+            @RenderBody()          
+        </div>
+        @Html.Partial("../Layout/Simplified/_Footer")
+    </body>
+</html>

@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD11EBB4-B949-481C-BDD8-D9D79C866770}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LIB</RootNamespace>
+    <AssemblyName>lib</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Engine, Version=4.5.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Autofac.Engine.4.5.0\lib\net45\Autofac.Engine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="BarcodeStandard, Version=2.2.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\BarcodeLib.2.2.10\lib\netstandard2.0\BarcodeStandard.dll</HintPath>
+    </Reference>
+    <Reference Include="Commons, Version=0.4.2.8580, Culture=neutral, PublicKeyToken=44382d1b57473eda">
+      <HintPath>..\SLN\packages\Memcached.ClientLibrary.1.0\lib\net20\Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Elasticsearch.Net, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Elasticsearch.Net.7.3.0\lib\net461\Elasticsearch.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.12.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\HtmlAgilityPack.1.11.12\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <HintPath>..\SLN\packages\Memcached.ClientLibrary.1.0\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Memcached.ClientLibrary.1.0\lib\net20\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42c0400964dcc297, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Memcached.ClientLibrary.1.0\lib\net20\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\NEST.7.3.0\lib\net461\Nest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nest.JsonNetSerializer, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\NEST.JsonNetSerializer.7.3.0\lib\net461\Nest.JsonNetSerializer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Drawing.Common.6.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=2.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Text.Json.2.0.0.11\lib\net40\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\SLN\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvancedProperties\AdvancedProperties.cs" />
+    <Compile Include="AdvancedProperties\AdvancedProperty.cs" />
+    <Compile Include="AdvancedProperties\comareOrder.cs" />
+    <Compile Include="AdvancedProperties\Image.cs" />
+    <Compile Include="AdvancedProperties\InputBox.cs" />
+    <Compile Include="AdvancedProperties\Service.cs" />
+    <Compile Include="AdvancedProperties\EditTemplates.cs" />
+    <Compile Include="AdvancedProperties\PropertyOrderPair.cs" />
+    <Compile Include="AdvancedProperties\ValidationTypes.cs" />
+    <Compile Include="AdvancedProperties\Access.cs" />
+    <Compile Include="AdvancedProperties\BoAttribute.cs" />
+    <Compile Include="AdvancedProperties\Calendar.cs" />
+    <Compile Include="AdvancedProperties\Common.cs" />
+    <Compile Include="AdvancedProperties\DB.cs" />
+    <Compile Include="AdvancedProperties\LookUp.cs" />
+    <Compile Include="AdvancedProperties\Encryption.cs" />
+    <Compile Include="AdvancedProperties\EditTemplatesWorker.cs" />
+    <Compile Include="AdvancedProperties\HtmlText.cs" />
+    <Compile Include="AdvancedProperties\LinkItem.cs" />
+    <Compile Include="AdvancedProperties\Link.cs" />
+    <Compile Include="AdvancedProperties\Mark.cs" />
+    <Compile Include="AdvancedProperties\MultiCheck.cs" />
+    <Compile Include="AdvancedProperties\ParentItem.cs" />
+    <Compile Include="AdvancedProperties\PopUp.cs" />
+    <Compile Include="AdvancedProperties\PopUpSelector.cs" />
+    <Compile Include="AdvancedProperties\PropertyEnums.cs" />
+    <Compile Include="AdvancedProperties\PropertyItem.cs" />
+    <Compile Include="AdvancedProperties\PropertySorter.cs" />
+    <Compile Include="AdvancedProperties\SerializableDictionary.cs" />
+    <Compile Include="AdvancedProperties\Template.cs" />
+    <Compile Include="AdvancedProperties\Text.cs" />
+    <Compile Include="AdvancedProperties\Translate.cs" />
+    <Compile Include="AdvancedProperties\Validation.cs" />
+    <Compile Include="AppConstants.cs" />
+    <Compile Include="BusinessObjects\Barcode\Barcode_CODE128.cs" />
+    <Compile Include="BusinessObjects\Barcode\Barcode.cs" />
+    <Compile Include="BusinessObjects\Barcode\Barcode_EAN13.cs" />
+    <Compile Include="BusinessObjects\BasePermissionenum.cs" />
+    <Compile Include="BusinessObjects\BusinessObject.cs" />
+    <Compile Include="BusinessObjects\Document.cs" />
+    <Compile Include="BusinessObjects\Graphic.cs" />
+    <Compile Include="BusinessObjects\Modulesenum.cs" />
+    <Compile Include="BusinessObjects\Permission.cs" />
+    <Compile Include="BusinessObjects\Person.cs" />
+    <Compile Include="BusinessObjects\PredefinedColor.cs" />
+    <Compile Include="Cache\CacheGroup.cs" />
+    <Compile Include="Cache\CacheKeyBuilder.cs" />
+    <Compile Include="Cache\CacheItem.cs" />
+    <Compile Include="Connected Services\ExceptionHandler\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Configurations\BaseEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\GraphicEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\IEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\PersonEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\RoleEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\SexEntityConfiguration.cs" />
+    <Compile Include="EF\Configurations\UserEntityConfiguration.cs" />
+    <Compile Include="EF\MedCoreContext.cs" />
+    <Compile Include="Connectors\ElasticSearchConnector.cs" />
+    <Compile Include="Extensions\EnumExtensoins.cs" />
+    <Compile Include="Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Helpers\DynamicJsGeneratorHelpers.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\LibConfig.cs" />
+    <Compile Include="Helpers\ColorHelpers.cs" />
+    <Compile Include="Helpers\RequestResult.cs" />
+    <Compile Include="Helpers\RequestResultType.cs" />
+    <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\AutofacRequestLifetimeHttpModule.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\ComponentLifeStyle.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\ContainerConfigurer.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\ContainerManager.cs" />
+    <Compile Include="Infrastructure\DependencyManagement\IDependencyRegistrar.cs" />
+    <Compile Include="Infrastructure\EngineContext.cs" />
+    <Compile Include="Infrastructure\EventBroker.cs" />
+    <Compile Include="Infrastructure\IEngine.cs" />
+    <Compile Include="Infrastructure\IStartupTask.cs" />
+    <Compile Include="Infrastructure\ITypeFinder.cs" />
+    <Compile Include="Infrastructure\LinEngine.cs" />
+    <Compile Include="Infrastructure\Singleton.cs" />
+    <Compile Include="Infrastructure\WebAppTypeFinder.cs" />
+    <Compile Include="Infrastructure\WriteLockDisposable.cs" />
+    <Compile Include="Models\BaseControlModel.cs" />
+    <Compile Include="Models\LinkModel.cs" />
+    <Compile Include="MVC\IRouteProvider.cs" />
+    <Compile Include="Plugins\BasePlugin.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\IPluginFinder.cs" />
+    <Compile Include="Plugins\PluginDescriptor.cs" />
+    <Compile Include="Plugins\PluginFileParser.cs" />
+    <Compile Include="Plugins\PluginFinder.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Tools\AdminArea\AdminAreaGroup.cs" />
+    <Compile Include="Tools\AdminArea\AdminAreaGroupenum.cs" />
+    <Compile Include="Tools\BO\AggregateBase.cs" />
+    <Compile Include="Tools\BO\ItemBase.cs" />
+    <Compile Include="BusinessObjects\Language.cs" />
+    <Compile Include="BusinessObjects\Role.cs" />
+    <Compile Include="BusinessObjects\Sex.cs" />
+    <Compile Include="BusinessObjects\Translation.cs" />
+    <Compile Include="Tools\BO\SortParameter.cs" />
+    <Compile Include="Tools\BO\Translation.cs" />
+    <Compile Include="BusinessObjects\Users.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Controls\DataTableOutput.cs" />
+    <Compile Include="Tools\Controls\DecimalNumberRange.cs" />
+    <Compile Include="Tools\Controls\IDataModel.cs" />
+    <Compile Include="Tools\Controls\IDataProcessor.cs" />
+    <Compile Include="Tools\Controls\DateRange.cs" />
+    <Compile Include="Tools\Controls\NumberRange.cs" />
+    <Compile Include="Tools\AdminArea\ToolLinkItem.cs" />
+    <Compile Include="Tools\Localization\ResourceData.cs" />
+    <Compile Include="Tools\Revisions\OperationTypes.cs" />
+    <Compile Include="Tools\Revisions\Revision.cs" />
+    <Compile Include="Tools\Security\Authentication.cs" />
+    <Compile Include="Tools\Security\Permissions.cs" />
+    <Compile Include="Cache\CacheProcessor.cs" />
+    <Compile Include="Tools\Utils\CommonHelper.cs" />
+    <Compile Include="Tools\Utils\Config.cs" />
+    <Compile Include="Tools\Utils\ContextItemsHolder.cs" />
+    <Compile Include="Tools\Utils\ImageResizer.cs" />
+    <Compile Include="Tools\Utils\IWebHelper.cs" />
+    <Compile Include="Tools\Utils\URLHelper.cs" />
+    <Compile Include="Tools\Utils\DataBase.cs" />
+    <Compile Include="Tools\Utils\Crypt.cs" />
+    <Compile Include="Tools\Utils\ExceptionManagement.cs" />
+    <Compile Include="Tools\Utils\General.cs" />
+    <Compile Include="Tools\Utils\ResXUnified.cs" />
+    <Compile Include="Tools\Utils\SessionItems.cs" />
+    <Compile Include="Tools\Utils\Strings.cs" />
+    <Compile Include="Tools\Utils\Tools.cs" />
+    <Compile Include="Tools\Utils\Translate.cs" />
+    <Compile Include="Tools\Utils\UtilityMail.cs" />
+    <Compile Include="Tools\Utils\WebHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\ExceptionHandler\ExceptionHandlerService.wsdl" />
+    <None Include="Connected Services\ExceptionHandler\Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ExceptionHandler\Service6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Translations\Translations.csproj">
+      <Project>{64f4e1b8-50f6-429a-81c1-dd47d8c4fb65}</Project>
+      <Name>Translations</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ExceptionHandler\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ExceptionHandler\Service.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ExceptionHandler\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ExceptionHandler\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ExceptionHandler\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,7 @@
+﻿@model TextboxModel
+@using Weblib.Models.Common
+<textarea name="@Model.Name" class="@(!string.IsNullOrEmpty(Model.Class) ? Model.Class : "textarea")" placeholder="@Model.PlaceHolder"
+    @if (Model.Disabled){ @: disabled
+    }
+    @if (Model.ValidationType != LIB.AdvancedProperties.ValidationTypes.None){ @: data-req="@((int)((TextboxModel)Model).ValidationType)"
+    }>@(!string.IsNullOrEmpty(Model.Value) ? Model.Value.Trim() : "")</textarea> 

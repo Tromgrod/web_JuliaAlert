@@ -1,0 +1,144 @@
+﻿@model Dictionary<long, LIB.Tools.BO.ItemBase>
+@using JuliaAlert.Models.Objects
+@using LIB.Tools.Utils
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    long SupplyTextileId = Convert.ToInt64(Request.Form["ParentId"]);
+}
+<div class="edit-section-table">
+    <div class="edit-section-table-header">
+        <div class="edit-section-table-title">Название</div>
+        <div class="edit-section-table-title">Код</div>
+        <div class="edit-section-table-title">Цвет</div>
+        <div class="edit-section-table-title">Состав</div>
+        <div class="edit-section-table-title">Кол-во</div>
+        <div class="edit-section-table-title">Цена за 1м</div>
+        <div class="edit-section-table-title">Сумма</div>
+        <div class="edit-section-table-title">Возврат</div>
+        <div class="edit-section-table-title"></div>
+    </div>
+
+    <div class="edit-section-table-row edit-section-table-add">
+        <div class="edit-section-table-content">
+            <div class="input-row" style="position: relative;">
+                <input type="text" name="Textile_autocomplete" class="input autocomplete-input ui-autocomplete-input" onchange="set_Textile_data_dynamic(this)" data-namespace="JuliaAlert.Models.Objects.Textile" data-classname="Textile" data-autocompleteminlen="0" data-autocompletename="Textile" data-autocomplete-server="1" autocomplete="off">
+                <input type="hidden" class="hidden-autocomplete-input" name="Textile">
+                <a onclick="clear_autocomplete_dynamic(this)" class="clear-link"></a>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="text" name="Code" class="input midle-input-table" disabled>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <select name="ColorProduct" class="select dynamic-select" data-req="1" data-req-mess="Заполните поле"></select>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="text" name="Compound" class="input" disabled>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="number" name="Count" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)">
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="number" name="Price" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)">
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="number" name="FinalPrice" class="input decimal-input" step="any" disabled>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content"></div>
+
+        <div class="edit-section-table-content edit-section-table-content-controls">
+            <input type="hidden" dontAutoClear name="SupplyTextile" value="@SupplyTextileId">
+            <div class="dynamic-btn-conainer">
+                <a title="Сохранить" class="control-save" onclick="save_Dynamic(this, @SupplyTextileId, '@typeof(SupplyTextileUnit).FullName')"></a>
+            </div>
+        </div>
+    </div>
+
+    @foreach (SupplyTextileUnit supplyTextileUnit in Model.Values)
+    {
+        <div class="edit-section-table-row">
+            <input type="hidden" dontAutoClear name="Id" value="@supplyTextileUnit.Id">
+            <input type="hidden" dontAutoClear name="SupplyTextile" value="@SupplyTextileId">
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="Textile_Name" class="input" value="@supplyTextileUnit.TextileColor.Textile.GetName()" disabled>
+                </div>
+                <input type="hidden" name="Textile" value="@supplyTextileUnit.TextileColor.Textile.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="Code" class="input midle-input-table" value="@supplyTextileUnit.TextileColor.Textile.Code" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ColorProduct_Name" class="input midle-input-table" value="@supplyTextileUnit.TextileColor.ColorProduct.GetName()" disabled>
+                </div>
+                <input type="hidden" name="ColorProduct" value="@supplyTextileUnit.TextileColor.ColorProduct.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" class="input" value="@supplyTextileUnit.TextileColor.Textile.Compound.GetName()" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Count" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)" value="@supplyTextileUnit.Count.ToString("F")">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Price" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" onkeyup="get_final_price(this)" value="@supplyTextileUnit.Price.ToString("F")">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="FinalPrice" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" value="@((supplyTextileUnit.Price * supplyTextileUnit.Count).ToString("F"))" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <a class="button return-btn@(supplyTextileUnit.IsReturn() ? " button-red" : "")" onclick="open_simple_popup_dynamic('@typeof(SupplyTextileUnit).FullName', @supplyTextileUnit.Id, '~/Views/Production/ReturnSupplyTextileUnit.cshtml')">Возврат</a>
+            </div>
+
+            <div class="edit-section-table-content edit-section-table-content-controls">
+                <div class="dynamic-btn-conainer">
+                    <a title="Сохранить" class="control-save" onclick="save_Dynamic(this, @SupplyTextileId, '@typeof(SupplyTextileUnit).FullName')"></a>
+                    <a title="Удалить" class="control-delete" onclick="delete_Dynamic(this, @supplyTextileUnit.Id, '@typeof(SupplyTextileUnit).FullName')"></a>
+                    <a title="Перейти к ткани" class="control-link" href="@URLHelper.GetUrl("DocControl/TextileColor/" + supplyTextileUnit.TextileColor.Id)" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(".edit-section-table .autocomplete-input").each((i, item) => load_autocomplete(item));
+</script>

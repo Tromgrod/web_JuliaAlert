@@ -1,0 +1,198 @@
+﻿@model Product
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using LIB.Tools.BO
+@using LIB.BusinessObjects
+@{
+    ViewBag.Title = "Добавить товар";
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    <script src="~/Scripts/FrontEnd/Object/product.js"></script>
+
+    var currentUser = LIB.Tools.Security.Authentication.GetCurrentUser();
+
+    bool ProductionAccess = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.Production),
+    FactoryPriceVisible = currentUser.HasAtLeastOnePermission((long)BasePermissionenum.FactoryPrice);
+}
+<form class="inner-content-area content-control content-two-columns" action="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = "Product",
+            Delete = Model.Id > 0 && ProductionAccess,
+            Save = ProductionAccess,
+            Namespace = typeof(Product).FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+        <div class="inner-content-left">
+            <div class="edit-section">
+                <div class="edit-section-header-flex">
+                    <span>Конкретные модели</span>
+                    @if (Model.Id > 0 && ProductionAccess)
+                    {
+                        <div class="switch-header-container">
+                            <label>Скрыть</label>
+                            <label class="switch">
+                                <input id="switch" onchange="change_unique_model_show(this)" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                            <label>Показать</label>
+                        </div>
+                    }
+                </div>
+                <div id="unique-model-container" class="edit-section-body">
+                    @foreach (var uniqueProduct in UniqueProduct.PopulateByProduct(Model).Values)
+                    {
+                        <div class="edit-section-row@(uniqueProduct.Enabled ? " enabled" : " display-none")">
+                            <div onclick="unique_model_action('@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/UniqueProduct/" + uniqueProduct.Id)', this)" class="product-select">
+                                <div class="edit-section-row-left">
+                                    <span>Код: @uniqueProduct.GetCode()</span>
+                                </div>
+                                <div class="edit-section-row-right">
+                                    <span>@uniqueProduct.GetName()</span>
+                                </div>
+                                <input type="hidden" name="UniqueProductList" value="@uniqueProduct.Id">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">Данные модели</div>
+                <div class="edit-section-body">
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Name",
+                                Type = TextboxType.Text,
+                                Value = Model.Name,
+                                Disabled = !ProductionAccess,
+                                Caption = "Название модели",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                AutocompleteName = "Pattern",
+                                Type = TextboxType.AutoComplete,
+                                Disabled = !ProductionAccess,
+                                AutocompleteServer = true,
+                                AutocompleteMinLen = 0,
+                                HtmlValue = Model.Pattern != null ? Model.Pattern.Id.ToString() : "0",
+                                Value = Model.Pattern != null ? Model.Pattern.GetName() : string.Empty,
+                                AutocompleteType = typeof(Pattern),
+                                Caption = "Лекало"
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-trio edit-section-row-fisrt">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Name = "Code",
+                                Type = TextboxType.Text,
+                                Value = Model.Code,
+                                Disabled = !ProductionAccess,
+                                Caption = "Код модели",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-second">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "GroupProduct",
+                                AllowDefault = true,
+                                Value = Model.Id > 0 ? Model.TypeProduct.GroupProduct.Id.ToString() : "0",
+                                Options = new GroupProduct().Populate(),
+                                OnChange = "get_type_model(this.value)",
+                                Caption = "Группа товара",
+                                Disabled = !ProductionAccess,
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                        <div class="edit-section-row-trio edit-section-row-third">
+                            @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                            {
+                                Name = "TypeProduct",
+                                Value = Model.TypeProduct != null ? Model.TypeProduct.Id.ToString() : "0",
+                                Options = Model.Id > 0 ? TypeProduct.PopulateByGroupProduct(Model.TypeProduct.GroupProduct.Id) : null,
+                                Disabled = !ProductionAccess,
+                                Caption = "Тип модели",
+                                ValidationType = ValidationTypes.Required
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "ProductSize",
+                            Caption = "Виды размеров",
+                            Class = "select select-multyselect",
+                            Disabled = !ProductionAccess,
+                            Multiple = true,
+                            Values = Model.Id > 0 ? Model.Sizes.Select(c => (ItemBase)c).ToDictionary(c => c.Id) : new Dictionary<long, ItemBase>(),
+                            Options = new ProductSize().Populate(),
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "ColorProduct",
+                            Caption = "Цвета",
+                            Class = "select select-multyselect",
+                            Disabled = !ProductionAccess,
+                            Multiple = true,
+                            Values = Model.Id > 0 ? Model.Colors.Select(c => (ItemBase)c).ToDictionary(c => c.Id) : new Dictionary<long, ItemBase>(),
+                            Options = new ColorProduct().Populate(),
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                        {
+                            Name = "Decor",
+                            Caption = "Виды декоров",
+                            Class = "select select-multyselect",
+                            Disabled = !ProductionAccess,
+                            Multiple = true,
+                            Values = Model.Id > 0 ? Model.Decors.Select(c => (ItemBase)c).ToDictionary(c => c.Id) : new Dictionary<long, ItemBase>(),
+                            Options = new Decor().Populate(),
+                            ValidationType = ValidationTypes.Required
+                        })
+                    </div>
+                </div>
+            </div>
+
+            <div class="clear separator"></div>
+
+            <div id="ProductPrice_section" class="edit-section">
+                <div class="edit-section-header flex-caption">
+                    <span>Цены модели</span>
+                    <div onclick="toggle_section_ProductPrice(this)" title="Extinde" class="edit-section-state-indicator" style="height: 47px; border-left: 4px solid #666; border-radius: 0 5px 0 0 ">
+                        <div class="close-block right-line"></div>
+                        <div class="close-block left-line"></div>
+                    </div>
+                </div>
+                <div class="edit-section-body" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</form>

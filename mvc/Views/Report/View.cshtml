@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Master/_Standard_Report.cshtml";
+}
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+<div class="inner-content-area content-report" action="@LIB.Tools.Utils.URLHelper.GetUrl("Report/Search")">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="edit-section-header report-filter-section-header">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <div class="edit-section-header-caption">@(!string.IsNullOrEmpty((string)ViewData["Report_Name"]) ? ViewData["Report_Name"] : "Filter")</div>
+            <div style="display: flex; gap: 10px; padding: 0 10px;">
+                <a class="button" onclick="ShowQueryOptions('@(ViewData["Model"])')">Настройки отчета</a>
+                <a onclick="doExportExcellReport()" class="edit-section-excell" title="Export Excell"></a>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("../Controls/SearchGrid/_data_grid", ViewData["SearchItem"])
+    <div class="search-results">
+        @Html.Partial("../Controls/ReportGrid/_data_grid", ViewData["DataItems"])
+    </div>
+    <input type="hidden" id="sSearch" value="@ViewData["sSearch"]" />
+    <div id="printArea"></div>
+</div>
+
+<div class="result-box-container">
+    <div class="result-box"></div>
+</div>

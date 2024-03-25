@@ -1,0 +1,12 @@
+﻿@using Weblib.Models.Common
+<div class="@(!string.IsNullOrEmpty(((DocumentModel)Model).Class) ? ((DocumentModel)Model).Class : "file")">
+    @if (((DocumentModel)Model).Value != null)
+    {
+    <a id="@(((DocumentModel)Model).Name)_link" target="_blank" href="@(((DocumentModel)Model).Value.File)">@(((DocumentModel)Model).Value.Name)</a>
+    }
+    @if (!((DocumentModel)Model).ReadOnly)
+    {
+        @Html.Partial("../Controls/_button", new ButtonModel() { Name = "UploadFile", Text = "Загрузить документ" });
+    }
+    <input type="hidden" name="@(((DocumentModel)Model).Name)" value="@(((DocumentModel)Model).Value != null?((DocumentModel)Model).Value.Id.ToString():"")" />
+</div>

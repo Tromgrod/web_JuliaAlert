@@ -1,0 +1,20 @@
+﻿@model List<ItemBase>
+@using LIB.Tools.BO
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+    var URL = LIB.Tools.Utils.URLHelper.GetUrl(string.Empty);
+}
+<div class="data-grid-title-row">
+    <div class="data-grid-title">Имя клиента</div>
+    <div class="data-grid-title">Сумма</div>
+    <div class="data-grid-title">Дата</div>
+</div>
+@foreach (Order order in Model)
+{
+    <a href="@(URL + "DocControl/Local_Order/" + order.Id)" target="_blank" style="@order.OrderState.GetStyleColor()" class="data-grid-data-row data-grid-data-row-list">
+        <div class="data-grid-data"><b>@(order.Client.GetName())</b></div>
+        <div class="data-grid-data">@(Math.Round(order.Price, 2, MidpointRounding.AwayFromZero) + " " + order.SalesChannel.Currency.GetName())</div>
+        <div class="data-grid-data">@order.OrderDate.ToString("dd/MM/yyyy")</div>
+    </a>
+}

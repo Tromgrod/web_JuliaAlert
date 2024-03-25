@@ -1,0 +1,42 @@
+﻿@model Controls.Input.Models.InputModel
+@using Weblib.Models.Common
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/Input/css/input.css");
+    Html.AddScriptParts("~/plugins/Input/js/input.js");
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search && Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+{
+    <div class="control-input control-view @(Model.CssView)" @if (!string.IsNullOrEmpty(Model.Color)) { @: style="background:@Model.Color"
+         }>@if (string.IsNullOrEmpty(Model.Color)){@Html.Raw(HttpUtility.HtmlDecode(Model.Value))}</div>
+}
+@if (!Model.ReadOnly)
+{
+    if (Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+    {
+        <div data-control="@(string.IsNullOrEmpty(Model.Color) ? "input" : "color")" class="control-input control-edit @(Model.CssEdit)
+         @if (Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search) { @: displayblock @Html.Raw(HttpUtility.HtmlDecode(Model.Value))
+}"
+             @if (!string.IsNullOrEmpty(Model.Color)) { @: style="color:@Model.Color"
+             }>
+            @if (Model.TextBox.Class == "calendar-input small-input")
+            {
+                <i class="fa fa-calendar"></i>
+            }
+            @Html.Partial("../Controls/_textbox", Model.TextBox)
+            @if (Model.HourTextBox != null)
+            {
+                @Html.Partial("../Controls/_textbox", Model.HourTextBox)
+            }
+            @if (Model.MinutesTextBox != null)
+            {
+                @Html.Partial("../Controls/_textbox", Model.MinutesTextBox)
+            }
+        </div>
+    }
+    else
+    {
+        @Html.Partial("../Controls/RowControl/_inputrow", Model.TextBox)
+    }
+}

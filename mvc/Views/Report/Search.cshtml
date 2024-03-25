@@ -1,0 +1,6 @@
+﻿@using Weblib.Models
+@using Weblib.Models.Common
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+@Html.Partial("../Controls/ReportGrid/_data_grid", ViewData["DataItems"])

@@ -1,0 +1,59 @@
+﻿@model Provider
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+
+<div class="edit-section-header-popup center-header popup-header">
+    @(Model != null ? "Поставщик" : "Новый поставщик")
+</div>
+
+<div class="popup-container" style="flex-direction: column;">
+
+    <div class="edit-section-row">
+        <div class="edit-section-row-trio edit-section-row-fisrt">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Name",
+                Type = TextboxType.Text,
+                Caption = "Название",
+                Value = Model != null ? Model.Name : string.Empty,
+                ValidationType = ValidationTypes.Required
+            })
+        </div>
+        <div class="edit-section-row-trio edit-section-row-second">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "FiscalCode",
+                Type = TextboxType.Text,
+                Caption = "Фискальный код",
+                Value = Model != null ? Model.FiscalCode : string.Empty,
+                ValidationType = ValidationTypes.Required
+            })
+        </div>
+        <div class="edit-section-row-trio edit-section-row-third">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "PhoneNumber",
+                Type = TextboxType.Text,
+                Caption = "Номер телефона",
+                Value = Model != null ? Model.PhoneNumber : string.Empty,
+                ValidationType = ValidationTypes.Required
+            })
+        </div>
+    </div>
+
+    <input type="hidden" name="Namespace" value="@typeof(Provider).FullName">
+    <input type="hidden" name="Id" value="@(Model != null ? Model.Id : 0)">
+</div>
+
+<div class="popup-btn">
+    <a class="button" onclick="save_popup().done(_ => location.reload())">Сохранить</a>
+</div>
+
+<script>
+    $('.popup-container').find('.select-multyselect').select2({ closeOnSelect: false });
+</script>

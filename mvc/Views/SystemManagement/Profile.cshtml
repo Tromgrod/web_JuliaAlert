@@ -1,0 +1,143 @@
+﻿@model JuliaAlertLib.BusinessObjects.User
+@using Weblib.Models
+@{
+    Layout = "~/Views/Master/_SuperAdmin.cshtml";
+}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        User Profile
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/DashBoard/")"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">User profile : @(Model.Login)</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="@(LIB.Tools.Security.Authentication.GetCurrentUser().Image.Thumbnail!=""?LIB.Tools.Security.Authentication.GetCurrentUser().Image.Thumbnail:LIB.Tools.Utils.URLHelper.GetUrl(@"Images\placeholders\UserPlaceHolder.png"))" alt="User profile picture">
+                    <h3 class="profile-username text-center">@(Model.Person.GetName())</h3>
+                    <p class="text-muted text-center">@(Model.Role.Name)</p>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+
+            <!-- About Me Box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Information</h3>
+                    <a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/EditItem/User/"+HttpUtility.UrlEncode(Model.GetType().Namespace)+"/"+Model.Id.ToString())" class="profile-edit"><i class="fa fa-pencil"></i></a>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+                    {
+                        if (property.PropertyName != "Image" && property.PropertyName != "Password")
+                        { 
+                        @:<strong><i class="fa fa-book margin-r-5"></i>  @(property.Common.DisplayName)</strong>
+                        @:<p class="text-muted">                
+                            if (property.PropertyName == "Person")
+                            {
+                                @:<a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/EditItem/Person/LIB.BusinessObjects/"+Model.Person.Id.ToString())">
+                            }
+                            Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(Model), property, (LIB.Tools.BO.ItemBase)Model, true, LIB.AdvancedProperties.DisplayMode.Advanced) });
+
+                            if (property.PropertyName == "Person")
+                            {
+                                @:</a>
+                            }
+                        @:</p>
+                        <hr/>
+                        }
+                    }
+                    <strong><i class="fa fa-calendar-times-o margin-r-5"></i>  Дата Регистрации</strong>
+                    <p class="text-muted">
+                        @((Model).DateCreated != DateTime.MinValue ? (Model).DateCreated.ToString("dd/MM/yyyy HH:mm") : DateTime.Now.ToString("dd/MM/yyyy HH:mm"))
+                    </p>
+                    <hr />
+
+                    <strong><i class="fa fa-user margin-r-5"></i> Autor</strong>
+                    <p class="text-muted">
+                        @((Model).CreatedBy != null ? (Model).CreatedBy.Login : "")
+                    </p>
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+                    <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <!-- The time line -->
+                        <ul class="timeline">
+                            @foreach (var revisionDay in ((Dictionary<DateTime, List<LIB.Tools.Revisions.Revision>>)ViewData["Revisions"]).Values)
+                            {
+                                <li class="time-label">
+                                    <span class="bg-green">
+                                        @(revisionDay.First(d => d.Id > 0).Date.ToString("dd MMM yyyy"))
+                                    </span>
+                                </li>
+                                foreach (var revision in revisionDay)
+                                {
+                                    <li>
+                                        <i class="fa fa-@(revision.Icon) bg-@(revision.Color)"></i>
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="fa fa-clock-o"></i> @(revision.Date.ToString("HH:mm:ss"))</span>
+                                            <h3 class="timeline-header no-border"><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/EditItem/" + revision.Table + "/" + HttpUtility.UrlEncode(Model.GetType().Namespace) + "/" + revision.BOId.ToString())">@(revision.Table) "<span class="object-name">@(revision.BOName)</span>" </a> @(revision.Comment)</h3>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="timeline">
+                        <!-- The time line -->
+                        <ul class="timeline">
+                            @foreach (var revisionDay in ((Dictionary<DateTime, List<LIB.Tools.Revisions.Revision>>)ViewData["BORevisions"]).Values)
+                            {
+                                <li class="time-label">
+                                    <span class="bg-green">
+                                        @(revisionDay.First(d => d.Id > 0).Date.ToString("dd MMM yyyy"))
+                                    </span>
+                                </li>
+                                foreach (var revision in revisionDay)
+                                {
+                                    <li>
+                                        <i class="fa fa-@(revision.Icon) bg-@(revision.Color)"></i>
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="fa fa-clock-o"></i> @(revision.Date.ToString("HH:mm:ss"))</span>
+                                            <h3 class="timeline-header no-border"><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/Profile/"+revision.User.Id.ToString())">@(revision.User.Login)</a> @(revision.Comment)</h3>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            <li class="time-label">
+                                <span class="bg-red">
+                                    @(Model.DateCreated.ToString("dd MMM yyyy"))
+                                </span>
+                            </li>
+                            <!-- END timeline item -->
+                            <li>
+                                <i class="fa fa-plus bg-purple"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> @(Model.DateCreated.ToString("HH:mm:ss"))</span>
+                                    <h3 class="timeline-header no-border"><a href="#">@(Model.CreatedBy.Login)</a> Created</h3>
+                                </div>
+                            </li>
+                        </ul>
+                    </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+            </div><!-- /.nav-tabs-custom -->
+        </div>
+    </div><!-- /.row -->
+
+</section>

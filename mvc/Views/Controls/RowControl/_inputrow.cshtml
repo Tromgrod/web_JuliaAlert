@@ -1,0 +1,47 @@
+﻿@model Weblib.Models.Common.TextboxModel
+@using Weblib.Models.Common
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+<div class="input-row@(Model.Type == Weblib.Models.Common.Enums.TextboxType.DateTime || Model.Type == Weblib.Models.Common.Enums.TextboxType.Date ? " input-row-date-time" : "")">
+@if (!string.IsNullOrEmpty(Model.Caption)) {
+    <div class="caption input-caption">
+        @if (Model.ValidationType == LIB.AdvancedProperties.ValidationTypes.Required)
+        {
+            <div class="requred-indicator">*</div>
+        }
+        <span>@Html.Raw(Model.Caption)</span>
+    </div>
+}
+    <div style="position: relative;">
+    @if (Model.Type == Weblib.Models.Common.Enums.TextboxType.MultiLine)
+    {
+        @Html.Partial("../Controls/_textarea", Model)
+    }
+    else if (Model.Type == Weblib.Models.Common.Enums.TextboxType.DateTime)
+    {
+        <div style="display: flex; gap: 5px;">
+            @Html.Partial("../Controls/_textbox", Model)
+            <div class="hour-input-caption">Время:</div>
+            @Html.Partial("../Controls/_textbox", new TextboxModel() { Class="input input-small"
+                                                                    , MaxLength=2,OnKeyUp="isHourKey(this)"
+                                                                    , OnKeyPress="return isNumberKey(event)"
+                                                                    , Disabled=Model.Disabled
+                                                                    , Value=Model.DateValue!=DateTime.MinValue?Model.DateValue.ToString("HH"):""
+                                                                    , Name=Model.Name+"_Hours"})
+            @Html.Partial("../Controls/_textbox", new TextboxModel() { Class="input input-small"
+                                                                        , MaxLength=2
+                                                                        , OnKeyUp="isMinuteKey(this)"
+                                                                        , OnKeyPress="return isNumberKey(event)"
+                                                                        , Disabled=Model.Disabled
+                                                                        , Value=Model.DateValue!=DateTime.MinValue?Model.DateValue.ToString("mm"):""
+                                                                        , Name=Model.Name+"_Minutes" })
+        </div>
+    }else if (Model.Type == Weblib.Models.Common.Enums.TextboxType.Label)
+    {
+        @Html.Partial("../Controls/_label", Model)
+    }else{
+        @Html.Partial("../Controls/_textbox", Model)
+    }
+        </div>
+</div>

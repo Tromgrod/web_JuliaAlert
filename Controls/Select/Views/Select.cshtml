@@ -1,0 +1,31 @@
+﻿@model Controls.Select.Models.SelectModel
+
+@using Weblib.Models.Common
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/Select/css/select.css");
+    Html.AddScriptParts("~/plugins/Select/js/select.js");
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search && Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+{
+    if (Model.Link != null)
+    {
+        <div class="control-select control-view @(Model.CssView)" style="@Model.CssStyleView">@Html.Partial("../Controls/_link", Model.Link)</div>
+    }
+    else
+    {
+        <div class="control-select control-view @(Model.CssView)" style="@Model.CssStyleView">@Model.DropDown.ValueName</div>
+    }
+}
+@if (!Model.ReadOnly)
+{
+    if (Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+    {
+        <div data-control="select" class="control-select control-edit @(Model.CssEdit)@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">@Html.Partial("../Controls/_dropdown", Model.DropDown)</div>
+    }
+    else
+    {
+        @Html.Partial("../Controls/RowControl/_selectrow", Model.DropDown)
+    }
+}

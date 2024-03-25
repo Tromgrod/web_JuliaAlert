@@ -1,0 +1,35 @@
+﻿@model JuliaAlertLib.BusinessObjects.User
+@using Weblib.Models.Common
+@{
+    Layout = "~/Views/Master/_Standard.cshtml";
+}
+<form class="inner-content-area content-control content-user" action="@LIB.Tools.Utils.URLHelper.GetUrl("Account/Edit")">        
+    @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel() { Id = Model.Id, Delete=false,Object="User",Namespace=typeof(JuliaAlertLib.BusinessObjects.User).FullName })
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="inner-content-left">
+        <div class="edit-section">
+            <div class="edit-section-header">Личные данные</div>
+            <div class="edit-section-body">
+                <div class="edit-section-row">
+                    <div class="edit-section-row-left">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "FirstName", Type=Weblib.Models.Common.Enums.TextboxType.ReadOnly , Value = Model.Person.FirstName, Caption = "Nume" })
+                    </div>
+                    <div class="edit-section-row-right">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "LastName", Type=Weblib.Models.Common.Enums.TextboxType.ReadOnly, Value = Model.Person.LastName, Caption = "Prenume" })
+                    </div>
+                </div>                
+                <div class="edit-section-row">
+                    <div class="edit-section-row-left">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "UserName", Type=Weblib.Models.Common.Enums.TextboxType.ReadOnly , Value = Model.Login, Caption = "Nume" })
+                    </div>
+                    <div class="edit-section-row-right">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "OldPassword", ValidationType = LIB.AdvancedProperties.ValidationTypes.Required, Type = Weblib.Models.Common.Enums.TextboxType.Password, Caption = "Parola Curenta" })
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "Password", ValidationType = LIB.AdvancedProperties.ValidationTypes.Required, ValidationFuction = "PasswordEqual", Type = Weblib.Models.Common.Enums.TextboxType.Password, Caption = "Parola Noua" })
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel() { Name = "PasswordConfirm", ValidationType = LIB.AdvancedProperties.ValidationTypes.Required, Type = Weblib.Models.Common.Enums.TextboxType.Password, Caption = "Parola Confirmarea" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

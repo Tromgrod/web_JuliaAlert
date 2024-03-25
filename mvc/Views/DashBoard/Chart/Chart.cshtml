@@ -1,0 +1,20 @@
+﻿@model ChartDashboard
+@using JuliaAlert.Dashboards.UtilityModel
+@using Newtonsoft.Json
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+<div class="dashboard-char">
+    <div class="chart-container">
+        <div class="chart" link-type="@((long)Model.PieChartTypeLink)">
+            <canvas id="dashboardPieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    @if (!Model.IsEmpty)
+    {
+        @:set_dashboard_chart(@Html.Raw(JsonConvert.SerializeObject(Model.Data, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore })))
+    }
+</script>

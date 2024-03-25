@@ -1,0 +1,13 @@
+﻿@model DropDownModel
+@using Weblib.Models.Common
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+<div class="input-row">
+    <div class="caption input-caption">
+        @if (Model.ValidationType == LIB.AdvancedProperties.ValidationTypes.Required)
+        {
+            <div class="requred-indicator">*</div>
+        }@Model.Caption
+    </div>@Html.Partial("../Controls/_dropdown", Model)
+</div>

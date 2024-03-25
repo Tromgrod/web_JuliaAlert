@@ -1,0 +1,4 @@
+﻿@model Weblib.Models.Common.CheckboxModel
+<div class="checkbox-row">
+    @Html.Partial("../Controls/_checkbox", Model) <label for="@(!string.IsNullOrEmpty(Model.Id)?Model.Id:Model.LabelName)" class="caption checkbox-caption">@Html.Raw(Model.Caption)@Html.Raw(Model.AdditionalControl)</label>
+</div>

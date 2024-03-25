@@ -1,0 +1,27 @@
+﻿@model List<Order>
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    var orderId = ViewData["OrderId"] != null ? (long)ViewData["OrderId"] : 0;
+    var orderLink = ViewData["OrderLink"] != null ? ViewData["OrderLink"].ToString() + "/" : string.Empty;
+}
+@if (Model != null && Model.Count > 0)
+{
+    <div style="display: flex; justify-content: space-around; background: #ebebeb;">
+        <span class="text text-caption">Дата</span>
+        <span class="text text-caption">Статус</span>
+        <span class="text text-caption">Сумма</span>
+    </div>
+    <table>
+        @foreach (var order in Model)
+        {
+            bool isCurrentOrder = order.Id > 0 && orderId == order.Id;
+            <tr onclick="window.open(gRootUrl + '@(orderLink + order.Id)')" style="cursor: pointer; background: @(order.OrderState.Color)@(isCurrentOrder ? "" : "50")">
+                <td class="text">@order.OrderDate.ToString("dd/MM/yy")</td>
+                <td class="text">@order.OrderState.GetName()</td>
+                <td class="text">@order.Price.ToString("F") @order.SalesChannel.Currency.Name</td>
+            </tr>
+        }
+    </table>
+}

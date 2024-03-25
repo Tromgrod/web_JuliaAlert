@@ -1,0 +1,19 @@
+﻿@model PhotoModel
+@using Weblib.Models.Common
+@using LIB.BusinessObjects
+<div id="upload_image_container_@Model.Name" class="@(!string.IsNullOrEmpty(Model.Class) ? Model.Class : "file")">
+    <div class="upload-image-loading"></div>
+    @if (Model.Value != null && Model.Value.Id > 0)
+    {
+        <a id="@(Model.Name)_link" class="pop-up-img" href="@Model.Value.FullThumbnail"><img class="img-form" height="@Model.Height" width="@Model.Width" src="@Model.Value.FullThumbnail" /></a>
+    }
+    else
+    {
+        <a id="@(Model.Name)_link"><img class="img-form" height="@Model.Height" width="@Model.Width" src="@Graphic.ToolsPlaceHolder.Thumbnail" /></a>
+    }
+    @if (!Model.ReadOnly)
+    {
+        @Html.Partial("../Controls/_button", new ButtonModel() { Name = "UploadFile", Text = "Загрузить изображение" });
+    }
+    <input type="hidden" name="@Model.Name" value="@(Model.Value != null ? Model.Value.Id.ToString() : string.Empty)" />
+</div>

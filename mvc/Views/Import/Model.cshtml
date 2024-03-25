@@ -1,0 +1,38 @@
+﻿@using Weblib.Models.Common
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+
+<script src="~/Scripts/FrontEnd/import_excel.js"></script>
+
+<div class="edit-section-header-popup edit-header-flex popup-header">
+    <div>Импорт моделей с Excel</div>
+    <a class="button btn-dowload" download="Import Excel Список моделей для программы.xlsm" href="~/Import Template/ImportModel.xlsm">Скачать шаблон</a>
+</div>
+
+<div class="popup-container">
+
+    <div>
+        @Html.Partial("../Controls/RowControl/_filerow", new DocumentModel()
+        {
+            Name = "Excel"
+        })
+        <script type="text/javascript">
+            initUploadDocumentFile('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadFile/")', 'Excel', '.xlsm');
+        </script>
+    </div>
+
+    <div style="width: 200px">
+        <div class="list-caption-container">
+            <label class="list-caption">Список файлов</label>
+            <div class="fail-container">
+                <a id="Excel_link" target="_blank" href="#" class="button-file display-none"></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="popup-btn display-none">
+    <a id="import_btn" onclick="import_order('ImportExcelModel')" class="button">Импортировать Excel</a>
+</div>

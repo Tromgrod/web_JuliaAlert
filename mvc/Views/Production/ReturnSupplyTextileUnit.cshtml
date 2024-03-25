@@ -1,0 +1,64 @@
+﻿@model ReturnSupplyTextileUnit
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using System.Globalization
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+
+    bool ProductIsReturn = Model.Id > 0;
+}
+
+<div class="edit-section-header-popup center-header popup-header">Оформление возврата ткани</div>
+
+<div class="popup-container" style="flex-direction: column;">
+
+    <div class="edit-section-row">
+        <div class="edit-section-row-left">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "ReturnDate",
+                Class = "input calendar-input normal-calendar",
+                Type = TextboxType.Date,
+                ValidationType = ValidationTypes.Required,
+                Value = Model.ReturnDate != DateTime.MinValue ? Model.ReturnDate.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "",
+                DateValue = Model.ReturnDate != DateTime.MinValue ? Model.ReturnDate : DateTime.MinValue,
+                ReadOnly = ProductIsReturn,
+                Caption = "Дата возврата"
+            })
+        </div>
+        <div class="edit-section-row-right" style="white-space: nowrap">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "ReturnCount",
+                Type = TextboxType.Number,
+                Value = Model.ReturnCount.ToString(),
+                ValidationType = ValidationTypes.Required,
+                Caption = "Кол-во возврата"
+            })
+        </div>
+    </div>
+
+    <div class="full-size">
+        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+        {
+            Name = "CauseReturn",
+            Type = Weblib.Models.Common.Enums.TextboxType.MultiLine,
+            Value = Model.CauseReturn,
+            Caption = "Причина возврата"
+        })
+    </div>
+
+    <input type="hidden" name="Namespace" value="@Model.GetType().FullName">
+    <input type="hidden" name="Id" value="@Model.Id">
+    <input type="hidden" name="SupplyTextileUnit" value="@Request.Form["ModelId"]">
+</div>
+
+<div class="popup-btn">
+    <a class="button" onclick="save_supply_textile_return()">Сохранить</a>
+</div>
+
+<script>
+    set_calendar($('.popup-container'));
+</script>

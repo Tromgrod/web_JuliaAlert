@@ -1,0 +1,13 @@
+﻿@model Weblib.Models.Common.MultiSelectModel
+@using Weblib.Models.Common
+<div class="input-row">
+@if (!string.IsNullOrEmpty(Model.Caption)) { 
+<div class="caption input-caption">@if (Model.ValidationType == LIB.AdvancedProperties.ValidationTypes.Required)
+                                   { <div class="requred-indicator">*</div> } @Html.Raw(Model.Caption)</div>
+                                   }
+    @Html.Partial("../Controls/_textbox", (TextboxModel)Model)
+    @if (!string.IsNullOrEmpty(Model.WidgetName))
+    {
+        @: @Html.Partial(Model.WidgetName, Model)
+    }
+</div>

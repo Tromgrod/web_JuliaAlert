@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/Views/Master/_Js.cshtml";
+    var Values = (string[])ViewData["Values"];
+}
+@foreach (var option in Model.Values)
+{     
+     @:<option value="@(option.GetId())"
+        if (Values != null)
+        {
+            foreach (var val in Values)
+            {
+                if (option.GetId().ToString() == val)
+                {@:selected
+                }  
+            }
+        }
+    @:>@(option.GetName())</option>
+}

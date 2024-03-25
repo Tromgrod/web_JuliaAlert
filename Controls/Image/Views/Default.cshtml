@@ -1,0 +1,27 @@
+﻿@model Controls.Image.Models.ImageModel
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/Image/css/Image.css");  
+    Html.AddScriptParts("~/plugins/Image/js/Image.js");  
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search)
+{
+    <div class="control-Image control-view @(Model.CssView)">
+        <img width="@Model.AdminThumbnailWidth" height="@Model.AdminThumbnailHeight" src="@Model.Value.AdminThumbnail" />
+    </div> 
+}
+@if (!Model.ReadOnly)
+{
+    <div data-control="Image" data-name="@(Model.PropertyName)" data-id="@(Model.Value.Id)" 
+         class="control-Image control-edit@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">
+        <div id="upload_image_container_@(Model.UniqueId)" class="upload-image-container" style="width: @(Model.AdminThumbnailWidth+72)px">
+            <div class="upload-image-image-loading" style="width: @(Model.AdminThumbnailWidth)px;height:@(Model.AdminThumbnailHeight)px"></div>
+            <img class="upload-image-image" width="@Model.AdminThumbnailWidth" id="filePreview_@Model.UniqueId" height="@Model.AdminThumbnailHeight" src="@Model.Value.AdminThumbnail" />
+            <a title="Upload" class="btn btn-xs btn-warning btn-tools upload-image-btn" href="#">Upload</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        initUpload('@LIB.Tools.Utils.URLHelper.GetUrl("Upload/DoUploadImage")','@Model.UniqueId',@Model.AdminThumbnailWidth,@Model.AdminThumbnailHeight,@Model.ThumbnailWidth,@Model.ThumbnailHeight,'@Model.BOName');
+    </script>
+}

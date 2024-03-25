@@ -1,0 +1,7 @@
+﻿CREATE PROCEDURE [dbo].[FindingLocationStorageTailoringSupplySpecificProductUnit_PopulateById]
+	@FindingLocationStorageTailoringSupplySpecificProductUnitId bigint
+AS
+	SELECT flstsspu.*
+	FROM FindingLocationStorageTailoringSupplySpecificProductUnit flstsspu
+	WHERE flstsspu.DeletedBy IS NULL 
+	AND flstsspu.FindingLocationStorageTailoringSupplySpecificProductUnitId = @FindingLocationStorageTailoringSupplySpecificProductUnitId

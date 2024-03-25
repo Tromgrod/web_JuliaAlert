@@ -1,0 +1,37 @@
+﻿@model Dictionary<long, ItemBase>
+@using LIB.AdvancedProperties
+@using LIB.Tools.BO
+
+@{
+    Dictionary<string, decimal> TotalColumsSum = null;
+
+    if (ViewData["TotalColumSum"] != null && ViewData["TotalColumSum"] is Dictionary<string, decimal>)
+    {
+        TotalColumsSum = (Dictionary<string, decimal>)ViewData["TotalColumSum"];
+    }
+}
+
+@foreach (AdvancedProperty property in (AdvancedProperties)ViewData["Properties"])
+{
+    if (property.Common.Visible == true && property.Common.EditTemplate != LIB.AdvancedProperties.EditTemplates.ImageUpload)
+    {
+        var isSortable = property.Common.Sortable == true;
+
+        <div class="data-grid-title@(isSortable ? " cursor_pointer" : "")" @if (isSortable) { @: onclick="SortReport(this,'@(property.PropertyName)')"
+             }>
+            <div class="data-grid-title-control @if (isSortable)
+             {@:data-grid-title-control-sortable @(property.PropertyName == (string)ViewData["SortCol"] ? "data-grid-title-control-sortable-" + ViewData["SortDir"].ToString() : "")
+             }">@property.Common.DisplayName</div>
+            @if (property.Common.TotalSum)
+            {
+                <div id="colum-@property.PropertyName" class="total-colum-report">@if (property.Common.EditTemplate == EditTemplates.DecimalNumberRange && property.Common.DecimalRound > 0)
+                    {
+                        @(Math.Round(TotalColumsSum[property.Db.ParamName], property.Common.DecimalRound, MidpointRounding.AwayFromZero) + property.Common.TotalSumPostfix)
+                    }
+                    else
+                    {
+                        @(TotalColumsSum[property.Db.ParamName] + property.Common.TotalSumPostfix)
+                    }</div>
+            }</div>
+    }
+}

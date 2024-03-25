@@ -1,0 +1,21 @@
+﻿@model List<ItemBase>
+@using LIB.Tools.BO
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+}
+<div class="data-grid-title-row">
+    <div class="data-grid-title">Документ</div>
+    <div class="data-grid-title">Дата</div>
+    <div class="data-grid-title">Поставщик</div>
+    <div class="data-grid-title">Сумма прихода</div>
+</div>
+@foreach (SupplyTextile supplyTextile in Model)
+{
+    <a href="@LIB.Tools.Utils.URLHelper.GetUrl("DocControl/SupplyTextile/" + supplyTextile.Id )" target="_blank" class="data-grid-data-row data-grid-data-row-list">
+        <div class="data-grid-data"><b>@supplyTextile.DocumentNumber</b></div>
+        <div class="data-grid-data">@supplyTextile.Date.ToString("dd.MM.yyyy")</div>
+        <div class="data-grid-data">@supplyTextile.Provider.Name</div>
+        <div class="data-grid-data">@supplyTextile.TotalPrice</div>
+    </a>
+}

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+}
+
+<script src="~/Scripts/FrontEnd/Statistic/statistic_select.js"></script>
+
+<div class="statistic-select-container">
+    <div class="statistic-select-block">
+        <a class="image-block" href="@LIB.Tools.Utils.URLHelper.GetUrl("Statistic/Diagram")">
+            <div class="statistic-select-diagram-icon"></div>
+        </a>
+        <a href="@LIB.Tools.Utils.URLHelper.GetUrl("Statistic/Diagram")" style="width: min-content; margin: 0 auto" class="button">Диаграммы</a>
+    </div>
+
+    <div class="statistic-select-block">
+        <a class="image-block" href="@LIB.Tools.Utils.URLHelper.GetUrl("Statistic/Map")">
+            <div class="statistic-select-map-icon"></div>
+        </a>
+        <a href="@LIB.Tools.Utils.URLHelper.GetUrl("Statistic/Map")" style="width: min-content; margin: 0 auto" class="button">Карта</a>
+    </div>
+</div>

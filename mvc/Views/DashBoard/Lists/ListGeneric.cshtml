@@ -1,0 +1,29 @@
+﻿@model DashboardItem[]
+@using JuliaAlert.Dashboards.UtilityModel
+@{
+    var firstList = Model.First().ListDashboard;
+    var firstListData = firstList.Data;
+
+    var listTitles = Model.Select(di => di.ListDashboard.Title).ToArray();
+
+    var dashboardItemIndex = ViewData["DashboardItemIndex"] != null ? Convert.ToInt32(ViewData["DashboardItemIndex"]) : 0;
+
+    var list = Model[dashboardItemIndex].ListDashboard;
+    var listData = list.Data;
+}
+
+<div class="block-widget-caption">
+    @for (var listId = 0; listId < listTitles.Length; listId++)
+    {
+        <a class="widget-caption @(listId == dashboardItemIndex ? "widget-caption-active" : "")" onclick="change_dashboard_item(this, @listId)">@listTitles[listId]</a>
+    }
+</div>
+
+<div class="data-grid-container">
+    <div class="data-grid">
+        @if (listData != null && listData.Count > 0)
+        {
+            @Html.Partial("Lists/" + list.ViewName, listData)
+        }
+    </div>
+</div>

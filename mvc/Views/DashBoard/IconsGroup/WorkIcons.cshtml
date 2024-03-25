@@ -1,0 +1,71 @@
+﻿@using LIB.Tools.Utils
+
+<div class="icon-item">
+    <a class="dashboard-icon-order dashboard-icon" href="@URLHelper.GetUrl("DocControl/Local_Order")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Local_Order")" target="_blank">
+        <span class="dashboard-icon-title button">Добавить<br>заказ</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/OrderList_LocalSales")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/OrderList_LocalSales")" target="_blank">
+        <span id="add_participation_category_btn" class="dashboard-icon-title button">Список<br>заказов</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/CustomerList_LocalSales")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/CustomerList_LocalSales")" target="_blank">
+        <span class="dashboard-icon-title button">Анализ по<br>клиентам</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/ClientList_LocalSales")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/ClientList_LocalSales")" target="_blank">
+        <span class="dashboard-icon-title button">Список<br>клиентов</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-stock dashboard-icon" href="@URLHelper.GetUrl("Report/UniqueProductList")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/UniqueProductList")" target="_blank">
+        <span class="dashboard-icon-title button">Склад<br> моделей</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-inventory dashboard-icon" href="@URLHelper.GetUrl("Report/InventoryList")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/InventoryList")" target="_blank">
+        <span class="dashboard-icon-title button">Инвентаризация</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-modellist dashboard-icon" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList_LocalSales")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList_LocalSales")" target="_blank">
+        <span class="dashboard-icon-title button">Анализ по<br>моделям</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="order-icon dashboard-icon" onclick="open_simple_popup_noData('~/Views/Import/LocalOrder.cshtml')"></a>
+    <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/Import/LocalOrder.cshtml')">
+        <span id="add_participation_category_btn" class="dashboard-icon-title button">Импорт<br>заказов</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-moving dashboard-icon" href="@URLHelper.GetUrl("DocControl/MovingProduct")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/MovingProduct")" target="_blank">
+        <span class="dashboard-icon-title button">Перемещение<br> моделей</span>
+    </a>
+</div>
+
+<div class="icon-item">
+    <a class="dashboard-icon-history dashboard-icon" href="@URLHelper.GetUrl("Report/MovingProductList")" target="_blank"></a>
+    <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/MovingProductList")" target="_blank">
+        <span class="dashboard-icon-title button">История<br> перемещений<br> моделей</span>
+    </a>
+</div>

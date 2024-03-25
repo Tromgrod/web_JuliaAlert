@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[Product]
+(
+	[ProductId] BIGINT PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(100) NOT NULL,
+	[Code] NVARCHAR(10) UNIQUE NOT NULL,
+	[TypeProductId] BIGINT NOT NULL,
+	[PatternId] BIGINT NULL,
+	[DeletedBy] BIGINT NULL,
+	[CreatedBy] BIGINT NOT NULL,
+	[DateCreated] DATETIME NOT NULL,
+	[DateUpdated] DATETIME NULL
+)

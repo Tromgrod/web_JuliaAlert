@@ -1,0 +1,128 @@
+﻿@model FindingColor
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common.Enums
+@using LIB.Tools.Utils
+@using LIB.BusinessObjects.Barcode
+
+@{
+    ViewBag.Title = "Фактура: " + Model.GetCode();
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+    var barcode = new Barcode_CODE128(Model.GetCode(), Barcode_CODE128.Type.Finding);
+}
+<script src="~/Scripts/FrontEnd/print.js"></script>
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+
+<form class="inner-content-area content-control content-two-columns" action="@URLHelper.GetUrl("DocControl/Save")">
+    @{
+        List<ButtonModel> ControlButtons = new List<ButtonModel>();
+        @Html.Partial("../Controls/RowControl/_pagecontrols", new PageControlsModel()
+        {
+            Id = Model.Id,
+            Buttons = ControlButtons,
+            Object = Model.GetType().Name,
+            Delete = false,
+            Save = false,
+            Update = false,
+            Namespace = Model.GetType().FullName
+        })
+    }
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-two-columns-form">
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header-flex">Штрихкод
+                    <a onclick="preview_barcode_CODE128('@barcode.Code')" class="edit-section-icon edit-section-print" title="Печать штрихкода"></a>
+                </div>
+                <div class="edit-section-body">
+                    <div style="width: 100%; display: flex; flex-direction: column; align-items: center; ">
+                        <img src="data:image/png;base64, @barcode.GenerateBarcode(460, 100)" style="display: block; padding: 10px 0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="inner-content-right">
+            <div class="edit-section">
+                <div class="edit-section-header">Данные фурнитуры</div>
+                <div class="edit-section-body">
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Text,
+                                Value = Model.GetName(),
+                                Caption = "Название"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Text,
+                                Value = Model.GetCode(),
+                                Caption = "Код"
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Text,
+                                Value = Model.Finding.FindingSubspecie.FindingSpecie.GetName(),
+                                Caption = "Вид"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Text,
+                                Value = Model.Finding.FindingSubspecie.GetName(),
+                                Caption = "Подвид"
+                            })
+                        </div>
+                    </div>
+
+                    <div class="edit-section-row">
+                        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                        {
+                            Disabled = true,
+                            Type = TextboxType.Text,
+                            Value = Model.ColorProduct.GetName(),
+                            Caption = "Цвет"
+                        })
+                    </div>
+
+                    <div class="edit-section-row">
+                        <div class="edit-section-row-left">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Number,
+                                Value = Model.CurrentCount.ToString("F"),
+                                Caption = "Остатки"
+                            })
+                        </div>
+                        <div class="edit-section-row-right">
+                            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                            {
+                                Disabled = true,
+                                Type = TextboxType.Number,
+                                Value = Model.LastPrice.ToString("F"),
+                                Caption = "Цена"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

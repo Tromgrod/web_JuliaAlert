@@ -1,0 +1,26 @@
+﻿@model DashboardItem[]
+@using JuliaAlert.Dashboards.UtilityModel
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    var dashboardItemIndex = ViewData["DashboardItemIndex"] != null ? Convert.ToInt32(ViewData["DashboardItemIndex"]) : 0;
+}
+
+<div class="dashboard-container">
+    <div class="left-dashboard">
+        @if (Model.Any(di => !di.ChartDashboard.IsEmpty))
+        {
+            @Html.Partial("Chart/Chart", Model[dashboardItemIndex].ChartDashboard)
+        }
+        <div class="dashboard-icons">
+            <div class="icons-conteiner">
+                @Html.Partial("IconsGroup/" + (string)ViewData["IconsGroupType"])
+            </div>
+        </div>
+    </div>
+    <div class="right-dashboard">
+        <div class="dashboard-list">
+            @Html.Partial("Lists/ListGeneric", Model)
+        </div>
+    </div>
+</div>

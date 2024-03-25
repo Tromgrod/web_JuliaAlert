@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Master/_AdminSimplified.cshtml";
+}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a style="display: block; margin: 0px auto; background: #fff; border-radius: 10px; width: 50%; padding: 5px;" href="@LIB.Tools.Utils.URLHelper.GetUrl("")">
+                <img style="width: 100%" src="@LIB.Tools.Utils.URLHelper.GetUrl(@"Images\logo_btn.svg")" />
+            </a>
+        </div>
+        <div class="login-box-body" style="border-radius: 5px;">
+            <section class="content">
+                <div class="error-page">
+                    <h4 class="headline text-yellow" style="font-size: 50px!important;"> Запрет доступа</h4>
+                    <div class="error-content">
+                        <p style="margin-top:30px!important">
+                            <i class="fa fa-warning text-yellow"></i>
+                            Вы не имеете доступа к этой странице.
+                            Обратитесь к администратору или вернитесь в панель управления.
+                        </p>
+
+                        <a onclick="goback()" class="btn btn-block btn-danger btn-sm">
+                            Вернуться на предыдущую страницу
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script>
+        function goback() {
+            history.back();
+        }
+    </script>
+</body>

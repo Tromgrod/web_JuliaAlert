@@ -1,0 +1,35 @@
+﻿@model MultyCheckWidgetModel
+@using System.Globalization
+@using Weblib.Models.Common
+<div 
+    name="@(Model.Name)" 
+    class="@(!string.IsNullOrEmpty(Model.Class)?Model.Class:"multycheck")"> 
+    @if (Model.Options != null) {
+        foreach (var option in Model.Options.Values)
+        {
+        <div class="mc_item">
+            <input type="checkbox"
+                   id="checkbox_@(option.GetType().Name)_@(option.Id)"
+                   value="@(option.GetId())"
+                   class="checkbox large@(Model.InputClass)"
+                   @if (Model.Values!=null && Model.Values.Values.Any(t => t.GetId().ToString() == option.GetId().ToString())) { @: checked
+                                                      } />  <label for="checkbox_@(option.GetType().Name)_@(option.Id)"> @(option.GetName()) </label><br /> </div> } } @if (Model.Groups != null) { foreach (var group in Model.Groups.Keys) {             @:<div class="mc-item-group">@(group)</div>
+            @:<div class="mc-item-group-container">
+            foreach (var option in Model.Groups[group].Values)
+            {
+                <div class="mc_item">
+                    <input type="checkbox"
+                           id="checkbox_@(option.GetType().Name)_@(option.Id)"
+                           value="@(option.GetId())"
+                           class="checkbox large@(Model.InputClass)"
+                           @if (Model.Values!=null && Model.Values.Values.Any(t => t.GetId().ToString() == option.GetId().ToString())) { @: checked
+                                                                                                 } />
+
+                    <label for="checkbox_@(option.GetType().Name)_@(option.Id)">@(option.GetName())</label><br />
+                </div>
+            }
+            @:</div>
+
+        }
+    }
+</div>

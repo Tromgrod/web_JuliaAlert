@@ -1,0 +1,76 @@
+﻿@model Dictionary<long, LIB.Tools.BO.ItemBase>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    var locationStorages = new LocationStorage().Populate();
+}
+<div id="dynamic_FindingLocationStorageTailoringSupplySpecificProductUnit" class="edit-section-table">
+    <div class="edit-section-table-header">
+        <div class="edit-section-table-title">Фурнитура</div>
+
+        <div class="edit-section-table-title">Цвет</div>
+
+        <div class="edit-section-table-title">Расход</div>
+
+        <div class="edit-section-table-title">Место хранения</div>
+    </div>
+
+    @foreach (FindingLocationStorageTailoringSupplySpecificProductUnit findingLocationStorageTailoringSupplySpecificProductUnit in Model.Values)
+    {
+        <div class="edit-section-table-row">
+            <input type="hidden" name="FindingLocationStorageTailoringSupplySpecificProductUnit" value="@findingLocationStorageTailoringSupplySpecificProductUnit.Id">
+            <input type="hidden" name="TailoringSupplySpecificProductUnit" value="@findingLocationStorageTailoringSupplySpecificProductUnit.TailoringSupplySpecificProductUnit.Id">
+            <input type="hidden" name="FindingColor" dontAutoClear value="@findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.Id">
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Disabled = true,
+                    AutocompleteClear = false,
+                    Type = TextboxType.Text,
+                    Value = findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.Finding.GetName(),
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Disabled = true,
+                    AutocompleteClear = false,
+                    Type = TextboxType.Text,
+                    Value = findingLocationStorageTailoringSupplySpecificProductUnit.FindingColor.ColorProduct.GetName(),
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+                {
+                    Name = "Consumption",
+                    Disabled = true,
+                    AutocompleteClear = false,
+                    Type = TextboxType.Number,
+                    Value = findingLocationStorageTailoringSupplySpecificProductUnit.Consumption.ToString(),
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+
+            <div class="edit-section-table-content">
+                @Html.Partial("../Controls/RowControl/_selectrow", new DropDownModel()
+                {
+                    Name = "LocationStorage",
+                    Value = findingLocationStorageTailoringSupplySpecificProductUnit.LocationStorage.Id.ToString(),
+                    Options = locationStorages,
+                    OnChange = "save_LocationStorage_dynamic(this)",
+                    AllowDefault = true,
+                    ValidationType = ValidationTypes.Required
+                })
+            </div>
+        </div>
+    }
+</div>

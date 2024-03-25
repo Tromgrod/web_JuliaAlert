@@ -1,0 +1,197 @@
+﻿@model Dictionary<long, LIB.Tools.BO.ItemBase>
+@using JuliaAlert.Models.Objects
+@using Weblib.Models.Common
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@using LIB.Tools.Utils
+@{
+    Layout = "~/Views/Master/_Ajax.cshtml";
+
+    long supplySpecificProductId = Convert.ToInt64(Request.Form["ParentId"]);
+
+    var factories = new Factory().Populate();
+}
+
+<div class="edit-section-table">
+    <div class="edit-section-table-header">
+        <div class="edit-section-table-title">Название</div>
+        <div class="edit-section-table-title">Код</div>
+        <div class="edit-section-table-title">Цвет</div>
+        <div class="edit-section-table-title">Размер</div>
+        <div class="edit-section-table-title">Место кроя</div>
+        <div class="edit-section-table-title">Стоимость кроя</div>
+        <div class="edit-section-table-title">Кол-во</div>
+        <div class="edit-section-table-title">Пошив</div>
+        <div class="edit-section-table-title">Приход</div>
+        <div class="edit-section-table-title"></div>
+    </div>
+    <div class="edit-section-table-row edit-section-table-add">
+        <div class="edit-section-table-content">
+            <div class="input-row" style="position: relative;">
+                <input type="text" name="UniqueProduct_autocomplete" class="input autocomplete-input ui-autocomplete-input" onchange="set_UniqueProduct_data_dynamic(this)" data-namespace="JuliaAlert.Models.Objects.UniqueProduct" data-classname="UniqueProduct" data-autocompleteminlen="0" data-autocompletename="UniqueProduct" data-autocomplete-server="1" autocomplete="off">
+                <input type="hidden" class="hidden-autocomplete-input" name="UniqueProduct">
+                <a onclick="clear_autocomplete_dynamic(this)" class="clear-link"></a>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="text" name="Code" class="input midle-input-table" disabled>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="text" name="ColorProduct_Name" class="input midle-input-table" disabled>
+            </div>
+            <input type="hidden" name="ColorProduct">
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <select name="ProductSize" class="select dynamic-select" data-req="1" data-req-mess="Заполните поле"></select>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <select name="FactoryCut" class="select dynamic-select" data-req="1" data-req-mess="Заполните поле">
+                    <option value=""></option>
+                    @foreach (var factory in factories.Values)
+                    {
+                        <option value="@factory.Id">@factory.GetName()</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="number" name="CutCost" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any">
+            </div>
+        </div>
+
+        <div class="edit-section-table-content">
+            <div class="input-row">
+                <input type="number" name="Count" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any">
+            </div>
+        </div>
+
+        <div class="edit-section-table-content"></div>
+
+        <div class="edit-section-table-content"></div>
+
+        <div class="edit-section-table-content edit-section-table-content-controls">
+            <input type="hidden" dontAutoClear name="SupplySpecificProduct" value="@supplySpecificProductId.ToString()">
+
+            <div class="dynamic-btn-conainer">
+                <a title="Сохранить" class="control-save" onclick="save_Dynamic(this, @supplySpecificProductId, '@typeof(SupplySpecificProductUnit).FullName')"></a>
+            </div>
+        </div>
+    </div>
+
+    @foreach (SupplySpecificProductUnit supplySpecificProductUnit in Model.Values)
+    {
+        <div id="supply_specific_product_unit_dynamic" class="edit-section-table-row">
+            <input type="hidden" dontAutoClear name="Id" value="@supplySpecificProductUnit.Id">
+            <input type="hidden" dontAutoClear name="SupplySpecificProduct" value="@supplySpecificProductId">
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="UniqueProduct_Name" class="input" value="@supplySpecificProductUnit.SpecificProduct.UniqueProduct.GetName()" disabled>
+                </div>
+                <input type="hidden" name="UniqueProduct" value="@supplySpecificProductUnit.SpecificProduct.UniqueProduct.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="Code" class="input midle-input-table" value="@supplySpecificProductUnit.SpecificProduct.UniqueProduct.GetCode()" disabled>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ColorProduct_Name" class="input midle-input-table" value="@supplySpecificProductUnit.SpecificProduct.UniqueProduct.ColorProduct.GetName()" disabled>
+                </div>
+                <input type="hidden" name="ColorProduct" value="@supplySpecificProductUnit.SpecificProduct.UniqueProduct.ColorProduct.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="text" name="ProductSize_Name" class="input small-input-table" value="@supplySpecificProductUnit.SpecificProduct.ProductSize.GetName()" disabled>
+                </div>
+                <input type="hidden" name="ProductSize" value="@supplySpecificProductUnit.SpecificProduct.ProductSize.Id">
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <select name="FactoryCut" class="select dynamic-select" data-req="1" data-req-mess="Заполните поле">
+                        <option value=""></option>
+                        @foreach (var factory in factories.Values)
+                        {
+                            <option @(supplySpecificProductUnit.FactoryCut.Id == factory.Id ? "selected" : "") value="@factory.Id">@factory.GetName()</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="CutCost" class="input decimal-input" data-req="1" data-req-mess="Заполните поле" step="any" value="@supplySpecificProductUnit.CutCost.ToString("F")">
+                </div>
+            </div>
+
+            <div class="edit-section-table-content">
+                <div class="input-row">
+                    <input type="number" name="Count" class="input decimal-input small-input-table" data-req="1" data-req-mess="Заполните поле" step="any" value="@supplySpecificProductUnit.Count">
+                </div>
+            </div>
+
+            @{
+                var totalTailoringCount = supplySpecificProductUnit.TotalTailoringCount;
+                string tailoringButtonClass = "";
+
+                if (totalTailoringCount == supplySpecificProductUnit.Count)
+                {
+                    tailoringButtonClass = "button-green";
+                }
+                else if (totalTailoringCount < supplySpecificProductUnit.Count && totalTailoringCount != 0)
+                {
+                    tailoringButtonClass = "button-orange";
+                }
+
+                var totalImplementCount = supplySpecificProductUnit.TotalImplementCount;
+                string implementButtonClass = "";
+
+                if (totalImplementCount == supplySpecificProductUnit.Count)
+                {
+                    implementButtonClass = "button-green";
+                }
+                else if (totalImplementCount < supplySpecificProductUnit.Count && totalImplementCount != 0)
+                {
+                    implementButtonClass = "button-orange";
+                }
+            }
+
+            <div class="edit-section-table-content">
+                <a id="tailoring-button" class="button @tailoringButtonClass" onclick="open_simple_popup_dynamic('@typeof(TailoringSupplySpecificProductUnit).FullName', @supplySpecificProductUnit.Id, '~/Views/Production/TailoringSupplySpecificProductUnit.cshtml')">Пошив</a>
+            </div>
+
+            <div class="edit-section-table-content">
+                <a id="implement-button" class="button @implementButtonClass" onclick="open_simple_popup_dynamic('@typeof(ImplementSupplySpecificProductUnit).FullName', @supplySpecificProductUnit.Id, '~/Views/Production/ImplementSupplySpecificProductUnit.cshtml')">Приход</a>
+            </div>
+
+            <div class="edit-section-table-content edit-section-table-content-controls">
+                <div class="dynamic-btn-conainer">
+                    <a title="Сохранить" class="control-save" onclick="save_Dynamic(this, @supplySpecificProductId, '@typeof(SupplySpecificProductUnit).FullName')"></a>
+                    <a title="Удалить" class="control-delete" onclick="delete_Dynamic(this, @supplySpecificProductUnit.Id, '@typeof(SupplySpecificProductUnit).FullName')"></a>
+                    <a title="Перейти к модели" class="control-link" href="@URLHelper.GetUrl("DocControl/UniqueProduct/" + supplySpecificProductUnit.SpecificProduct.UniqueProduct.Id)" target="_blank"></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(".edit-section-table .autocomplete-input").each((i, item) => load_autocomplete(item));
+</script>

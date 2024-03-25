@@ -1,0 +1,8 @@
+﻿Group: Edit Controls
+FriendlyName: Edit Plain Text Data Control - numbers, dates, text ....
+SystemName: Controls.Select
+Version: 1.00
+SupportedVersions: 1.00
+Author: Alexandr Golubev
+DisplayOrder: 1
+FileName: Controls.Select.dll

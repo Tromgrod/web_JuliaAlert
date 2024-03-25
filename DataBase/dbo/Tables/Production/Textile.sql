@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[Textile]
+(
+	[TextileId] BIGINT PRIMARY KEY IDENTITY,
+	[ImageId] BIGINT NULL,
+	[Name] NVARCHAR(100) NOT NULL UNIQUE,
+	[Code] NVARCHAR(10) NOT NULL UNIQUE,
+	[CompoundId] BIGINT NOT NULL,
+	[DeletedBy] BIGINT NULL,
+	[CreatedBy] BIGINT NOT NULL,
+	[DateCreated] DATETIME NOT NULL,
+	[DateUpdated] DATETIME NULL
+)

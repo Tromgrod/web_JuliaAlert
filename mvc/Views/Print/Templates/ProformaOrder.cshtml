@@ -1,0 +1,139 @@
+﻿@model Order
+@using LIB.BusinessObjects
+@using JuliaAlert.Models.Objects
+@{
+    Layout = "~/Views/Master/_Print.cshtml";
+
+    int number = 1;
+}
+
+<style type="text/css" media="print">
+    body {
+        margin: 0;
+    }
+
+    .container-print * {
+        font-family: Calibri;
+        font-size: 10pt !important;
+    }
+
+    #invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5%;
+    }
+
+        #invoice-table td {
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+    .logo-invoice {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 170px;
+    }
+
+    .medium-font {
+        font-size: 11pt !important;
+    }
+
+    .big-font {
+        font-size: 12pt !important;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+</style>
+
+<div class="container-print">
+    <img src="@Graphic.LogoInvoice.Thumbnail" class="logo-invoice">
+    <table id="invoice-table">
+        <tbody>
+            <tr>
+                <td colspan="9" class="medium-font">Proforma №: @Model.InvoiceNumber</td>
+            </tr>
+            <tr>
+                <td colspan="9" class="bold big-font">"Allert&Co" SRL</td>
+            </tr>
+            <tr>
+                <td colspan="9">1005600017882</td>
+            </tr>
+            <tr>
+                <td colspan="3">Republik of Moldova, Chisinau</td>
+                <td colspan="6" class="bold big-font">Benefeciary Bank</td>
+            </tr>
+            <tr>
+                <td colspan="3">31 august 1989 str, 91 of 18-19 MD-2004</td>
+                <td colspan="6" class="medium-font">FINCOMBANK S. A</td>
+            </tr>
+            <tr>
+                <td colspan="3">tel +373 79808056 +373 79808096</td>
+                <td colspan="6" class="medium-font">Chisinau, Moldova</td>
+            </tr>
+            <tr>
+                <td colspan="3">e-mail: paskari.alena@gmail.com</td>
+                <td colspan="6" class="medium-font">SWIFT: FTMDMD2X</td>
+            </tr>
+            <tr>
+                <td colspan="3">iuliaallert@gmail.com</td>
+                <td colspan="6" class="medium-font">IBAN: MD94FT222400100005128840</td>
+            </tr>
+            <tr>
+                <td colspan="9" class="bold big-font">Costumer: @Model.Client.Name</td>
+            </tr>
+            <tr>
+                <td colspan="9">@Model.Client.Address<br></td>
+            </tr>
+            <tr>
+                <td colspan="9">@Model.Client.Index<br></td>
+            </tr>
+            <tr>
+                <td colspan="9">@Model.Client.Countries.Name<br></td>
+            </tr>
+            <tr>
+                <td colspan="9"><br></td>
+            </tr>
+            <tr>
+                <td style="width: 3.8%;">№</td>
+                <td style="width: 8.5%;">MOD</td>
+                <td style="width: 20.9%;"></td>
+                <td style="width: 23.9%;">composition</td>
+                <td style="width: 5.6%;">Color</td>
+                <td style="width: 5.3%;">Size</td>
+                <td style="width: 11.3%;">Amount</td>
+                <td style="width: 10.6%;">Price</td>
+                <td style="width: 9.6%;">Total</td>
+            </tr>
+            @foreach (Gift Gift in Model.Gifts.Values)
+            {
+                <tr>
+                    <td>@(number++)</td>
+                    <td>@Gift.SpecificProduct.UniqueProduct.Product.Code</td>
+                    <td>@Gift.SpecificProduct.UniqueProduct.GetName()</td>
+                    <td>@Gift.SpecificProduct.UniqueProduct.Compound.Name</td>
+                    <td></td>
+                    <td>@Gift.SpecificProduct.ProductSize.Name</td>
+                    <td>@Gift.Count</td>
+                    <td>$0,0</td>
+                    <td>$0,0</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="5"></td>
+                <td colspan="3"></td>
+                <td class="bold medium-font">$0,0</td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align: center;" class="bold medium-font">
+        <label style="padding: 0 5%;">@Model.OrderDate.ToString("dd.MM.yyyy")</label>
+        <label>___________________________________  com director Bivol A</label>
+    </div>
+    <div style="padding-top: 15%; text-align: center;">
+        For personal use only<br>
+        free of charge
+    </div>
+</div>

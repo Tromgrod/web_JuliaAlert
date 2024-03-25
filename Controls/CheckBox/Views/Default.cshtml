@@ -1,0 +1,17 @@
+﻿@model Controls.CheckBox.Models.CheckBoxModel
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/CheckBox/css/CheckBox.css");
+    Html.AddCssFileParts("~/Scripts/Bootstrap_Plugins/iCheck/all.css");
+    Html.AddScriptParts("~/plugins/CheckBox/js/CheckBox.js");
+    Html.AddScriptParts("~/Scripts/Bootstrap_Plugins/iCheck/icheck.min.js");  
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search && Model.Mode != LIB.AdvancedProperties.DisplayMode.FrontEnd)
+{
+<div class="control-checkbox control-view">@(Model.Value ? "Да" : "Нет")</div> 
+}
+@if (!Model.ReadOnly)
+{
+    <div data-control="checkbox" class="control-checkbox @(Model.Mode !=LIB.AdvancedProperties.DisplayMode.FrontEnd?" control-edit":"")@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search || Model.Mode == LIB.AdvancedProperties.DisplayMode.FrontEnd)?" displayblock":"")">@Html.Partial("../Controls/_checkbox", Model.Checkbox)</div>    
+}

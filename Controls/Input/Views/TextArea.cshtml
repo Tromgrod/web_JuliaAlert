@@ -1,0 +1,17 @@
+﻿@model Controls.Input.Models.InputModel
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/Input/css/input.css");
+    Html.AddScriptParts("~/plugins/Input/js/input.js"); 
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search)
+{
+    <div class="control-input control-input-multiline control-view">@Html.Raw(Model.Value)</div> 
+}
+@if (!Model.ReadOnly)
+{
+    <div data-control="textarea" class="control-input control-input-multiline control-edit@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">
+        @Html.Partial("../Controls/_textarea", Model.TextBox)
+    </div>
+}

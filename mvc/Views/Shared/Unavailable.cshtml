@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Master/_AdminSimplified.cshtml";
+}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a style="display:block;margin: 0px auto;" href="@LIB.Tools.Utils.URLHelper.GetUrl("")">
+                <img src="@LIB.Tools.Utils.URLHelper.GetUrl(@"Images\logo_btn.svg")" />
+            </a>
+        </div>
+        <div class="login-box-body">
+            <section class="content">
+                <div class="error-page">
+                    <h2 class="headline text-yellow"> 503</h2>
+                    <div class="error-content">
+                        <h3><i class="fa fa-warning text-yellow"></i> Serviciul indisponibil.</h3>
+                        <p>
+                            Serverul temporar este încărcat, încercați mai târziu!
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>

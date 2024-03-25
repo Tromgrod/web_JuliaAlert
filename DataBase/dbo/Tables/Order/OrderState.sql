@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[OrderState]
+(
+	[OrderStateId] BIGINT PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(100) UNIQUE NOT NULL,
+	[Color] VARCHAR(7) UNIQUE NOT NULL,
+	[DeletedBy] BIGINT NULL,
+	[CreatedBy] BIGINT NOT NULL,
+	[DateCreated] DATETIME NOT NULL,
+	[DateUpdated] DATETIME NULL
+)

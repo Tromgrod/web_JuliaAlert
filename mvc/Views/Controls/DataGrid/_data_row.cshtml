@@ -1,0 +1,21 @@
+﻿<div class="data-grid-data-row data-grid-data-row-@(((LIB.Tools.BO.ItemBase)Model).Id)"> 
+    <div class="data-grid-data controls">
+        @if (((LIB.Tools.BO.ItemBase)Model).Id != 0)
+        {
+            <a class="control_save" onclick="save_item(@(((LIB.Tools.BO.ItemBase)Model).Id))"></a>
+            <a class="control_edit" onclick="edit_item(@(((LIB.Tools.BO.ItemBase)Model).Id))"></a>
+            <a class="control_delete" onclick="delete_item(@(((LIB.Tools.BO.ItemBase)Model).Id))"></a>
+        }
+        else
+        {
+            <a class="control_save control_add" onclick=" return add_item()" href="#"></a>
+        }
+    </div>    
+    <div class="data-grid-data">@(((LIB.Tools.BO.ItemBase)Model).Id!=0?((LIB.Tools.BO.ItemBase)Model).Id.ToString():"")</div>   
+    @foreach (LIB.AdvancedProperties.AdvancedProperty property in (LIB.AdvancedProperties.AdvancedProperties)ViewData["Properties"])
+    {
+        <div class="data-grid-data"> @{Html.RenderAction(property.ControlView, property.Control, new { model = property.GetDataProcessor().SetValue(property.PropertyDescriptor.GetValue(Model), property, (LIB.Tools.BO.ItemBase)Model) });}</div>
+    }     
+    <div class="data-grid-data">@(((LIB.Tools.BO.ItemBase)Model).DateCreated!=DateTime.MinValue?((LIB.Tools.BO.ItemBase)Model).DateCreated.ToString("dd/MM/yyyy HH:mm"):DateTime.Now.ToString("dd/MM/yyyy HH:mm"))</div>  
+    <div class="data-grid-data">@(((LIB.Tools.BO.ItemBase)Model).CreatedBy!=null?((LIB.Tools.BO.ItemBase)Model).CreatedBy.Login:"")</div>  
+</div>

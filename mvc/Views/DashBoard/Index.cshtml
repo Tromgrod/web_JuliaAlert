@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Master/_Standard_NoFooter.cshtml";
+
+    var dashboardIndex = Convert.ToInt32(ViewData["DashboardIndex"]);
+}
+<script src="~/Scripts/Bootstrap_Plugins/chartjs/chart.min.js"></script>
+<script src="~/Scripts/FrontEnd/popup.js"></script>
+
+@Html.Partial("Dashboard")
+
+<script>
+    set_hover_on_breadcrumb(@dashboardIndex)
+</script>

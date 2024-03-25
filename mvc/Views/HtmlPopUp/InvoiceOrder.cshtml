@@ -1,0 +1,31 @@
+﻿@model Order
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+<div class="edit-section-header-popup center-header popup-header">Данные для печати</div>
+
+<div class="popup-container">
+    @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+    {
+        Name = "Delivery",
+        Type = TextboxType.Number,
+        Value = Model.Delivery.ToString(),
+        Caption = "Доставка",
+        ValidationType = ValidationTypes.RegularExpression
+    })
+    @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+    {
+        Name = "TAX",
+        Type = TextboxType.Number,
+        Value = Model.TAX.ToString(),
+        Caption = "TAX",
+        ValidationType = ValidationTypes.RegularExpression
+    })
+</div>
+<div class="popup-btn">
+    <a id="Save" class="button" href="#" onclick="invoice_print('InvoiceOrder')">Печать</a>
+</div>

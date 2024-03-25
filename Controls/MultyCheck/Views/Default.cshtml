@@ -1,0 +1,23 @@
+﻿@model Controls.MultyCheck.Models.MultyCheckModel
+@using WebLib.UI
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/plugins/MultyCheck/css/MultyCheck.css");
+    Html.AddCssFileParts("~/Scripts/Bootstrap_Plugins/iCheck/all.css");
+    Html.AddScriptParts("~/plugins/MultyCheck/js/MultyCheck.js");
+    Html.AddScriptParts("~/Scripts/Bootstrap_Plugins/iCheck/icheck.min.js");  
+}
+@if (Model.Mode != LIB.AdvancedProperties.DisplayMode.AdvancedEdit && Model.Mode != LIB.AdvancedProperties.DisplayMode.Search)
+{
+    <div class="control-MultyCheck control-view">
+        @foreach(LIB.Tools.BO.ItemBase item in Model.Values.Values){
+            @item.GetName()<br/>
+        }
+    </div> 
+}
+@if (!Model.ReadOnly)
+{
+    <div data-control="MultyCheck" class="control-MultyCheck control-edit@((Model.Mode == LIB.AdvancedProperties.DisplayMode.AdvancedEdit || Model.Mode == LIB.AdvancedProperties.DisplayMode.Search)?" displayblock":"")">
+        @Html.Partial("../Controls/_multycheck", Model.MultyCheck)
+    </div>
+}

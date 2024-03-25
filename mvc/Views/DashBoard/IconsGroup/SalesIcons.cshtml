@@ -1,0 +1,127 @@
+﻿@using LIB.Tools.Utils
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Заказы</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-order dashboard-icon" href="@URLHelper.GetUrl("DocControl/Order")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Order")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить<br> заказ</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/OrderList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/OrderList")" target="_blank">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Список<br> заказов</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="order-icon dashboard-icon" onclick="open_simple_popup_noData('~/Views/Import/Order.cshtml')"></a>
+            <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/Import/Order.cshtml')">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Импорт<br> заказов (World)</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Отчеты</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-citystatisticlist dashboard-icon" href="@URLHelper.GetUrl("Report/CityStatisticList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/CityStatisticList")" target="_blank">
+                <span id="participation_category_list_btn" class="dashboard-icon-title button">Отчет по<br> городам</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-countrystatisticlist dashboard-icon" href="@URLHelper.GetUrl("Report/CountryStatisticList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/CountryStatisticList")" target="_blank">
+                <span class="dashboard-icon-title button">Отчет по<br> странам</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-countorder dashboard-icon" href="@URLHelper.GetUrl("CustomReport/CountOrder")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("CustomReport/CountOrder")" target="_blank">
+                <span class="dashboard-icon-title button">Годовой отчет<br> по дням</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Клиенты</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/CustomerList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/CustomerList")" target="_blank">
+                <span class="dashboard-icon-title button">Анализ по<br> клиентам</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/ClientList_Global")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/ClientList_Global")" target="_blank">
+                <span class="dashboard-icon-title button">Список<br> клиентов</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Транзакции</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-customerlist dashboard-icon" href="@URLHelper.GetUrl("Report/TransactionList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/TransactionList")" target="_blank">
+                <span class="dashboard-icon-title button">Список<br> транзакций</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-transaction dashboard-icon" href="@URLHelper.GetUrl("DocControl/Transaction")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Transaction")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить<br> транзакцию</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Прочее</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-modellist dashboard-icon" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/ModelList")" target="_blank">
+                <span class="dashboard-icon-title button">Анализ по<br> моделям</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-giftlist dashboard-icon" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/GiftList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@LIB.Tools.Utils.URLHelper.GetUrl("Report/GiftList")" target="_blank">
+                <span class="dashboard-icon-title button">Список<br> подарков</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-modellist dashboard-icon" onclick="open_simple_popup_noData('~/Views/DashBoard/IconsGroup/PopUp Icons/MD_Icon.cshtml')">
+                <label class="dashboard-icon-mini-moldova"></label>
+            </a>
+            <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/DashBoard/IconsGroup/PopUp Icons/MD_Icon.cshtml')">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Группа MD</span>
+            </a>
+        </div>
+    </div>
+</div>

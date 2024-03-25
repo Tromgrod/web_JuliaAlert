@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Master/_Simplified.cshtml";
+}
+<div class="login-container">
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="clear-height"></div>
+        <a href="@LIB.Tools.Utils.URLHelper.GetUrl("")" class="login-logo"></a>
+        <div class="login-body">
+            <div class="login-form form-controls">
+                <input type="text" name="Login" class="input" data-req="1" data-req-mess="Заполните поле">
+                <input type="password" name="Password" class="input" data-req="1" data-req-mess="Заполните поле" onkeydown="submit_on_enter(this,event)">
+                <div class="message-box"></div>
+                <div class="login-actions">
+                    <div class="login-checkbox">
+                        <div class="cp_check">
+                            <input type="checkbox" name="store_pass" value="1" />
+                        </div>
+                        <label class="cp_label" for="store_pass">Memorizare</label>
+                    </div>
+                    <a onclick="return doLogin()" class="login-btn button">Вход</a>
+                </div>
+            </div>
+            <div class="loading"></div>
+        </div>
+    }
+</div>

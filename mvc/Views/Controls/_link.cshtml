@@ -1,0 +1,19 @@
+﻿@using Weblib.Models.Common
+@using LIB.Models
+<A 
+    class="@(!string.IsNullOrEmpty(((LIB.Models.LinkModel)Model).Class)?((LIB.Models.LinkModel)Model).Class:"link")"
+    @if (!string.IsNullOrEmpty(((LIB.Models.LinkModel)Model).Href))
+    {
+    @:href="@(((LIB.Models.LinkModel)Model).Href)"
+    }
+    else
+    {
+    @:href="#"
+    }    
+    @if (!string.IsNullOrEmpty(((LIB.Models.LinkModel)Model).Action))
+    {
+    @:onclick="return @(((LIB.Models.LinkModel)Model).Action)"
+    }
+    >
+    @(!string.IsNullOrEmpty(((LIB.Models.LinkModel)Model).Caption)&&((LIB.Models.LinkModel)Model).Caption!="0"?((LIB.Models.LinkModel)Model).Caption:"")
+ </A> 

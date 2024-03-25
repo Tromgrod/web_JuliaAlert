@@ -1,0 +1,86 @@
+﻿@model Client
+@using Weblib.Models.Common
+@using JuliaAlert.Models.Objects
+@using LIB.AdvancedProperties
+@using Weblib.Models.Common.Enums
+
+@{
+    Layout = "~/Views/Master/_PopUp.cshtml";
+}
+
+<div class="edit-section-header-popup center-header popup-header">
+    <div>Заказчик</div>
+</div>
+
+<div class="popup-container" style="flex-direction: column;">
+
+    <div class="edit-section-row" style="width: 100%;">
+        @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+        {
+            Name = "Name",
+            Type = TextboxType.Text,
+            Value = Model.Name,
+            Caption = "Имя",
+            ValidationType = ValidationTypes.Required
+        })
+    </div>
+
+    <div class="edit-section-row">
+        <div class="edit-section-row-left">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Birthday",
+                Class = "input calendar-input",
+                Type = Weblib.Models.Common.Enums.TextboxType.Date,
+                Value = Model != null && Model.Birthday != DateTime.MinValue ? Model.Birthday.ToString("dd/MM/yyyy") : "",
+                DateValue = Model != null ? Model.Birthday : DateTime.MinValue,
+                Caption = "Дата рождения"
+            })
+        </div>
+        <div class="edit-section-row-right">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Phone",
+                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                Class = "input funcNumber",
+                Value = Model != null ? Model.Phone : "",
+                Caption = "Телефон"
+            })
+        </div>
+    </div>
+
+    <div class="edit-section-row">
+        <div class="edit-section-row-left">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Discount",
+                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                Class = "input funcNumber",
+                Value = Model != null ? Model.Discount.ToString() : "",
+                Caption = "Скидка"
+            })
+        </div>
+        <div class="edit-section-row-right">
+            @Html.Partial("../Controls/RowControl/_inputrow", new TextboxModel()
+            {
+                Name = "Description",
+                Type = Weblib.Models.Common.Enums.TextboxType.Text,
+                Value = Model != null ? Model.Comment : "",
+                Caption = "Комментарий"
+            })
+        </div>
+    </div>
+
+    <input type="hidden" name="Id" value="@Model.Id">
+    <input type="hidden" name="Namespace" value="@Model.GetType().FullName">
+</div>
+
+<div class="popup-btn">
+    <a onclick="save_popup_reload()" class="button">Сохранить</a>
+</div>
+
+<script>
+    $('.popup-container').find('.autocomplete-input').each((i, item) => load_autocomplete(item));
+
+    set_calendar($('.popup-container'));
+</script>

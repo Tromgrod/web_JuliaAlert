@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Master/_SuperAdmin.cshtml";
+}
+<section class="content-header">
+    <h1>Access Denied<small>Control panel</small></h1>
+    <ol class="breadcrumb">
+        <li><a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/DashBoard/")"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="alert alert-danger alert-dismissable">
+        <h4><i class="icon fa fa-ban"></i> No Access!</h4>No Access to this data object <br/>
+        <a href="@LIB.Tools.Utils.URLHelper.GetUrl("SystemManagement/DashBoard/")">Back to Dashboard</a>
+    </div>    
+</section>

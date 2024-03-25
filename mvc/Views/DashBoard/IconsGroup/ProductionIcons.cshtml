@@ -1,0 +1,131 @@
+﻿@using LIB.Tools.Utils
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Модели</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-product dashboard-icon" href="@URLHelper.GetUrl("DocControl/Product")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Product")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить<br> модель</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="blazer-icon dashboard-icon" onclick="open_simple_popup_noData('~/Views/Import/Model.cshtml')"></a>
+            <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/Import/Model.cshtml')">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Импорт<br> моделей</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-stock dashboard-icon" href="@URLHelper.GetUrl("Report/UniqueProductList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/UniqueProductList")" target="_blank">
+                <span class="dashboard-icon-title button">Склад<br> моделей</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-inventory dashboard-icon" href="@URLHelper.GetUrl("Report/InventoryList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/InventoryList")" target="_blank">
+                <span class="dashboard-icon-title button">Инвентаризация</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-moving dashboard-icon" href="@URLHelper.GetUrl("DocControl/MovingProduct")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/MovingProduct")" target="_blank">
+                <span class="dashboard-icon-title button">Перемещение<br> моделей</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-history dashboard-icon" href="@URLHelper.GetUrl("Report/MovingProductList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/MovingProductList")" target="_blank">
+                <span class="dashboard-icon-title button">История перемещений<br> моделей</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Лекало</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-product dashboard-icon" href="@URLHelper.GetUrl("DocControl/Pattern")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Pattern")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить<br> лекало</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/PatternList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/PatternList")" target="_blank">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Список<br> лекал</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Фурнитура</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-product dashboard-icon" href="@URLHelper.GetUrl("DocControl/Finding")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Finding")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить новую<br> фурнитуру</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-stock dashboard-icon" href="@URLHelper.GetUrl("Report/FindingList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/FindingList")" target="_blank">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Склад<br> фурнитур</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Ткань</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-product dashboard-icon" href="@URLHelper.GetUrl("DocControl/Textile")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("DocControl/Textile")" target="_blank">
+                <span class="dashboard-icon-title button">Добавить новую<br> ткань</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-stock dashboard-icon" href="@URLHelper.GetUrl("Report/TextileList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/TextileList")" target="_blank">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Склад<br> тканей</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="icon-conteiner">
+    <span class="icon-conteiner-title">Приходы</span>
+
+    <div class="icon-group">
+        <div class="icon-item">
+            <a class="dashboard-icon-orderlist dashboard-icon" href="@URLHelper.GetUrl("Report/ProviderList")" target="_blank"></a>
+            <a class="dashboard-icon-title-conteiner" href="@URLHelper.GetUrl("Report/ProviderList")" target="_blank">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Список<br> поставщиков</span>
+            </a>
+        </div>
+
+        <div class="icon-item">
+            <a class="dashboard-icon-supply dashboard-icon" onclick="open_simple_popup_noData('~/Views/DashBoard/IconsGroup/PopUp Icons/Supply_Icon.cshtml')"></a>
+            <a class="dashboard-icon-title-conteiner" onclick="open_simple_popup_noData('~/Views/DashBoard/IconsGroup/PopUp Icons/Supply_Icon.cshtml')">
+                <span id="add_participation_category_btn" class="dashboard-icon-title button">Приходы</span>
+            </a>
+        </div>
+    </div>
+</div>
